@@ -1,0 +1,7 @@
+.content {
+    padding-top: 50px;
+    flex-grow: 1;
+    background-color: bisque;
+    color: rgb(78, 78, 78);
+    text-align: center
+}

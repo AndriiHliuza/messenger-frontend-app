@@ -1,0 +1,33 @@
+.alert-page {
+    flex-grow: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: bisque;
+    color: rgb(77, 13, 13);
+}
+
+.alert-container {
+    width: 70%;
+    flex-direction: column;
+
+    height: 80%;
+
+    padding: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: burlywood;
+
+    border: 2px solid brown;
+    border-radius: 10px;
+}
+
+.alert-explanation-text {
+    font-size: 20px;
+    margin: 5px;
+}

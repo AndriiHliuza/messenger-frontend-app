@@ -1,0 +1,83 @@
+.authPage {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: bisque;
+}
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0.5;
+
+    max-width: 550px;
+    
+    margin: 20px 0%;
+
+    border-radius: 10px;
+
+    background-color: rgb(78, 78, 78);
+    color: white;
+}
+
+.authForm > h1 {
+    text-align: center;
+}
+
+.authForm > form {
+    display: flex;
+    flex-direction: column;
+}
+
+.authForm button {
+    align-self: center;
+    margin-bottom: 10px;
+
+    height: 50px;
+    width: 300px;
+
+    border:  2px solid rgb(118, 118, 118);
+    border-radius: 20px;
+
+    background-color: bisque;
+    color: rgb(68, 68, 68);
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.authForm button:disabled {
+    opacity: 0.35;
+}
+
+.sign-item {
+    align-self: center;
+    margin-bottom: 15px;
+}
+
+.sign-item-text {
+    margin-right: 5px;
+}
+
+.sign-item a:link {
+    color: rgb(88, 143, 255)
+}
+
+.sign-item a:visited {
+    color: rgb(88, 143, 255)
+}
+
+@media (max-width: 768px) {
+    .authForm {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 576px) {
+    .authForm {
+        max-width: 350px;
+    }
+}

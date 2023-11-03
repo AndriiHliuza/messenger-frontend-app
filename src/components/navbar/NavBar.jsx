@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { faMessage, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./NavBar.css";
@@ -9,15 +9,16 @@ import {
     CONTACT_ROUTE,
     SIGH_IN_ROUTE,
     SIGN_UP_ROUTE,
-    PROFILE_ROUTE
+    USER_PROFILE_ROUTE
 } from "../../config";
 import { useAuth } from "../../utils/AuthProvider";
-import { logout } from "../../axios/UserAuthAPI";
+import { logout } from "../../axios/AuthAPI";
 
 export default function NavBar() {
 
     const { user, setUser } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const items = [
         { name: "Home", href: HOME_ROUTE },
@@ -29,9 +30,10 @@ export default function NavBar() {
 
     useEffect(() => {
         if (user.authenticated) {
+            const uniqueName = user.uniqueName;
             setItemsToShow([
                 ...items,
-                { name: "Profile", href: PROFILE_ROUTE }
+                { name: "Profile", href: USER_PROFILE_ROUTE + "/" + uniqueName }
             ]);
         } else {
             setItemsToShow([
@@ -53,6 +55,7 @@ export default function NavBar() {
             await logout();
             setUser({
                 username: "",
+                uniqueName: "",
                 authenticated: false,
                 role: ""
             }); 
@@ -75,7 +78,7 @@ export default function NavBar() {
                                     key={item.name}
                                     to={item.href}
                                     className={({ isActive }) => {
-                                        return isActive ? "nav-item active-item" : "nav-item"
+                                        return isActive && (location.pathname === item.href) ? "nav-item active-item" : "nav-item"
                                     }}
                                     onClick={onNavItemClick}>
                                     {item.name}

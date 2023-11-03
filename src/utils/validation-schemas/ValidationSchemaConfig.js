@@ -18,6 +18,9 @@ export const registrationSchema = yup.object().shape({
         .string()
         .oneOf([yup.ref("password"), null], "Passwords must match")
         .required(),
+    uniqueName: yup
+        .string()
+        .required(),
     firstname: yup
         .string()
         .required(),

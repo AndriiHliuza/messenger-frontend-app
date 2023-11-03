@@ -11,6 +11,7 @@ function App() {
 
   const [user, setUser] = useState({
     username: "",
+    uniqueName: "",
     authenticated: false,
     role: ""
   });
@@ -23,6 +24,7 @@ function App() {
         if (accessToken) {
           setUser({
             username: jwtDecode(accessToken).sub,
+            uniqueName: jwtDecode(accessToken).uniqueName,
             authenticated: isAuthenticated,
             role: jwtDecode(accessToken).role
           });

@@ -1,18 +1,24 @@
 import { axiosClient, authAxiosClient } from "./AxiosClient";
-import { REGISTRATION_ROUTE, AUTHENTICATION_ROUTE, LOGOUT_ROUTE } from "../config";
+import { 
+    API_REGISTRATION_ROUTE, 
+    API_AUTHENTICATION_ROUTE, 
+    API_LOGOUT_ROUTE 
+} from "../config";
 
 export const register = async (
     username,
     password,
+    uniqueName,
     firstname,
     lastname,
     birthday
 ) => {
     return await axiosClient.post(
-        REGISTRATION_ROUTE,
+        API_REGISTRATION_ROUTE,
         {
             username,
             password,
+            uniqueName,
             firstname,
             lastname,
             birthday
@@ -33,7 +39,7 @@ export const authenticate = async (
     password
 ) => {
     return await axiosClient.post(
-        AUTHENTICATION_ROUTE,
+        API_AUTHENTICATION_ROUTE,
         {
             username,
             password
@@ -51,7 +57,7 @@ export const authenticate = async (
 
 export const logout = async () => {
     await authAxiosClient.post(
-        LOGOUT_ROUTE
+        API_LOGOUT_ROUTE
     ).then((response) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");

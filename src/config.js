@@ -2,11 +2,12 @@
 export const BASE_URL = "http://localhost:8080";
 
 // api routes
-export const REGISTRATION_ROUTE = "/api/registration";
-export const AUTHENTICATION_ROUTE = "/api/authentication";
-export const TOKEN_VALIDATION_ROUTE = "/api/jwt/validation";
-export const ACCESS_TOKEN_ROUTE = "/api/jwt/access";
-export const LOGOUT_ROUTE = "/api/logout";
+export const API_REGISTRATION_ROUTE = "/api/registration";
+export const API_AUTHENTICATION_ROUTE = "/api/authentication";
+export const API_TOKEN_VALIDATION_ROUTE = "/api/jwt/validation";
+export const API_ACCESS_TOKEN_ROUTE = "/api/jwt/access";
+export const API_LOGOUT_ROUTE = "/api/logout";
+export const API_USERS_ROUTE = "/api/users"
 
 // unathenticated user routes
 export const HOME_ROUTE = "/";
@@ -17,8 +18,9 @@ export const SIGN_UP_ROUTE = "/sign-up";
 export const NOT_FOUND_ROUTE = "/*";
 
 // authenticated user routes
-export const PROFILE_ROUTE = "/user/profile";
-
+export const USER_PROFILE_ROUTE = "/users";
+export const ADMIN_PROFILE_ROUTE = "/admin";
+export const ROOT_PROFILE_ROUTE = "/root";
 
 // validation form regex
 export const USERNAME_REGEX = /^\w+@\w+\.\w+$/;

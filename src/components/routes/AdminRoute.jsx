@@ -8,7 +8,7 @@ export default function AdminRoute() {
     const { user } = useAuth();
 
     return (
-        user?.role === "ADMIN"
+        user?.role === "ADMIN" || user?.role === "ROOT"
             ? <Outlet />
             : <NotFoundPage />
     );

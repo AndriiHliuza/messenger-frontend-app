@@ -17,7 +17,9 @@ import {
     CONTACT_ROUTE,
     SIGH_IN_ROUTE,
     SIGN_UP_ROUTE,
-    PROFILE_ROUTE,
+    USER_PROFILE_ROUTE,
+    ADMIN_PROFILE_ROUTE,
+    ROOT_PROFILE_ROUTE,
     NOT_FOUND_ROUTE
 } from "../../config"
 import NotFoundPage from "../pages/alert-pages/NotFoundPage";
@@ -41,15 +43,15 @@ export default function RoutesProcessor() {
             <Route element={<AuthenticationBasedRoute />} >
 
                 <Route element={<UserRoute />} >
-                    <Route path={PROFILE_ROUTE} element={<UserProfilePage />} />
+                    <Route path={USER_PROFILE_ROUTE + "/:uniqueName"} element={<UserProfilePage />} />
                 </Route>
 
                 <Route element={<AdminRoute />} >
-                    <Route path="/admin" element={<HomePage />} />
+                    <Route path={ADMIN_PROFILE_ROUTE + "/:uniqueName"} element={<h1>Hello Admin</h1>} />
                 </Route>
 
                 <Route element={<RootRoute />} >
-                    <Route path="/root" element={<HomePage />} />
+                    <Route path={ROOT_PROFILE_ROUTE + "/:uniqueName"} element={<h1>Hello Root</h1>} />
                 </Route>
 
             </Route>

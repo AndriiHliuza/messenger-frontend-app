@@ -20,7 +20,7 @@ export default function RootRoute() {
       setLoading(false);
     }
     checkUserExistence();
-  });
+  }, [params]);
 
   return (
     isLoading

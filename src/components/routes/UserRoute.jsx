@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from "react";
 import { Outlet, useParams } from "react-router-dom";
-import { getUserByUniqueNameAndRole } from "../../axios/UserAPI"; 
+import { getUserByUniqueNameAndRole } from "../../axios/UserAPI";
 import { Role } from "../../utils/Role";
 import NotFoundPage from "../pages/alert-pages/NotFoundPage";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
@@ -20,7 +20,7 @@ export default function UserRoute() {
       setLoading(false);
     }
     checkUserExistence();
-  });
+  }, [params]);
 
   return (
     isLoading

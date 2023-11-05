@@ -20,7 +20,7 @@ export default function AdminRoute() {
       setLoading(false);
     }
     checkUserExistence();
-  });
+  }, [params]);
 
   return (
     isLoading

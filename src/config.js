@@ -7,7 +7,9 @@ export const API_AUTHENTICATION_ROUTE = "/api/authentication";
 export const API_TOKEN_VALIDATION_ROUTE = "/api/jwt/validation";
 export const API_ACCESS_TOKEN_ROUTE = "/api/jwt/access";
 export const API_LOGOUT_ROUTE = "/api/logout";
-export const API_USERS_ROUTE = "/api/users"
+export const API_USERS_ROUTE = "/api/users";
+export const API_ADMIN_ROUTE = "/api/admin";
+export const API_ROOT_ROUTE = "/api/root";
 
 // unathenticated user routes
 export const HOME_ROUTE = "/";
@@ -18,9 +20,9 @@ export const SIGN_UP_ROUTE = "/sign-up";
 export const NOT_FOUND_ROUTE = "/*";
 
 // authenticated user routes
-export const USER_PROFILE_ROUTE = "/users";
-export const ADMIN_PROFILE_ROUTE = "/admin";
-export const ROOT_PROFILE_ROUTE = "/root";
+export const USER_ROUTE = "/users";
+export const ADMIN_ROUTE = "/admin";
+export const ROOT_ROUTE = "/root";
 
 // validation form regex
 export const USERNAME_REGEX = /^\w+@\w+\.\w+$/;

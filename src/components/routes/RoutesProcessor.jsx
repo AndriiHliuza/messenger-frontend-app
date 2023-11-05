@@ -3,9 +3,9 @@ import { Route, Routes } from "react-router-dom";
 
 import AuthenticationBasedRoute from "./AuthenticationBasedRoute";
 import NotAuthenticatedUserRoute from "./NotAuthenticatedUserRoute";
-import AdminRoute from "./AdminRoute";
-import RootRoute from "./RootRoute";
-import UserRoute from "./UserRoute";
+import RoleAdminRoute from "./role-routes/RoleAdminRoute";
+import RoleRootRoute from "./role-routes/RoleRootRoute";
+import RoleUserRoute from "./role-routes/RoleUserRoute";
 
 import LoginPage from "../pages/auth-pages/login-page/LoginPage";
 import RegistrationPage from "../pages/auth-pages/registration-page/RegistrationPage";
@@ -17,12 +17,17 @@ import {
     CONTACT_ROUTE,
     SIGH_IN_ROUTE,
     SIGN_UP_ROUTE,
-    USER_PROFILE_ROUTE,
-    ADMIN_PROFILE_ROUTE,
-    ROOT_PROFILE_ROUTE,
+    USER_ROUTE,
+    ADMIN_ROUTE,
+    ROOT_ROUTE,
     NOT_FOUND_ROUTE
 } from "../../config"
 import NotFoundPage from "../pages/alert-pages/NotFoundPage";
+import AdminProfilePage from "../pages/profile-pages/admin-profile/AdminProfilePage";
+import RootProfilePage from "../pages/profile-pages/root-profile/RootProfilePage";
+import UserRoute from "./UserRoute";
+import AdminRoute from "./AdminRoute";
+import RootRoute from "./RootRoute";
 
 export default function RoutesProcessor() {
 
@@ -31,7 +36,7 @@ export default function RoutesProcessor() {
             {/* public routes */}
             <Route path={HOME_ROUTE} element={<HomePage />} />
             <Route path={ABOUT_ROUTE} element={<HomePage />} />
-            <Route path={CONTACT_ROUTE} element={<HomePage />} />            
+            <Route path={CONTACT_ROUTE} element={<HomePage />} />
 
             {/* Routes for not authenticated users */}
             <Route element={<NotAuthenticatedUserRoute />} >
@@ -42,16 +47,23 @@ export default function RoutesProcessor() {
             {/* Routes for authenticated users */}
             <Route element={<AuthenticationBasedRoute />} >
 
-                <Route element={<UserRoute />} >
-                    <Route path={USER_PROFILE_ROUTE + "/:uniqueName"} element={<UserProfilePage />} />
+                <Route element={<RoleUserRoute />} >
+                    <Route path={USER_ROUTE} element={<UserRoute />} >
+                        <Route path=":uniqueName" element={<UserProfilePage />} />
+                        <Route path=":uniqueName/friends" element={<h1>Hello friends</h1>} />
+                    </Route>
                 </Route>
 
-                <Route element={<AdminRoute />} >
-                    <Route path={ADMIN_PROFILE_ROUTE + "/:uniqueName"} element={<h1>Hello Admin</h1>} />
+                <Route element={<RoleAdminRoute />} >
+                    <Route path={ADMIN_ROUTE} element={<AdminRoute />} >
+                        <Route path=":uniqueName" element={<AdminProfilePage />} />
+                    </Route>
                 </Route>
 
-                <Route element={<RootRoute />} >
-                    <Route path={ROOT_PROFILE_ROUTE + "/:uniqueName"} element={<h1>Hello Root</h1>} />
+                <Route element={<RoleRootRoute />} >
+                    <Route path={ROOT_ROUTE} element={<RootRoute />} >
+                        <Route path=":uniqueName" element={<RootProfilePage />} />
+                    </Route>
                 </Route>
 
             </Route>

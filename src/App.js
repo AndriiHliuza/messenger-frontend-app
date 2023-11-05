@@ -5,6 +5,7 @@ import RoutesProcessor from './components/routes/RoutesProcessor';
 import { AuthContext, isUserAuthenticated } from './utils/AuthProvider';
 import { useEffect, useState } from 'react';
 import { jwtDecode } from "jwt-decode";
+import { Role } from './utils/Role';
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
     username: "",
     uniqueName: "",
     authenticated: false,
-    role: ""
+    role: Role.VISITOR
   });
 
   useEffect(() => {
@@ -29,7 +30,7 @@ function App() {
             role: jwtDecode(accessToken).role
           });
         }
-      }      
+      }
     }
     checkIsUserAuthenticated();
   }, []);

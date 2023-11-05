@@ -5,15 +5,16 @@ import { registrationSchema } from "../../../../utils/validation-schemas/Validat
 import "../AuthPages.css";
 import FormItem from "../FormItem";
 import { 
-    ADMIN_PROFILE_ROUTE,
-    ROOT_PROFILE_ROUTE,
-    USER_PROFILE_ROUTE,
+    USER_ROUTE,
+    ADMIN_ROUTE,
+    ROOT_ROUTE,
     SIGH_IN_ROUTE,
     HOME_ROUTE
 } from "../../../../config";
 import { register } from "../../../../axios/AuthAPI";
 import { useAuth } from "../../../../utils/AuthProvider"
 import { jwtDecode } from "jwt-decode";
+import { Role } from "../../../../utils/Role";
 
 export default function RegistrationPage() {
 
@@ -40,14 +41,14 @@ export default function RegistrationPage() {
                 role: role 
             });
             switch (role) {
-                case "USER":
-                    navigate(USER_PROFILE_ROUTE + "/" + uniqueName);
+                case Role.USER:
+                    navigate(USER_ROUTE + "/" + uniqueName);
                     break;
-                case "ADMIN":
-                    navigate(ADMIN_PROFILE_ROUTE + "/" + uniqueName);
+                case Role.ADMIN:
+                    navigate(ADMIN_ROUTE + "/" + uniqueName);
                     break;
-                case "ROOT":
-                    navigate(ROOT_PROFILE_ROUTE + "/" + uniqueName);
+                case Role.ROOT:
+                    navigate(ROOT_ROUTE + "/" + uniqueName);
                     break;
                 default :
                     navigate(HOME_ROUTE);

@@ -9,10 +9,13 @@ import {
     CONTACT_ROUTE,
     SIGH_IN_ROUTE,
     SIGN_UP_ROUTE,
-    USER_PROFILE_ROUTE
+    USER_ROUTE,
+    ADMIN_ROUTE,
+    ROOT_ROUTE
 } from "../../config";
 import { useAuth } from "../../utils/AuthProvider";
 import { logout } from "../../axios/AuthAPI";
+import { Role } from "../../utils/Role";
 
 export default function NavBar() {
 
@@ -29,11 +32,28 @@ export default function NavBar() {
     const [itemsToShow, setItemsToShow] = useState([]);
 
     useEffect(() => {
+        let userProfileRoute = USER_ROUTE;
+        let role = user.role;
+        switch (role) {
+            case Role.USER:
+                userProfileRoute = USER_ROUTE;
+                break;
+            case Role.ADMIN:
+                userProfileRoute = ADMIN_ROUTE;
+                break;
+            case Role.ROOT:
+                userProfileRoute = ROOT_ROUTE;
+                break;
+            default :
+                userProfileRoute = USER_ROUTE;
+        }
+
+
         if (user.authenticated) {
             const uniqueName = user.uniqueName;
             setItemsToShow([
                 ...items,
-                { name: "Profile", href: USER_PROFILE_ROUTE + "/" + uniqueName }
+                { name: "Profile", href: userProfileRoute + "/" + uniqueName }
             ]);
         } else {
             setItemsToShow([
@@ -57,7 +77,7 @@ export default function NavBar() {
                 username: "",
                 uniqueName: "",
                 authenticated: false,
-                role: ""
+                role: Role.VISITOR
             }); 
             navigate(HOME_ROUTE);
         }

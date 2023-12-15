@@ -12,6 +12,7 @@ import {
     HOME_ROUTE
 } from "../../../../config";
 import { register } from "../../../../axios/AuthAPI";
+import { getUserByUsernameAndRole } from "../../../../axios/UserAPI";
 import { useAuth } from "../../../../utils/AuthProvider"
 import { jwtDecode } from "jwt-decode";
 import { Role } from "../../../../utils/Role";
@@ -32,27 +33,33 @@ export default function RegistrationPage() {
         );
         actions.resetForm();
         if (data?.accessToken && data?.refreshToken) {
-            const uniqueName = jwtDecode(data.accessToken).uniqueName;
+            const username = jwtDecode(data.accessToken).sub;
             const role = jwtDecode(data.accessToken).role;
-            setUser({
-                username: jwtDecode(data.accessToken).sub,
-                uniqueName: uniqueName,
-                authenticated: true,
-                role: role 
-            });
-            switch (role) {
-                case Role.USER:
-                    navigate(USER_ROUTE + "/" + uniqueName);
-                    break;
-                case Role.ADMIN:
-                    navigate(ADMIN_ROUTE + "/" + uniqueName);
-                    break;
-                case Role.ROOT:
-                    navigate(ROOT_ROUTE + "/" + uniqueName);
-                    break;
-                default :
-                    navigate(HOME_ROUTE);
-            }
+            if (username && role) {
+                const response = await getUserByUsernameAndRole(username, role);
+                if (response != null && response?.data?.username === username && response?.data?.uniqueName === values.uniqueName) {
+                    const uniqueName = response.data.uniqueName;
+                    setUser({
+                        username: username,
+                        uniqueName: uniqueName,
+                        authenticated: true,
+                        role: role 
+                    });
+                    switch (role) {
+                        case Role.USER:
+                            navigate(USER_ROUTE + "/" + uniqueName);
+                            break;
+                        case Role.ADMIN:
+                            navigate(ADMIN_ROUTE + "/" + uniqueName);
+                            break;
+                        case Role.ROOT:
+                            navigate(ROOT_ROUTE + "/" + uniqueName);
+                            break;
+                        default :
+                            navigate(HOME_ROUTE);
+                    }
+                }
+            }   
         }
     }
 
@@ -97,7 +104,7 @@ export default function RegistrationPage() {
                                 placeholder="3245!mySuperSecurePassword$8976"
                             />
                             <FormItem 
-                                label="Unique name (It helps other people in WebTalk to find you):"
+                                label="Username:"
                                 id="uniqueName"
                                 name="uniqueName"
                                 type="text"

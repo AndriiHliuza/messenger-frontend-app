@@ -42,3 +42,27 @@ export const authenticationSchema = yup.object().shape({
         .string()
         .required()
 });
+
+export const modificationSchema = yup.object().shape({
+    uniqueName: yup
+        .string(),
+    password: yup
+        .string()
+        .min(8)
+        .matches(PASSWORD_REGEX, {
+            message: "Password must include uppercase, lowercase letters, a number and a special character. Allowed special characters: !@#$%.,;"
+        }),
+    firstname: yup
+        .string(),
+    lastname: yup
+        .string(),
+    birthday: yup
+        .date()
+        .max(new Date(), ({ max }) => `Date needs to be before ${new Date()}`),
+    currentPassword: yup
+        .string()
+        .min(8)
+        .matches(PASSWORD_REGEX, {
+            message: "Password must include uppercase, lowercase letters, a number and a special character. Allowed special characters: !@#$%.,;"
+        })
+});

@@ -13,8 +13,6 @@ import HomePage from "../pages/home-page/HomePage";
 import UserProfilePage from "../pages/profile-pages/user-profile/UserProfilePage"
 import {
     HOME_ROUTE,
-    ABOUT_ROUTE,
-    CONTACT_ROUTE,
     SIGH_IN_ROUTE,
     SIGN_UP_ROUTE,
     USER_ROUTE,
@@ -28,6 +26,9 @@ import RootProfilePage from "../pages/profile-pages/root-profile/RootProfilePage
 import UserRoute from "./UserRoute";
 import AdminRoute from "./AdminRoute";
 import RootRoute from "./RootRoute";
+import ViewUsersRoute from "./ViewUsersRoute";
+import ChatPage from "../pages/chat-page/ChatPage";
+import ProfileModificationPage from "../pages/profile-pages/profile-modification-page/ProfileModificationPage";
 
 export default function RoutesProcessor() {
 
@@ -35,8 +36,7 @@ export default function RoutesProcessor() {
         <Routes>
             {/* public routes */}
             <Route path={HOME_ROUTE} element={<HomePage />} />
-            <Route path={ABOUT_ROUTE} element={<HomePage />} />
-            <Route path={CONTACT_ROUTE} element={<HomePage />} />
+            <Route path="/chat" element={<ChatPage />} />
 
             {/* Routes for not authenticated users */}
             <Route element={<NotAuthenticatedUserRoute />} >
@@ -49,8 +49,12 @@ export default function RoutesProcessor() {
 
                 <Route element={<RoleUserRoute />} >
                     <Route path={USER_ROUTE} element={<UserRoute />} >
+                        <Route index element={<ViewUsersRoute />} />
                         <Route path=":uniqueName" element={<UserProfilePage />} />
-                        <Route path=":uniqueName/friends" element={<h1>Hello friends</h1>} />
+                        <Route path=":uniqueName/account" element={<ProfileModificationPage />} />
+                        <Route path=":uniqueName/chats" element={<h1>My chats</h1>} />
+                        <Route path=":uniqueName/subscribers" element={<h1>Hello subscribers</h1>} />
+                        <Route path=":uniqueName/subscriptions" element={<h1>Hello subscribtions</h1>} />
                     </Route>
                 </Route>
 

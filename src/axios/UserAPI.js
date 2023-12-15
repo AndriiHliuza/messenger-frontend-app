@@ -1,15 +1,18 @@
 import { authAxiosClient } from "./AxiosClient";
-import { 
+import {
     API_USERS_ROUTE,
+    API_ADMINS_ROUTE,
+    API_ROOTS_ROUTE,
+    API_USER_ROUTE,
     API_ADMIN_ROUTE,
     API_ROOT_ROUTE
 } from "../config";
 
-export const getUserByUniqueNameAndRole = async (uniqueName, role) => {
+export const getUserByUsernameAndRole = async (username, role) => {
     let route;
-    switch(role) {
+    switch (role) {
         case "USER":
-            route = API_USERS_ROUTE;
+            route = API_USER_ROUTE;
             break;
         case "ADMIN":
             route = API_ADMIN_ROUTE;
@@ -20,10 +23,126 @@ export const getUserByUniqueNameAndRole = async (uniqueName, role) => {
         default:
             route = null;
     }
+    return await authAxiosClient.get(route + "?username=" + username)
+        .then((response) => {
+            return response
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const getUserByUniqueNameAndRole = async (uniqueName, role) => {
+    let route;
+    switch (role) {
+        case "USER":
+            route = API_USERS_ROUTE;
+            break;
+        case "ADMIN":
+            route = API_ADMINS_ROUTE;
+            break;
+        case "ROOT":
+            route = API_ROOTS_ROUTE;
+            break;
+        default:
+            route = null;
+    }
     return await authAxiosClient.get(route + "/" + uniqueName)
-    .then((response) => {
-        return response
+        .then((response) => {
+            return response
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const getUsers = async (page, size, order) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "?page=" + page + "&size=" + size + "&order=" + order)
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const subscribe = async (
+    subscriberUniqueName,
+    subscriptionUniqueName
+) => {
+    return await authAxiosClient.post(
+        API_USERS_ROUTE + "/" + subscriberUniqueName + "/subscriptions",
+        {
+            subscriptionUniqueName: subscriptionUniqueName,
+            subscriberUniqueName: subscriberUniqueName,
+            isSubscribed: false
+        },
+        {
+            headers: { "Content-Type": "application/json" }
+        }
+    ).then((response) => {
+        return response;
     }).catch((error) => {
         return null;
     })
+}
+
+export const isSubscribed = async (
+    subscriberUniqueName,
+    subscriptionUniqueName
+) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "/" + subscriberUniqueName + "/subscriptions/" + subscriptionUniqueName)
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const unsubscribe = async (
+    subscriberUniqueName,
+    subscriptionUniqueName
+) => {
+    return await authAxiosClient.delete(API_USERS_ROUTE + "/" + subscriberUniqueName + "/subscriptions/" + subscriptionUniqueName)
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const modify = async (
+    username,
+    formData
+) => {
+    return await authAxiosClient.patch(
+        API_USERS_ROUTE + "/" + username,
+        formData,
+        {
+            headers: { "Content-Type": "multipart/form-data" },
+        }
+    ).then((response) => {
+        return response;
+    }).catch((error) => {
+        return null;
+    })
+}
+
+export const getProfileImage = async (uniqueName) => {
+    return await authAxiosClient.get(
+        API_USERS_ROUTE + "/" + uniqueName + "/image",
+        {
+            responseType: "blob"
+        }
+    ).then((response) => {
+        return response;
+    }).catch((error) => {
+        return null;
+    })
+}
+
+export const getProfileImageMetadata = async (uniqueName) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "/" + uniqueName + "/image/metadata")
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
 }

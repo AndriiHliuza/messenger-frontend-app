@@ -13,7 +13,7 @@ export default function AuthenticationBasedRoute() {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 100);
+        }, 300);
     }, []);
 
     return (

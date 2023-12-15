@@ -8,13 +8,14 @@ export const API_TOKEN_VALIDATION_ROUTE = "/api/jwt/validation";
 export const API_ACCESS_TOKEN_ROUTE = "/api/jwt/access";
 export const API_LOGOUT_ROUTE = "/api/logout";
 export const API_USERS_ROUTE = "/api/users";
+export const API_ADMINS_ROUTE = "/api/admins";
+export const API_ROOTS_ROUTE = "/api/roots";
+export const API_USER_ROUTE = "/api/user";
 export const API_ADMIN_ROUTE = "/api/admin";
 export const API_ROOT_ROUTE = "/api/root";
 
 // unathenticated user routes
 export const HOME_ROUTE = "/";
-export const ABOUT_ROUTE = "/about";
-export const CONTACT_ROUTE = "/contact";
 export const SIGH_IN_ROUTE = "/sign-in";
 export const SIGN_UP_ROUTE = "/sign-up";
 export const NOT_FOUND_ROUTE = "/*";

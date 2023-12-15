@@ -66,6 +66,8 @@
     flex-direction: column;
     align-content: center;
     justify-content: center;
+
+    margin: 0px 5px 0px 5px;
 }
 
 .logout-button {
@@ -115,12 +117,7 @@
 }
 
 .menu-toggler-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 60px;
-
-    cursor: pointer;
+    display: none;
 }
 
 .menu-icon {
@@ -185,4 +182,14 @@
         padding: 20px 0px;
         margin: 10px 0px;
     }
+
+    .menu-toggler-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+    
+        cursor: pointer;
+    }
+    
 }

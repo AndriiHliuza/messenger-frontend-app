@@ -13,6 +13,7 @@ export default function FormItem({ label, ...props }) {
             <input
                 {...props}
                 {...field}
+                value={field.value ? field.value : ""}
                 className={meta?.error && field?.value ? "not-valid-input" : ""}
             />
             <div className={meta?.error && field?.value ? "display-item-error-validation-message" : "hide-item-error-validation-message"}>

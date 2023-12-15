@@ -12,6 +12,7 @@ import {
     HOME_ROUTE
 } from "../../../../config";
 import { authenticate } from "../../../../axios/AuthAPI";
+import { getUserByUsernameAndRole } from "../../../../axios/UserAPI";
 import { useAuth } from "../../../../utils/AuthProvider"
 import { jwtDecode } from "jwt-decode";
 import { Role } from "../../../../utils/Role";
@@ -28,26 +29,32 @@ export default function LoginPage() {
         );
         actions.resetForm();
         if (data?.accessToken && data?.refreshToken) {
-            const uniqueName = jwtDecode(data.accessToken).uniqueName;
+            const username = jwtDecode(data.accessToken).sub;
             const role = jwtDecode(data.accessToken).role;
-            setUser({
-                username: jwtDecode(data.accessToken).sub,
-                uniqueName: uniqueName,
-                authenticated: true,
-                role: role
-            });
-            switch (role) {
-                case Role.USER:
-                    navigate(USER_ROUTE + "/" + uniqueName);
-                    break;
-                case Role.ADMIN:
-                    navigate(ADMIN_ROUTE + "/" + uniqueName);
-                    break;
-                case Role.ROOT:
-                    navigate(ROOT_ROUTE + "/" + uniqueName);
-                    break;
-                default :
-                    navigate(HOME_ROUTE);
+            if (username && role) {
+                const response = await getUserByUsernameAndRole(username, role);
+                if (response != null && response?.data?.username === username) {
+                    const uniqueName = response.data.uniqueName;
+                    setUser({
+                        username: jwtDecode(data.accessToken).sub,
+                        uniqueName: uniqueName,
+                        authenticated: true,
+                        role: role
+                    });
+                    switch (role) {
+                        case Role.USER:
+                            navigate(USER_ROUTE + "/" + uniqueName);
+                            break;
+                        case Role.ADMIN:
+                            navigate(ADMIN_ROUTE + "/" + uniqueName);
+                            break;
+                        case Role.ROOT:
+                            navigate(ROOT_ROUTE + "/" + uniqueName);
+                            break;
+                        default :
+                            navigate(HOME_ROUTE);
+                    }
+                }
             }
         }
     }

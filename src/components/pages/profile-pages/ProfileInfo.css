@@ -1,0 +1,113 @@
+.profile-info {
+    background-color: rgb(110, 110, 110);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    height: 450px;
+    width: 95%;
+
+    border-radius: 5px;
+
+    margin: 20px 20px 5px 20px;
+}
+
+.user-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex-grow: 1;
+    height: 100%;
+}
+
+.user-photo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 300px;
+    width: 300px;
+
+    border: 2px solid black;
+    border-radius: 150px;
+}
+
+.uploaded-user-photo {
+    height: 100%;
+    width: 100%;
+    border-radius: 150px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex-grow: 1;
+    height: 100%;
+}
+
+.user-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex-grow: 1;
+    height: 100%;
+
+    padding: 0px 20px 0px 20px;
+}
+
+.user-info-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 60px;
+    width: 100%;
+
+    margin: 5px 0px 5px 0px;
+
+    padding: 10px;
+}
+
+.item-name {
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+
+    .profile-info {
+        flex-direction: column;
+
+        height: 800px;
+    }
+
+    .user-photo {
+        width: 100%;
+    }
+
+    .user-info {
+        width: 90%;
+        padding: 0px;
+    }
+
+    .user-info-item {
+        margin: 5px;
+    }
+
+}
+
+@media (max-width: 400px) {
+
+    .user-photo-container {
+        width: 220px;
+        
+        height: 220px;
+    }
+}

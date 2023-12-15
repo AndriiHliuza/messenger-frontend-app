@@ -14,7 +14,7 @@ export default function RoleUserRoute() {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 100);
+        }, 300);
     }, []);
 
     return (

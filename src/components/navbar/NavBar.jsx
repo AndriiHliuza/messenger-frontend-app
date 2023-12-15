@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { faMessage, faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./NavBar.css";
 import {
     HOME_ROUTE,
-    ABOUT_ROUTE,
-    CONTACT_ROUTE,
     SIGH_IN_ROUTE,
     SIGN_UP_ROUTE,
     USER_ROUTE,
@@ -25,8 +23,6 @@ export default function NavBar() {
 
     const items = [
         { name: "Home", href: HOME_ROUTE },
-        { name: "About", href: ABOUT_ROUTE },
-        { name: "Contact", href: CONTACT_ROUTE }
     ];
 
     const [itemsToShow, setItemsToShow] = useState([]);
@@ -48,11 +44,12 @@ export default function NavBar() {
                 userProfileRoute = USER_ROUTE;
         }
 
-
         if (user.authenticated) {
             const uniqueName = user.uniqueName;
             setItemsToShow([
                 ...items,
+                { name: "Users", href: USER_ROUTE },
+                { name: "Chats", href: userProfileRoute + "/" + uniqueName + "/chats" },
                 { name: "Profile", href: userProfileRoute + "/" + uniqueName }
             ]);
         } else {

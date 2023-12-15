@@ -14,7 +14,7 @@ export default function RoleAdminRoute() {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 100);
+        }, 150);
     }, []);
 
     return (

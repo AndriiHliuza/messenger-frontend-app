@@ -13,7 +13,7 @@ export default function NotAuthenticatedUserRoute() {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false);
-        }, 100);
+        }, 300);
     }, []);
 
     return (

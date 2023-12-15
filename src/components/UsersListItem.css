@@ -1,0 +1,139 @@
+.users-list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 75%;
+
+    margin: 20px auto 0px auto;
+}
+
+.users-list-item-container {
+    background-color: rgb(110, 110, 110);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 300px;
+    flex-grow: 1;
+
+    margin: 0px 15px 20px 15px;
+
+    border: 1px solid black;
+    border-radius: 15px;
+}
+
+.user-item-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 400px;
+
+    height: 90%;
+}
+
+.user-item-photo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 270px;
+    height: 270px;
+
+    margin: 0px 20px 0px 20px;
+
+    border: 1px solid black;
+    border-radius: 150px;
+}
+
+.user-item-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-grow: 1;
+
+    height: 90%;
+
+    margin-right: 20px;
+}
+
+.user-item-info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    flex-grow: 1;
+
+    height: 100%;
+
+    padding: 0px 20px 0px 20px;
+}
+
+.user-item-info-headline {
+    font-weight: bold;
+}
+
+.visit-account-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+
+    height: 20px;
+    width: 100px;
+
+    margin: 15px 0px 15px 0px;
+
+    padding: 10px;
+
+    border: 2px solid black;
+    border-radius: 8px;
+}
+
+.visit-account-button:hover {
+    background-color: rgba(9, 9, 9, 0.8);
+    cursor: pointer;
+    color: white;
+}
+
+@media (max-width: 992px) {
+    .users-list-item {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .users-list-item {
+        width: 100%;
+    }
+
+    .users-list-item-container {
+        flex-direction: column;
+
+        height: 550px;
+    }
+
+    .user-item-photo {
+        width: 350px;
+        height: 100%;
+
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .user-item-photo {
+        width: 240px;
+        height: 300px;
+
+        margin-top: 20px;
+    }
+
+    .user-item-photo-container {
+        height: 100%;
+    }
+}

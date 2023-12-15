@@ -37,16 +37,20 @@
     height: 50px;
     width: 300px;
 
-    border:  2px solid rgb(118, 118, 118);
-    border-radius: 20px;
+    border:  1px solid rgb(156, 156, 156);
+    border-radius: 10px;
 
-    background-color: bisque;
-    color: rgb(68, 68, 68);
+    background-color: rgb(67, 67, 67);
+    color: white;
 
     font-size: 15px;
     font-weight: bold;
 
     cursor: pointer;
+}
+
+.authForm button:hover {
+    background-color: rgb(56, 56, 56);
 }
 
 .authForm button:disabled {
@@ -79,5 +83,19 @@
 @media (max-width: 576px) {
     .authForm {
         max-width: 350px;
+    }
+}
+
+@media (max-width: 300px) {
+    .authForm {
+        max-width: 250px;
+    }
+
+    .authForm button {
+        width: 200px;
+    }
+
+    .sign-item {
+        margin: 10px;
     }
 }

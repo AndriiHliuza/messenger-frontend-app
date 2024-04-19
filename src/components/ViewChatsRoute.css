@@ -1,0 +1,21 @@
+.view-chats-page {
+    background-color: bisque;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    flex-grow: 1;
+    width: 100%;
+}
+
+.chat-list-items {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+    flex-grow: 1;
+    width: 100%;
+}

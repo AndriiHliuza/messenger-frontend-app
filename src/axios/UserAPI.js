@@ -146,3 +146,12 @@ export const getProfileImageMetadata = async (uniqueName) => {
             return null;
         })
 }
+
+export const findUsersByUniqueNameStartingWith = async (uniqueNamePrefix) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "/uniqueNames?prefix=" + uniqueNamePrefix)
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
+}

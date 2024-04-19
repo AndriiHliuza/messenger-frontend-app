@@ -66,3 +66,9 @@ export const modificationSchema = yup.object().shape({
             message: "Password must include uppercase, lowercase letters, a number and a special character. Allowed special characters: !@#$%.,;"
         })
 });
+
+export const chatCreationSchema = yup.object().shape({
+    chatName: yup
+        .string()
+        .min(4)
+});

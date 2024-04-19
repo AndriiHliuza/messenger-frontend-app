@@ -1,12 +1,12 @@
 import { React, useState, useEffect } from "react";
 import { Outlet } from 'react-router-dom';
-import { useAuth } from "../../utils/AuthProvider";
 import AlreadyLoggedInPage from "../pages/alert-pages/AlreadyLoggedInPage";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
+import { useAppContext } from "../../App";
 
 export default function NotAuthenticatedUserRoute() {
 
-    const { user } = useAuth();
+    const { user } = useAppContext();
 
     const [isLoading, setLoading] = useState(true);
 

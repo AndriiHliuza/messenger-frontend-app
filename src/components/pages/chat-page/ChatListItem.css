@@ -1,0 +1,152 @@
+.chat-list-item-container {
+    background-color: rgb(110, 110, 110);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 95%;
+    height: 180px;
+
+    margin: 20px 0px 20px 0px;
+    
+    border-radius: 10px;
+}
+
+.chat-list-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 95%;
+    height: 80%;
+}
+
+.chat-list-item-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 300px;
+    height: 100%;
+    margin: 0px 20px 0px 20px;
+
+    border-right: 1px solid black;
+}
+
+.chat-list-item-name {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.chat-list-item-delete-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 90%;
+    height: 35px;
+}
+
+.chat-list-item-delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 70%;
+
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.chat-list-item-delete-button:hover {
+    background-color: rgba(9, 9, 9, 0.5);
+    color: white;
+    cursor: pointer;
+}
+
+.chat-list-item-last-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-grow: 1;
+    height: 100%;
+}
+
+.chat-list-item-last-message:hover {
+    background-color: rgba(9, 9, 9, 0.5);
+    color: white;
+    cursor: pointer;
+
+    border-radius: 10px;
+}
+
+.chat-list-item-last-message-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    flex-grow: 1;
+    height: 80%;
+
+    margin: 0px 20px 0px 20px;
+}
+
+.chat-list-item-last-message-sender-uniqueName {
+    max-width: 700px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.chat-list-item-last-message-content {
+    max-width: 700px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@media (max-width: 1200px) {
+    .chat-list-item-last-message-sender-uniqueName, .chat-list-item-last-message-content {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .chat-list-item-last-message-sender-uniqueName, .chat-list-item-last-message-content {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    
+    .chat-list-item-container {
+        height: 200px;
+    }
+
+    .chat-list-item {
+        flex-direction: column;
+    }
+
+    .chat-list-item-info {
+        width: 90%;
+        border-right: 0px solid black;
+        border-bottom: 1px solid black;
+    }
+
+    .chat-list-item-last-message {
+        width: 95%;
+    }
+}
+
+@media (max-width: 576px) {
+    .chat-list-item-last-message-sender-uniqueName, .chat-list-item-last-message-content {
+        max-width: 200px;
+    }
+}

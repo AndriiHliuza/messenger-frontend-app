@@ -13,14 +13,15 @@ import {
 } from "../../../../config";
 import { register } from "../../../../axios/AuthAPI";
 import { getUserByUsernameAndRole } from "../../../../axios/UserAPI";
-import { useAuth } from "../../../../utils/AuthProvider"
 import { jwtDecode } from "jwt-decode";
 import { Role } from "../../../../utils/Role";
+import { useAppContext } from "../../../../App";
+import { generateKeyPair } from "../../../../utils/E2EEProvider";
 
 export default function RegistrationPage() {
 
     const navigate = useNavigate();
-    const { setUser } = useAuth();
+    const { setUser } = useAppContext();
 
     const onSubmit = async (values, actions) => {
         const data = await register(
@@ -45,6 +46,7 @@ export default function RegistrationPage() {
                         authenticated: true,
                         role: role 
                     });
+                    generateKeyPair();
                     switch (role) {
                         case Role.USER:
                             navigate(USER_ROUTE + "/" + uniqueName);

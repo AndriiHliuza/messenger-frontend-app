@@ -11,13 +11,13 @@ import {
     ADMIN_ROUTE,
     ROOT_ROUTE
 } from "../../config";
-import { useAuth } from "../../utils/AuthProvider";
 import { logout } from "../../axios/AuthAPI";
 import { Role } from "../../utils/Role";
+import { useAppContext } from "../../App";
 
 export default function NavBar() {
 
-    const { user, setUser } = useAuth();
+    const { user, setUser } = useAppContext();
     const navigate = useNavigate();
     const location = useLocation();
 

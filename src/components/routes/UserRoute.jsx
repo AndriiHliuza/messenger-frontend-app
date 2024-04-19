@@ -5,8 +5,8 @@ import { Role } from "../../utils/Role";
 import NotFoundPage from "../pages/alert-pages/NotFoundPage";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
 
-export const ProfileContext = createContext();
-export const useProfile = () => useContext(ProfileContext);
+export const UserContext = createContext();
+export const useUserContext = () => useContext(UserContext);
 
 export default function UserRoute() {
 
@@ -34,7 +34,6 @@ export default function UserRoute() {
       let profileImageResponse = null;
       if (params.uniqueName) {
         profileDataResponse = await getUserByUniqueNameAndRole(params.uniqueName, Role.USER);
-
       }
       if (profileDataResponse !== null && profileDataResponse?.data?.uniqueName === params.uniqueName) {
         setUserExists(true);
@@ -88,9 +87,9 @@ export default function UserRoute() {
       ? <LoadingPage />
       : userExists
         ? (
-          <ProfileContext.Provider value={{ userProfile, setUserProfile }}>
+          <UserContext.Provider value={{ userProfile, setUserProfile }}>
             <Outlet />
-          </ProfileContext.Provider>
+          </UserContext.Provider>
         )
         : <NotFoundPage />
   );

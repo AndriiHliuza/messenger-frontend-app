@@ -25,7 +25,6 @@ export default function ViewUsersRoute() {
 
     let users = data?.pages?.reduce((prevPage, currentPage) => [...prevPage, ...currentPage.data], []);
 
-
     const observer = useRef(null);
     const lastUserRef = useCallback(user => {
         if (!user) return;
@@ -46,10 +45,11 @@ export default function ViewUsersRoute() {
     }, [isFetchingNextPage, fetchNextPage])
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 300);
-    }, []);
+        // setTimeout(() => {
+        //     setLoading(false);
+        // }, 300);
+        setLoading(false);
+    }, [users]);
 
     if (status === 'error') return <NotFoundPage />
 

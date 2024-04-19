@@ -2,14 +2,17 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar"
 import RoutesProcessor from './components/routes/RoutesProcessor';
-import { AuthContext, isUserAuthenticated } from './utils/AuthProvider';
-import { useEffect, useState } from "react";
+import { isUserAuthenticated } from './utils/AuthProvider';
+import { useEffect, useState, createContext, useContext } from "react";
 import { jwtDecode } from "jwt-decode";
 import { Role } from "./utils/Role";
 import { getUserByUsernameAndRole } from "./axios/UserAPI";
 import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
+
+export const AppContext = createContext();
+export const useAppContext = () => useContext(AppContext);
 
 function App() {
 
@@ -48,14 +51,14 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AppContext.Provider value={{ user, setUser }}>
         <BrowserRouter>
           <div className="App">
             <NavBar />
             <RoutesProcessor />
           </div>
         </BrowserRouter>
-      </AuthContext.Provider>
+      </AppContext.Provider>
     </QueryClientProvider>
   );
 }

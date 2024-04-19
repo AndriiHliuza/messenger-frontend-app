@@ -75,6 +75,13 @@
     font-weight: bold;
 }
 
+.user-item-info-value {
+    max-width: 250px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .visit-account-button {
     display: flex;
     flex-direction: column;
@@ -135,5 +142,9 @@
 
     .user-item-photo-container {
         height: 100%;
+    }
+
+    .user-item-info-value {
+        max-width: 150px;
     }
 }

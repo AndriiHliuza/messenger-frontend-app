@@ -18,6 +18,7 @@ import {
     USER_ROUTE,
     ADMIN_ROUTE,
     ROOT_ROUTE,
+    CHATS_ROUTE,
     NOT_FOUND_ROUTE
 } from "../../config"
 import NotFoundPage from "../pages/alert-pages/NotFoundPage";
@@ -29,6 +30,8 @@ import RootRoute from "./RootRoute";
 import ViewUsersRoute from "./ViewUsersRoute";
 import ChatPage from "../pages/chat-page/ChatPage";
 import ProfileModificationPage from "../pages/profile-pages/profile-modification-page/ProfileModificationPage";
+import ViewChatsRoute from "./ViewChatsRoute";
+import ChatCreationPage from "../pages/chat-page/ChatCreationPage";
 
 export default function RoutesProcessor() {
 
@@ -52,10 +55,17 @@ export default function RoutesProcessor() {
                         <Route index element={<ViewUsersRoute />} />
                         <Route path=":uniqueName" element={<UserProfilePage />} />
                         <Route path=":uniqueName/account" element={<ProfileModificationPage />} />
-                        <Route path=":uniqueName/chats" element={<h1>My chats</h1>} />
+                        <Route path=":uniqueName/chats" >
+                            <Route index element={<ViewChatsRoute />} />
+                            <Route path="creation-panel" element={<ChatCreationPage />}/>
+                        </Route>
                         <Route path=":uniqueName/subscribers" element={<h1>Hello subscribers</h1>} />
                         <Route path=":uniqueName/subscriptions" element={<h1>Hello subscribtions</h1>} />
                     </Route>
+                </Route>
+
+                <Route path={CHATS_ROUTE}>
+                    <Route path=":chatId" element={<ChatPage />} />
                 </Route>
 
                 <Route element={<RoleAdminRoute />} >

@@ -1,7 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../../utils/AuthProvider";
-import { useProfile } from "../../../routes/UserRoute";
+import { useUserContext } from "../../../routes/UserRoute";
 import "../ProfileModificationPage.css";
 import { Form, Formik } from "formik";
 import FormItem from "../../auth-pages/FormItem";
@@ -13,11 +12,12 @@ import ImageItem from "../ImageItem";
 import {
     USER_ROUTE
 } from "../../../../config";
+import { useAppContext } from "../../../../App";
 
 export default function ProfileModificationPage() {
 
-    const { user, setUser } = useAuth();
-    const { userProfile, setUserProfile } = useProfile();
+    const { user, setUser } = useAppContext();
+    const { userProfile, setUserProfile } = useUserContext();
     const [isLoading, setLoading] = useState(true);
     const [isModificationFailed, setModificationFailed] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
@@ -25,9 +25,10 @@ export default function ProfileModificationPage() {
 
     useEffect(() => {
         setProfileImage(userProfile.profileImage);
-        setTimeout(() => {
-            setLoading(false);
-        }, 300);
+        setLoading(false);
+        // setTimeout(() => {
+        //     setLoading(false);
+        // }, 300);
     }, []);
 
     const onSubmit = async (values, actions) => {

@@ -1,12 +1,12 @@
 import { React } from "react";
 import "./ProfileInfo.css";
 import ProfileInfoItem from "./ProfileInfoItem";
-import { useProfile } from "../../routes/UserRoute";
+import { useUserContext } from "../../routes/UserRoute";
 import ProfileImageItem from "./ProfileImageItem";
 
 export default function UserInfo(props) {
 
-    const { userProfile } = useProfile();
+    const { userProfile } = useUserContext();
 
     return (
         <div className="profile-info">

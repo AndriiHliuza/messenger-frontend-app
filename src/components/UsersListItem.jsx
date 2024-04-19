@@ -60,13 +60,13 @@ const UsersListItem = forwardRef((props, ref) => {
                 <div className="user-item-info">
                     <div className="user-item-info-container">
                         <div className="user-item-info-headline">Username:</div>
-                        <div>{user.uniqueName}</div>
+                        <div className="user-item-info-value">{user.uniqueName}</div>
                         <div className="user-item-info-headline">Firstname:</div>
-                        <div>{user.firstname}</div>
+                        <div className="user-item-info-value">{user.firstname}</div>
                         <div className="user-item-info-headline">Lastname:</div>
-                        <div>{user.lastname}</div>
+                        <div className="user-item-info-value">{user.lastname}</div>
                         <div className="user-item-info-headline">Birthday:</div>
-                        <div>{user.birthday ? user.birthday : "-"}</div>
+                        <div className="user-item-info-value">{user.birthday ? user.birthday : "-"}</div>
                         <div className="visit-account-button" onClick={onVisitAccountClick}>Visit account</div>
                     </div>
                 </div>

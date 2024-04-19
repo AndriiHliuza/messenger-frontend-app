@@ -61,5 +61,8 @@ export const logout = async () => {
     ).then((response) => {
         localStorage.removeItem("access-token");
         localStorage.removeItem("refresh-token");
+        localStorage.removeItem("user-private-key");
+        localStorage.removeItem("user-public-key");
+        localStorage.removeItem("server-public-key");
     });
 }

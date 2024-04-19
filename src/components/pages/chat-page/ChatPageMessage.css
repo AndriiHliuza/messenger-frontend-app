@@ -1,0 +1,129 @@
+.chat-page-message-container {
+    background-color: rgb(110, 110, 110);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    margin: 10px 0px 10px 0px;
+    
+    border-radius: 10px;
+}
+
+.current-user-message, .other-user-message {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+
+    width: 100%;
+
+    margin: 10px;
+}
+
+.current-user-message {
+    padding-right: 10px;
+    border-right: 2px solid black;
+}
+
+.other-user-message {
+    padding-left: 10px;
+    border-left: 2px solid black;
+}
+
+.message-sender-username {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.message-sender-username:hover {
+    cursor: pointer;
+}
+
+.message-sender-username-value {
+    max-width: 400px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.message-content {
+    word-wrap: break-word;
+    width: 850px;
+    white-space: pre-line;
+}
+
+.message-actions-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 40px;
+}
+
+.message-actions-buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 90%;
+    height: 60%;
+
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.message-update-button, .message-delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.message-update-button {
+    border-right: 2px solid black;
+}
+
+.message-update-button:hover, .message-delete-button:hover {   
+    color: white;
+    cursor: pointer;
+    background-color: rgba(9, 9, 9, 0.5);
+}
+
+.hidden-message-actions-buttons-container {
+    display: none;
+}
+
+@media (max-width: 1200px) {
+    .message-content {
+        width: 650px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .message-content {
+        width: 450px;
+    }
+}
+
+@media (max-width: 576px) {
+    .message-sender-username-value {
+        width: 200px;
+    }
+
+    .message-content {
+        width: 300px;
+    }
+}
+
+@media (max-width: 400px) {
+    .message-content {
+        width: 200px;
+    }
+}

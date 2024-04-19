@@ -80,6 +80,13 @@
     font-weight: bold;
 }
 
+.item-value {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 @media (max-width: 768px) {
 
     .profile-info {

@@ -1,0 +1,104 @@
+.chat-page-member-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+}
+
+.chat-page-member {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    
+    width: 100%;
+
+    margin: 10px;
+    padding: 10px;
+
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.chat-page-member:hover {
+    background-color: rgba(133, 133, 133, 0.5);
+    border-bottom: 3px solid black;
+    cursor: pointer;
+}
+
+.current-user-within-chat-members {
+    background-color: rgba(57, 57, 57, 0.5);
+}
+
+.chat-page-member-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    
+    width: 100%;
+}
+
+.chat-page-member-info-username {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.chat-page-member-actions-buttons-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 60px;
+
+    margin-top: 10px;
+}
+
+.hidden-chat-page-member-actions-buttons-container {
+    display: none;
+}
+
+.chat-page-member-actions-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 90%;
+    height: 90%;
+
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.chat-page-member-make-admin-button, .chat-page-member-delete-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+}
+
+.chat-page-member-make-admin-button {
+    border-bottom: 1px solid black;
+
+    border-radius: 5px 5px 0px 0px;
+}
+
+.chat-page-member-delete-button {
+    border-radius: 0px 0px 5px 5px;
+}
+
+.chat-page-member-make-admin-button:hover {
+    background-color: rgba(46, 46, 46, 0.5);
+}
+
+.chat-page-member-delete-button:hover {
+    color: white;
+    background-color: rgb(100, 0, 0);
+}

@@ -1,0 +1,132 @@
+.chat-page-info-container, .show-chat-page-info-container {
+    background-color: rgb(110, 110, 110);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 300px;
+    height: 100%;
+
+    border-left: 2px solid black;
+}
+
+.chat-page-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 95%;
+}
+
+.chat-page-info-name-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 80px;
+    
+    border-bottom: 2px solid black;
+}
+
+.chat-page-info-name {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 80%;
+    width: 90%;
+}
+
+.chat-page-info-name-value {
+    max-width: 200px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.chat-members {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    height: 100%;
+    width: 100%;
+
+    overflow-y: auto;
+}
+
+.add-users-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: flex-start;
+
+    height: 100%;
+    width: 100%;
+
+    overflow-y: auto;
+}
+
+.chat-page-operations-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 200px;
+
+    overflow-y: auto;
+}
+
+.chat-page-button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 65px;
+}
+
+.chat-page-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 150px;
+    height: 60%;
+
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.chat-page-button:hover {
+    background-color: rgba(9, 9, 9, 0.5);
+    color: white;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+
+    .chat-page-info-container {
+        display: none;
+    }
+
+    .show-chat-page-info-container {
+        background-color: rgb(110, 110, 110);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        width: 100%;
+        height: 100%;
+    
+        border-left: 0px solid black;
+    }
+}

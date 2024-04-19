@@ -1,8 +1,4 @@
-import { createContext, useContext } from 'react';
 import { validateToken, getNewAccessToken } from '../axios/TokenAPI';
-
-export const AuthContext = createContext();
-export const useAuth = () => useContext(AuthContext);
 
 export async function isUserAuthenticated() {
     
@@ -38,4 +34,7 @@ export async function isUserAuthenticated() {
 export function removeJwtsFromLocalStorage() {
     localStorage.removeItem("access-token");
     localStorage.removeItem("refresh-token");
+    localStorage.removeItem("user-private-key");
+    localStorage.removeItem("user-public-key");
+    localStorage.removeItem("server-public-key");
 }

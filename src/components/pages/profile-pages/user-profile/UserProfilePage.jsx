@@ -4,13 +4,13 @@ import ProfileInfo from "../ProfileInfo";
 import LoadingPage from "../../alert-pages/LoadingPage";
 import ProfileActionsArea from "./ProfileActionsArea";
 import { isSubscribed } from "../../../../axios/UserAPI";
-import { useAuth } from "../../../../utils/AuthProvider";
-import { useProfile } from "../../../routes/UserRoute";
+import { useUserContext } from "../../../routes/UserRoute";
+import { useAppContext } from "../../../../App";
 
 export default function UserProfilePage() {
 
-  const { user } = useAuth();
-  const { userProfile } = useProfile();
+  const { user } = useAppContext();
+  const { userProfile } = useUserContext();
   const [follow, setFollow] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
@@ -32,9 +32,10 @@ export default function UserProfilePage() {
     if (userUniqueName !== subscriptionUniqueName && userUniqueName !== "" && subscriptionUniqueName !== "") {
       checkSubscription();
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 300);
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 300);
+    setLoading(false);
   }, [userProfile, user]);
 
   return (

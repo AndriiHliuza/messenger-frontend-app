@@ -2,14 +2,19 @@ import { React } from "react";
 import { useNavigate } from "react-router-dom";
 import "../ProfilePage.css";
 import { useUserContext } from "../../../routes/UserRoute";
-import { subscribe, unsubscribe } from "../../../../axios/UserAPI";
-import {  
+import { getUserByUsernameAndRole, subscribe, unsubscribe } from "../../../../axios/UserAPI";
+import {
     USER_ROUTE,
+    CHATS_ROUTE,
     API_WEB_SOCKET_MESSAGING_URL
 } from "../../../../config";
 import { useAppContext } from "../../../../App";
 import { useAuthContext } from "../../../routes/AuthenticationBasedRoute";
 import { NotificationType } from "../../../../utils/NotificationType";
+import { getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername, createChat } from "../../../../axios/ChatAPI";
+import { Role } from "../../../../utils/Role";
+import { ChatType } from "../../../../utils/ChatType";
+import { ChatMemberRole } from "../../../../utils/ChatMemberRole";
 
 export default function ProfileActionsArea(props) {
 
@@ -70,16 +75,91 @@ export default function ProfileActionsArea(props) {
         navigate(userProfileRoute + "/" + uniqueName + "/account");
     }
 
-    const openChat = () => {
-        // let userProfileRoute = USER_ROUTE;
-        // const uniqueName = userProfile.uniqueName;
-        // navigate(userProfileRoute + "/" + uniqueName + "/chats/" + "chatid");
+    const deleteAccount = () => {
+
+    }
+
+    // const onSubmit = async (values, actions) => {
+    //     let chatName = values.chatName;
+    //     if (chosenUsers.length !== 0 && values.chatName) {
+    //         let usersToAddToChat = [];
+    //         for (let i = 0; i < chosenUsers.length; i++) {
+    //             usersToAddToChat[i] = {
+    //                 chatId: null,
+    //                 user: chosenUsers[i],
+    //                 role: null
+    //             }
+    //         }
+    //         const response = await createChat(
+    //             chatName,
+    //             ChatType.GROUP_CHAT,
+    //             usersToAddToChat
+    //         );
+    //         let chat = response?.data;
+    //         if (chat) {
+    //             actions.resetForm();
+    //             window.alert("Chat " + chat.name + " was successfully created");
+    //             navigate(USER_ROUTE + "/" + user.uniqueName + "/chats");
+    //         } else {
+    //             window.alert("Something went wrong. Chat wasn't created. Try again!")
+    //             actions.resetForm();
+    //         }
+    //     } else {
+    //         window.alert("Chat should have name and users");
+    //     } 
+    // }
+
+    const openChat = async () => {
+        let isErrorOccured = false;
+        let openedUserProfileUsername = userProfile.username;
+        let privateChatresponse = await getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername(openedUserProfileUsername);
+        let privateChat = privateChatresponse?.data;
+        let chatId = null;
+        if (privateChat) {
+            chatId = privateChat.id;
+        } else {
+            let usersToAddToChat = [];
+            let currentUserResponse = await getUserByUsernameAndRole(user.username, Role.USER);
+            let currentUser = currentUserResponse?.data;
+            let userProfileUserResponse = await getUserByUsernameAndRole(userProfile.username, Role.USER);
+            let userProfileUser = userProfileUserResponse?.data;
+            if (currentUser && userProfileUser) {
+                usersToAddToChat.push({
+                    chatId: null,
+                    user: userProfileUser,
+                    role: ChatMemberRole.ADMIN
+                });
+
+                let chatCreationResponse = await createChat(
+                    "PRIVATE CHAT",
+                    ChatType.PRIVATE_CHAT,
+                    usersToAddToChat
+                )
+
+                let chatCreationResponseData = chatCreationResponse?.data;
+                if (chatCreationResponseData) {
+                    chatId = chatCreationResponseData.id;
+                } else {
+                    isErrorOccured = true;
+                }
+            } else {
+                isErrorOccured = true;
+            }
+        }
+
+        if (isErrorOccured) {
+            window.alert("Something went wrong. Can't open chat with " + userProfile.uniqueName + ". Try again later!");
+        } else {
+            navigate(CHATS_ROUTE + "/" + chatId);
+        }
+
     }
 
     return (
         <div className="profile-actions-area">
             <div className="profile-actions-panel">
                 <div className={user.username === userProfile.username ? "profile-button modify-account-button" : "hide-button"} onClick={modifyAccount}>Modify Account</div>
+                <div className={user.username === userProfile.username ? "profile-button modify-account-button delete-account-button" : "hide-button"} onClick={deleteAccount}>Delete Account</div>
                 <div className={user.username !== userProfile.username ? "profile-button follow-button" : "hide-button"} onClick={onFollowClick}>{follow ? "Unsubscribe" : "Subscribe"}</div>
                 <div className={user.username !== userProfile.username ? "profile-button message-button" : "hide-button"} onClick={openChat}>Write message</div>
             </div>

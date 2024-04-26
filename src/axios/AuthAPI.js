@@ -28,7 +28,7 @@ export const register = async (
             localStorage.setItem("access-token", response.data.accessToken);
             localStorage.setItem("refresh-token", response.data.refreshToken);
         }
-        return response.data;
+        return response?.data;
     }).catch((error) => {
         return null;
     });

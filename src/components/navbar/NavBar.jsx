@@ -40,7 +40,7 @@ export default function NavBar() {
             case Role.ROOT:
                 userProfileRoute = ROOT_ROUTE;
                 break;
-            default :
+            default:
                 userProfileRoute = USER_ROUTE;
         }
 
@@ -75,7 +75,7 @@ export default function NavBar() {
                 uniqueName: "",
                 authenticated: false,
                 role: Role.VISITOR
-            }); 
+            });
             navigate(HOME_ROUTE);
         }
     }

@@ -10,6 +10,8 @@ import "../ViewUsersRoute.css"
 export default function ViewUsersRoute() {
 
     const [isLoading, setLoading] = useState(true);
+    const [isInitialMount, setIsInitialMount] = useState(true);
+
     const {
         fetchNextPage,
         isFetchingNextPage,
@@ -45,6 +47,10 @@ export default function ViewUsersRoute() {
     }, [isFetchingNextPage, fetchNextPage])
 
     useEffect(() => {
+        if (isInitialMount) {
+            setIsInitialMount(false);
+            return;
+        }
         // setTimeout(() => {
         //     setLoading(false);
         // }, 300);
@@ -59,7 +65,7 @@ export default function ViewUsersRoute() {
             : (
                 <>
                     {
-                        users
+                        users && users.length > 0
                             ? (
                                 <div className="view-users-page">
                                     {users.map((user) => {

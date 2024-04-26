@@ -13,6 +13,7 @@ import Search from "../../search/Search";
 import ChatCreationUserItem from "./ChatCreationUserItem";
 import { createChat } from "../../../axios/ChatAPI";
 import { USER_ROUTE } from "../../../config";
+import { ChatMemberRole } from "../../../utils/ChatMemberRole";
 
 export default function ChatCreationPage() {
 
@@ -37,7 +38,7 @@ export default function ChatCreationPage() {
                 usersToAddToChat[i] = {
                     chatId: null,
                     user: chosenUsers[i],
-                    role: null
+                    role: ChatMemberRole.MEMBER
                 }
             }
             const response = await createChat(
@@ -51,7 +52,7 @@ export default function ChatCreationPage() {
                 window.alert("Chat " + chat.name + " was successfully created");
                 navigate(USER_ROUTE + "/" + user.uniqueName + "/chats");
             } else {
-                window.alert("Something went wrong. Chat wasn't created. Try again!")
+                window.alert("Something went wrong. Chat wasn't created. Try again!");
                 actions.resetForm();
             }
         } else {

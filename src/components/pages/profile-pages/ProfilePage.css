@@ -7,6 +7,9 @@
     justify-content: flex-start;
 
     flex-grow: 1;
+
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .profile-actions-area {
@@ -67,6 +70,16 @@
 
 .modify-account-button, .follow-button {
     border-radius: 5px 5px 0px 0px;
+}
+
+.delete-account-button {
+    border-radius: 0px;
+}
+
+.delete-account-button:hover {
+    background-color: rgb(90, 24, 24);
+    color: white;
+    cursor: pointer;
 }
 
 .subscribers-button {

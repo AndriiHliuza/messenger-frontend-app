@@ -2,11 +2,13 @@
     flex-grow: 1;
 
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 
     background-color: bisque;
     color: rgb(77, 13, 13);
+
+    overflow-y: auto;
 }
 
 .alert-container {
@@ -14,7 +16,9 @@
     flex-direction: column;
 
     height: 80%;
+    min-height: 300px;
 
+    margin: 40px;
     padding: 20px;
 
     display: flex;
@@ -30,4 +34,19 @@
 .alert-explanation-text {
     font-size: 20px;
     margin: 5px;
+}
+
+.loading-page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    margin-top: 100px;
+}
+
+.successful-registration-element {
+    background-color: rgba(0, 75, 0, 0.7);
+    color: white;
+
+    border: 2px solid black;
 }

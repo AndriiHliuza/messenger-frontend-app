@@ -49,6 +49,8 @@
 
     width: 90%;
     height: 35px;
+
+    margin-top: 10px;
 }
 
 .chat-list-item-delete-button {
@@ -105,6 +107,32 @@
     overflow: hidden;
 }
 
+.new-chat-message-notification-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 25px;
+    width: 150px;
+
+    margin-top: 10px;
+}
+
+.new-chat-message-notification {
+    background-color: rgb(0, 92, 0);
+    color: white;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+
+    border-radius: 50px;
+}
+
 .chat-list-item-last-message-content {
     max-width: 700px;
     text-overflow: ellipsis;
@@ -127,7 +155,7 @@
 @media (max-width: 768px) {
     
     .chat-list-item-container {
-        height: 200px;
+        height: 250px;
     }
 
     .chat-list-item {
@@ -142,6 +170,18 @@
 
     .chat-list-item-last-message {
         width: 95%;
+
+        margin-top: 5px;
+    }
+
+    .chat-list-item-delete-button-container {    
+        width: 100%;
+
+        margin: 5px 0px 5px 0px;
+    }
+
+    .new-chat-message-notification-container {
+        width: 100%;
     }
 }
 

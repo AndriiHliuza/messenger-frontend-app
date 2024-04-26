@@ -19,6 +19,7 @@ export const API_USER_ROUTE = "/api/user";
 export const API_ADMIN_ROUTE = "/api/admin";
 export const API_ROOT_ROUTE = "/api/root";
 export const API_CHATS_ROUTE = "/api/chats";
+export const API_PRIVATE_CHATS_ROUTE = "/api/private-chats";
 
 // unathenticated user routes
 export const HOME_ROUTE = "/";

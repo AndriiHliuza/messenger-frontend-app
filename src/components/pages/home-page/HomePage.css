@@ -8,5 +8,19 @@
     flex-grow: 1;
     background-color: bisque;
     color: rgb(78, 78, 78);
-    text-align: center
+    text-align: center;
+
+    overflow-y: auto;
+}
+
+.content-message {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 100%;
+
+    margin: 20px 0px 20px 0px;
 }

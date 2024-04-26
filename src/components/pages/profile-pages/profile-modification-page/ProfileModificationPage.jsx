@@ -4,6 +4,7 @@ import { useUserContext } from "../../../routes/UserRoute";
 import "../ProfileModificationPage.css";
 import { Form, Formik } from "formik";
 import FormItem from "../../auth-pages/FormItem";
+import "../../auth-pages/FormItem.css";
 import { modificationSchema } from "../../../../utils/validation-schemas/ValidationSchemaConfig";
 import LoadingPage from "../../alert-pages/LoadingPage";
 import NotFoundPage from "../../alert-pages/NotFoundPage";
@@ -13,6 +14,8 @@ import {
     USER_ROUTE
 } from "../../../../config";
 import { useAppContext } from "../../../../App";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ProfileModificationPage() {
 
@@ -21,15 +24,38 @@ export default function ProfileModificationPage() {
     const [isLoading, setLoading] = useState(true);
     const [isModificationFailed, setModificationFailed] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
+    const [userProfileBirthday, setUserProfileBirthday] = useState("");
+    const [isBirthdayValid, setBirthdayValid] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         setProfileImage(userProfile.profileImage);
+        if (userProfile.birthday === null) {
+            setUserProfileBirthday("");
+        } else {
+            setUserProfileBirthday(userProfile.birthday);
+        }
         setLoading(false);
         // setTimeout(() => {
         //     setLoading(false);
-        // }, 300);
+        // }, 300);     
     }, []);
+
+    const setBirthday = (e) => {
+        let birthdayValue = e.target.value;
+        if (birthdayValue !== null && birthdayValue !== "") {
+            let birthdayFromInput = new Date(birthdayValue);
+            let currentDate = new Date();
+            if (birthdayFromInput > currentDate) {
+                setBirthdayValid(false);
+            } else {
+                setBirthdayValid(true);
+            }
+        } else {
+            setBirthdayValid(true);
+        }
+        setUserProfileBirthday(birthdayValue);
+    }
 
     const onSubmit = async (values, actions) => {
 
@@ -39,7 +65,7 @@ export default function ProfileModificationPage() {
         formData.append("uniqueName", values.uniqueName);
         formData.append("firstname", values.firstname);
         formData.append("lastname", values.lastname);
-        formData.append("birthday", values.birthday);
+        formData.append("birthday", userProfileBirthday);
         formData.append("userImage", profileImage)
         const userDataResponse = await modify(
             user.username,
@@ -71,7 +97,7 @@ export default function ProfileModificationPage() {
                     const imageBlob = new Blob([imageBytes], { type: imageType });
                     imageToSet = Object.assign(
                         imageBlob,
-                        { 
+                        {
                             preview: URL.createObjectURL(imageBlob),
                             name: imageName,
                             username: imageUsername
@@ -111,7 +137,7 @@ export default function ProfileModificationPage() {
                             password: "",
                             firstname: userProfile.firstname,
                             lastname: userProfile.lastname,
-                            birthday: userProfile.birthday,
+                            // birthday: userProfile.birthday,
                             currentPassword: ""
                         }}
                         validationSchema={modificationSchema}
@@ -151,13 +177,27 @@ export default function ProfileModificationPage() {
                                             type="text"
                                             placeholder={userProfile.lastname}
                                         />
-                                        <FormItem
+                                        {/* <FormItem
                                             label="Birthday:"
                                             id="birthday"
                                             name="birthday"
                                             type="date"
                                             placeholder="20.12.2022"
-                                        />
+                                        /> */}
+                                        <div className="formItem">
+                                            <label htmlFor="birthday">Birthday:</label>
+                                            <input
+                                                id="birthday"
+                                                name="birthday"
+                                                type="date"
+                                                value={userProfileBirthday}
+                                                onChange={setBirthday}
+                                            />
+                                            <div className={!isBirthdayValid ? "display-item-error-validation-message" : "hide-item-error-validation-message"}>
+                                                <FontAwesomeIcon icon={faInfoCircle} />
+                                                <span className="item-error-message">{`Date needs to be before ${new Date()}`}</span>
+                                            </div>
+                                        </div>
                                         <hr />
                                         <div className="modification-explanation-text">You need to provide your current password for this operation</div>
                                         <FormItem

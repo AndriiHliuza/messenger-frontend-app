@@ -56,9 +56,9 @@ export const modificationSchema = yup.object().shape({
         .string(),
     lastname: yup
         .string(),
-    birthday: yup
-        .date()
-        .max(new Date(), ({ max }) => `Date needs to be before ${new Date()}`),
+    // birthday: yup
+    //     .date()
+    //     .max(new Date(), ({ max }) => `Date needs to be before ${new Date()}`),
     currentPassword: yup
         .string()
         .min(8)

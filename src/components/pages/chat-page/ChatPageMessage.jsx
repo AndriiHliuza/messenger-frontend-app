@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import "./ChatPageMessage.css";
 import { useAppContext } from '../../../App';
 import { USER_ROUTE } from '../../../config';
-import { deleteMessageFromChat } from '../../../axios/MessageApi';
+import { deleteMessageFromChat, getMessageStatusForUser } from '../../../axios/MessageApi';
 import { getChatById } from '../../../axios/ChatAPI';
 import forge from "node-forge";
 
 export default function ChatPageMessage(props) {
 
     const navigate = useNavigate();
-    const { chat, setChat, message } = props;
+    const { chat, setChat, message, setUpdatedMessage, isMessageUpdating, setMessageUpdating, isAdmin } = props;
     const { user } = useAppContext();
     const [isMessageFromCurrentUser, setMessageFromCurrentUser] = useState(false);
     const [senderUniqueName, setSenderUniqueName] = useState("");
@@ -18,14 +18,25 @@ export default function ChatPageMessage(props) {
     const [messageSendDate, setMessageSendDate] = useState("");
     const [isMessageActionsButtonsShown, setMessageActionsButtonsShown] = useState(false);
     const [messageContent, setMessageContent] = useState("");
+    const [messageStatus, setMessageStatus] = useState(null);
 
-    const onMessageContextMenuClick = (e) => {
+    const onMessageContextMenuClick = async (e) => {
         e.preventDefault();
         let currentUserUsername = user?.username;
         let messageUserUsername = message?.sender?.username;
 
-        if (currentUserUsername === messageUserUsername) {
-            setMessageActionsButtonsShown(true)
+        if (currentUserUsername === messageUserUsername && !isMessageUpdating) {
+            let messageStatusResponse = await getMessageStatusForUser(chat.id, message.id, user.username)
+            let messageStatusResponseData = messageStatusResponse?.data;
+            if (messageStatusResponseData && messageStatusResponseData?.status) {
+                let status = messageStatusResponseData.status.split("_")[0]
+                setMessageStatus("Status: " + status);
+                setMessageActionsButtonsShown(true)
+            }
+        }
+
+        if (isAdmin) {
+            setMessageActionsButtonsShown(true);
         }
     }
 
@@ -34,7 +45,17 @@ export default function ChatPageMessage(props) {
     }
 
     const onUpdateMessageButtonClick = () => {
-        console.log("update message");
+        setMessageUpdating(true);
+        setMessageActionsButtonsShown(false);
+        setUpdatedMessage({
+            id: message?.id,
+            sender: message?.sender,
+            chatId: message?.chatId,
+            content: messageContent,
+            sendTime: message?.sendTime,
+            type: message?.type,
+            status: message?.status
+        });
     }
 
     const onDeleteMessageButtonClick = async () => {
@@ -90,7 +111,12 @@ export default function ChatPageMessage(props) {
             setMessageSendDate("Date: " + date);
         }
 
-    }, []);
+        if (message?.status && messageSenderUsername && currentUserUsername && messageSenderUsername === currentUserUsername) {
+            let status = message.status.split("_")[0]
+            setMessageStatus("Status: " + status);
+        }
+
+    }, [message]);
 
     return (
         <div className="chat-page-message-container">
@@ -105,7 +131,7 @@ export default function ChatPageMessage(props) {
                                 message?.sender?.username
                                     ? isMessageFromCurrentUser
                                         ? ""
-                                        : senderUniqueName
+                                        : "From: " + senderUniqueName
                                     : "Unknown user"
                             }
                         </div>
@@ -115,10 +141,20 @@ export default function ChatPageMessage(props) {
                 {messageSendDate || messageSendDate ? <hr /> : ""}
                 <div>{messageSendTime}</div>
                 <div>{messageSendDate}</div>
-                <div className={isMessageActionsButtonsShown ? "message-actions-buttons-container" : "hidden-message-actions-buttons-container"}>
-                    <div className="message-actions-buttons">
-                        <div className="message-update-button" onClick={onUpdateMessageButtonClick}>Update</div>
-                        <div className="message-delete-button" onClick={onDeleteMessageButtonClick}>Delete</div>
+                <div className={isMessageActionsButtonsShown ? "message-actions-buttons-and-status-container" : "hidden-message-actions-buttons-container"}>
+                    <div className="message-actions-buttons-and-status">
+                        <div className="message-status-container">{messageStatus}</div>
+                        <div className="message-actions-buttons">
+                            {
+                                isAdmin && (user?.username !== message?.sender?.username)
+                                    ? <div className="message-delete-button" onClick={onDeleteMessageButtonClick}>Delete</div>
+                                    : <>
+                                        <div className="message-update-button" onClick={onUpdateMessageButtonClick}>Update</div>
+                                        <div className="message-delete-button" onClick={onDeleteMessageButtonClick}>Delete</div>
+                                    </>
+                            }
+
+                        </div>
                     </div>
                 </div>
             </div>

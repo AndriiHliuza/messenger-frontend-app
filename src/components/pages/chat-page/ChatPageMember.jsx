@@ -4,19 +4,20 @@ import "./ChatPageMember.css";
 import { USER_ROUTE } from '../../../config';
 import { ChatMemberRole } from '../../../utils/ChatMemberRole';
 import { useAppContext } from '../../../App';
+import { updateChatMember, deleteChatMemberFromChat } from '../../../axios/ChatAPI';
 
 export default function ChatPageMember(props) {
 
     const navigate = useNavigate();
     const { user } = useAppContext();
-    const { chatMember, isCurrentUserAdmin } = props;
+    const { chatMember, isCurrentUserAdmin, chatId } = props;
 
     const [chatMemberInfo, setChatMemberInfo] = useState(null);
     const [isChatPageMemberActionsButtonsShown, setChatPageMemberActionsButtonsShown] = useState(false);
 
     useEffect(() => {
         setChatMemberInfo(chatMember?.user);
-    }, []);
+    }, [chatMember]);
 
     const onChatPageMemberClick = () => {
         let chatMemberUniqueName = chatMemberInfo?.uniqueName;
@@ -29,8 +30,9 @@ export default function ChatPageMember(props) {
         e.preventDefault();
         let currentUserUsername = user?.username;
         let chatMemberUsername = chatMember?.user?.username;
+        let chatMemberRole = chatMember?.role;
 
-        if (isCurrentUserAdmin && currentUserUsername !== chatMemberUsername) {
+        if (isCurrentUserAdmin && currentUserUsername !== chatMemberUsername && chatMemberRole != ChatMemberRole.ADMIN) {
             setChatPageMemberActionsButtonsShown(true);
         }
     }
@@ -39,12 +41,29 @@ export default function ChatPageMember(props) {
         setChatPageMemberActionsButtonsShown(false);
     }
 
-    const onSetAdminRoleToChatMemberButtonClick = () => {
-        console.log("make admin");
+    const onSetAdminRoleToChatMemberButtonClick = async () => {
+        let updatedChatMember = {
+            ...chatMember,
+            role: ChatMemberRole.ADMIN
+        }
+        let response = await updateChatMember(chatId, chatMemberInfo?.username, updatedChatMember);
+        let data = response?.data;
+        if (data && data?.role === ChatMemberRole.ADMIN) {
+            window.alert("You have changed " + chatMemberInfo?.uniqueName + "'s status to ADMIN");
+        } else {
+            window.alert("Something went wrong. Member role was not updated");
+        }
     }
 
-    const onDeleteChatMemberButtonClick = () => {
-        console.log("delte");
+    const onDeleteChatMemberButtonClick = async () => {
+        let response = await deleteChatMemberFromChat(chatId, chatMemberInfo?.username);
+        let data = response?.data;
+
+        if (data) {
+            window.alert("You have deleted " + chatMemberInfo?.uniqueName + " user from chat");
+        } else {
+            window.alert("Something went wrong. User " + chatMemberInfo?.uniqueName + " was not deleted from chat");
+        }
     }
 
     return (
@@ -54,17 +73,17 @@ export default function ChatPageMember(props) {
                 onMouseLeave={onMouseLeaveChatMember}
             >
                 <div className="chat-page-member-info" onClick={onChatPageMemberClick}>
-                    <div className="chat-page-member-info-username"><strong>Username:&ensp;</strong>{chatMemberInfo?.uniqueName}</div>
+                    <div className="chat-page-member-info-username"><strong>{chatMemberInfo?.uniqueName}</strong></div>
                     <div>
                         {
                             chatMember?.role === ChatMemberRole.ADMIN
                                 ?
                                 <>
-                                    <strong>Role:&ensp;</strong>ADMIN
+                                    <div className="chat-page-member-info-role"><strong>ADMIN</strong></div>
                                 </>
                                 : ""
-                        }</div>
-                    <div><strong>Status:&ensp;</strong>{chatMemberInfo?.status}</div>
+                        }
+                    </div>
                 </div>
                 <div className={isChatPageMemberActionsButtonsShown ? "chat-page-member-actions-buttons-container" : "hidden-chat-page-member-actions-buttons-container"}>
                     <div className="chat-page-member-actions-buttons">

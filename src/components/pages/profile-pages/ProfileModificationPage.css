@@ -2,10 +2,12 @@
     background-color: bisque;
 
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
 
     flex-grow: 1;
+
+    overflow-y: auto;
 }
 
 .profile-modification-form {

@@ -1,41 +1,93 @@
 import { React, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import "./ChatPageInfo.css";
 import "../../search/Search.css";
 import ChatPageMember from './ChatPageMember';
 import { useAppContext } from '../../../App';
 import { ChatMemberRole } from '../../../utils/ChatMemberRole';
 import { findUsersByUniqueNameStartingWith } from '../../../axios/UserAPI';
-import FilteredUserItem from '../../search/FilteredUserItem';
-
+import ChatFilteredUserItem from './ChatFilteredUserItem';
+import { updateChat, deleteChatById, deleteChatMemberFromChat } from '../../../axios/ChatAPI';
+import { USER_ROUTE } from '../../../config';
+import { ChatType } from '../../../utils/ChatType';
 
 export default function ChatPageInfo(props) {
 
+    const navigate = useNavigate();
     const { user } = useAppContext();
-    const { chat, isMemberTabOpened } = props;
+    const { chat, isMemberTabOpened, isAdmin, setAdmin } = props;
     const [chatMembers, setChatMembers] = useState([]);
-    const [isAdmin, setAdmin] = useState(false);
+    // const [isAdmin, setAdmin] = useState(false);
     const [isAddUserPanelOpened, setAddUsersPanelOpened] = useState(false);
-
     const [usersToShow, setUsersToShow] = useState([]);
     const [usersUniqueNamePrefix, setUsersUniqueNamePrefix] = useState("");
-    const [chosenUsers, setChosenUsers] = useState([]);
+    const [isChatNameModificationButtonShown, setChatModificationButtonShown] = useState(false);
+    const [chatNameIsChanging, setChatNameIsChanging] = useState(false);
+    const [updatedChatName, setUpdatedChatName] = useState("");
+
+
+    const onChatNameClick = (e) => {
+        e.preventDefault();
+        if (isAdmin) {
+            setChatModificationButtonShown(true);
+        }
+    }
+
+    const onMouseLeaveChatName = () => {
+        setChatModificationButtonShown(false);
+        setChatNameIsChanging(false);
+        setUpdatedChatName(chat?.name);
+    }
+
+    const onChangeChatNameButtonClick = () => {
+        setChatNameIsChanging(true);
+    }
+
+    const onSubmitChatNameChangeButtonClick = async () => {
+        if (chat?.name && updatedChatName && chat?.name === updatedChatName) {
+            window.alert("Chat name is the same");
+        } else if (updatedChatName) {
+            let response = await updateChat(chat?.id, { ...chat, name: updatedChatName });
+            let data = response?.data;
+            if (data) {
+                window.alert("Chat name was updated");
+            }
+        }
+    }
+
+    const onCancelChatNameChangeButtonClick = () => {
+        setChatNameIsChanging(false);
+        setUpdatedChatName(chat?.name);
+    }
 
     const onSwitchNewUsersTab = () => {
         setUsersUniqueNamePrefix("");
         setUsersToShow([]);
-        setChosenUsers([]);
         setAddUsersPanelOpened(!isAddUserPanelOpened);
     }
 
-    const onDeleteChatButtonClick = () => {
-        console.log("delete chat in ChatPageInfo");
+    const onDeleteChatButtonClick = async () => {
+        if (window.confirm("Are you sure you want to leave chat?")) {
+            let response = await deleteChatMemberFromChat(chat?.id, user?.username);
+            let data = response?.data;
+            if (data) {
+                navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+            }
+        }
     }
 
-    const onCompletelyDeleteChatButtonClick = () => {
-        console.log("completely delete chat in ChatPageInfo");
+    const onCompletelyDeleteChatButtonClick = async () => {
+        if (window.confirm("Are you sure you want to leave and delete chat?")) {
+            let response = await deleteChatById(chat?.id);
+            let data = response?.data;
+            if (data) {
+                navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+            }
+        }
     }
 
     useEffect(() => {
+        setUpdatedChatName(chat?.name);
         let members = chat?.members;
         if (members && members.length !== 0) {
             setChatMembers(members);
@@ -79,45 +131,92 @@ export default function ChatPageInfo(props) {
                             value={usersUniqueNamePrefix}
                             onChange={(e) => setUsersUniqueNamePrefix(e.target.value)}
                         />
-                        <div className="filtered-user-items-container">
+                        <div className="chat-filtered-user-items-container">
                             {
-                                usersToShow.map((userToShow) => <div key={userToShow.username}>
-                                    {userToShow.uniqueName}
-                                </div>)
+                                usersToShow.map((userToShow) => <ChatFilteredUserItem
+                                    key={userToShow.username}
+                                    chat={chat}
+                                    userToShow={userToShow}
+                                    chatMembers={chatMembers}
+                                />)
                             }
                         </div>
-                        <div className="chat-page-button-container">
-                            <div className="chat-page-button" onClick={onSwitchNewUsersTab}>Back</div>
+                        <div className="chat-page-add-user-operation-container">
+                            <div className="chat-page-button-container">
+                                <div className="chat-page-button" onClick={onSwitchNewUsersTab}>Back</div>
+                            </div>
                         </div>
                     </div>
 
                     : <div className="chat-page-info">
-                        <div className="chat-page-info-name-container">
-                            <div className="chat-page-info-name"><div className="chat-page-info-name-value">{chat.name}</div></div>
+                        <div
+                            onContextMenu={onChatNameClick}
+                            onMouseLeave={onMouseLeaveChatName}
+                            className={chatNameIsChanging ? "chat-page-info-name-container chat-page-changing-info-name-container" : "chat-page-info-name-container"}>
+                            <div className="chat-page-info-name">
+                                {
+                                    chatNameIsChanging
+                                        ? <textarea
+                                            id="chatName"
+                                            name="chatName"
+                                            value={updatedChatName}
+                                            placeholder={chat?.name}
+                                            onChange={(event) => setUpdatedChatName(event.target.value)}
+                                            className="chat-page-updated-name-textarea"
+                                        ></textarea>
+                                        : <div className="chat-page-info-name-value">
+                                            <strong>{chat.name}</strong>
+                                        </div>
+                                }
+                            </div>
+                            {
+                                isChatNameModificationButtonShown
+                                    ? chatNameIsChanging
+                                        ? <>
+                                            <div className="chat-page-button-container">
+                                                <div className="chat-page-button" onClick={onSubmitChatNameChangeButtonClick}>Submit</div>
+                                            </div>
+                                            <div className="chat-page-button-container">
+                                                <div className="chat-page-button" onClick={onCancelChatNameChangeButtonClick}>Cancel</div>
+                                            </div>
+                                        </>
+                                        : <div className="chat-page-button-container">
+                                            <div className="chat-page-button" onClick={onChangeChatNameButtonClick}>Change name</div>
+                                        </div>
+                                    : ""
+                            }
                         </div>
                         <div className="chat-members">
                             {
                                 chatMembers.map((chatMember) => {
-                                    return <ChatPageMember key={chatMember.user?.username} chatMember={chatMember} isCurrentUserAdmin={isAdmin} />
+                                    return <ChatPageMember key={chatMember.user?.username} chatMember={chatMember} isCurrentUserAdmin={isAdmin} chatId={chat?.id} />
                                 })
                             }
                         </div>
-                        <div className="chat-page-operations-container">
-                            <div className="chat-page-button-container">
-                                <div className="chat-page-button" onClick={onSwitchNewUsersTab}>Add user</div>
-                            </div>
+                        <div className={chat?.type === ChatType.GROUP_CHAT ? "chat-page-operations-container" : "chat-page-operations-container private-chat-page-operations-container"} >
+                            {
+                                chat?.type === ChatType.GROUP_CHAT
+                                    ? <div className="chat-page-button-container">
+                                        <div className="chat-page-button" onClick={onSwitchNewUsersTab}>Add user</div>
+                                    </div>
+                                    : ""
+                            }
                             {
                                 isAdmin
-                                    ? <>
-                                        <div className="chat-page-button-container">
-                                            <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Delete chat for me</div>
+                                    ? chat?.type === ChatType.GROUP_CHAT
+                                        ? <>
+                                            <div className="chat-page-button-container">
+                                                <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Leave chat</div>
+                                            </div>
+                                            <div className="chat-page-button-container">
+                                                <div className="chat-page-button" onClick={onCompletelyDeleteChatButtonClick}>Delete chat</div>
+                                            </div>
+                                        </>
+                                        : <div className="chat-page-button-container">
+                                            <div className="chat-page-button" onClick={onCompletelyDeleteChatButtonClick}>Delete chat</div>
                                         </div>
-                                        <div className="chat-page-button-container">
-                                            <div className="chat-page-button" onClick={onCompletelyDeleteChatButtonClick}>Delete chat for all</div>
-                                        </div>
-                                    </>
                                     : <div className="chat-page-button-container">
-                                        <div className="chat-page-button" onClick={onCompletelyDeleteChatButtonClick}>Delete chat</div>
+                                        <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Leave chat</div>
                                     </div>
                             }
                         </div>

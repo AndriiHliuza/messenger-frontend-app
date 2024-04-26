@@ -33,8 +33,9 @@ function App() {
           const role = jwtDecode(accessToken).role;
           if (username && role) {
             const response = await getUserByUsernameAndRole(username, role);
-            if (response != null && response?.data?.username === username) {
-              const uniqueName = response.data.uniqueName;
+            const data = response?.data;
+            if (data && data?.username && data?.username === username) {
+              const uniqueName = data.uniqueName;
               setUser({
                 username: username,
                 uniqueName: uniqueName,

@@ -1,5 +1,6 @@
 import { React, useEffect, useState, createContext, useContext } from "react";
 import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
+import "./AuthenticationBasedRoute.css";
 import NotLoggedInPage from "../pages/alert-pages/NotLoggedInPage";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
 import Stomp from "stompjs";
@@ -8,6 +9,7 @@ import forge from "node-forge";
 import CryptoJS from "crypto-js";
 import {
     HOME_ROUTE,
+    USER_ROUTE,
     API_WEB_SOCKET_URL,
     API_WEB_SOCKET_MESSAGING_TOPIC_URL
 } from "../../config";
@@ -17,6 +19,8 @@ import { useAppContext } from "../../App";
 import { NotificationType } from "../../utils/NotificationType";
 import { ChatMemberRole } from "../../utils/ChatMemberRole";
 import { exchangePublicEncryptionKeys } from "../../axios/EncryptionKeysAPI";
+import { ChatType } from "../../utils/ChatType";
+
 
 export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
@@ -32,7 +36,9 @@ export default function AuthenticationBasedRoute() {
 
     const [isLoading, setLoading] = useState(true);
     const [userChats, setUserChats] = useState([]);
-    const [isInitialMoount, setIsInitialMount] = useState(true);
+    const [isInitialMount, setIsInitialMount] = useState(true);
+    const [isInformMessageShow, setInformMessageShow] = useState(false);
+    const [informMessage, setInformMessage] = useState("");
 
     // useEffect(() => {
     //     setTimeout(() => {
@@ -49,14 +55,14 @@ export default function AuthenticationBasedRoute() {
                     uniqueName: user.uniqueName,
                     authenticated: isAuthenticated,
                     role: user.role
-                }); 
-            }     
+                });
+            }
         }
         checkIsUserAuthenticated();
     }, [location.pathname]);
 
     useEffect(() => {
-        if (isInitialMoount && !user.authenticated) {
+        if (isInitialMount && !user.authenticated) {
             setIsInitialMount(false);
             return;
         }
@@ -64,6 +70,7 @@ export default function AuthenticationBasedRoute() {
         if (!stompClient.connected && user.authenticated) {
             stompClient.connect({}, onWebSocketConnected, onWebSocketConnectionError);
         }
+
         setLoading(false);
 
         return () => {
@@ -75,10 +82,21 @@ export default function AuthenticationBasedRoute() {
         }
     }, [user]);
 
+    useEffect(() => {
+        if (informMessage) {
+            setInformMessageShow(true);
+
+            setTimeout(() => {
+                setInformMessageShow(false);
+                setInformMessage("");
+            }, 2000);
+        }
+    }, [informMessage]);
+
     const onWebSocketConnected = async () => {
         stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/" + user.username + "/notifications", onUserNotificationReceived);
-        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/official-channel", onOfficialChannelMessageReceived);
-        
+        // stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/official-channel", onOfficialChannelMessageReceived);
+
         let currentUserChatsResponse = await getCurrentUserChats(3);
         let currentUserChats = currentUserChatsResponse?.data;
         if (currentUserChats) {
@@ -109,10 +127,13 @@ export default function AuthenticationBasedRoute() {
                 let time = notification.time;
                 let notificationType = notification.type;
                 let chatId = notification?.chatId;
+                let chatName = notification?.chatName;
+                let chatType = notification?.chatType;
 
                 switch (notificationType) {
                     case NotificationType.NEW_SUBSCRIBER_NOTIFICATION:
-                        window.alert(`${notificationContent}\nTime: ${time}`);
+                        setInformMessage(notificationContent);
+                        // window.alert(`${notificationContent}\nTime: ${time}`);
                         break;
                     case NotificationType.NEW_CHAT_NOTIFICATION:
                         let isNewChatNotificationReceived = true;
@@ -142,7 +163,7 @@ export default function AuthenticationBasedRoute() {
                                                     chatMessages[i].content = decryptedText;
                                                 }
                                             }
-                                        } 
+                                        }
                                     }
                                 }
                                 setUserChats(currentUserChats);
@@ -156,24 +177,60 @@ export default function AuthenticationBasedRoute() {
                                             }
                                         })
                                     }
-                                });   
+                                });
                             }
 
-                            if (!isCurrentUserCreatorOfChat) {
-                                window.alert(`${notificationContent}\nTime: ${time}`);
+                            if (!isCurrentUserCreatorOfChat && chatType === ChatType.GROUP_CHAT) {
+                                notificationContent = "You have been added to a chat " + notificationContent;
+                                setInformMessage(`${notificationContent}\nTime: ${time}`);
+                                // window.alert(`${notificationContent}\nTime: ${time}`);
                             }
                         }
+                        break;
+                    case NotificationType.NEW_ADMIN_IN_CHAT_NOTIFICATION:
+                        setInformMessage(`You have been set as ADMIN in ${chatName} chat`);
+                        // window.alert(`You have been set as ADMIN in ${chatName} chat`);
+                        break;
+                    case NotificationType.DELETED_CHAT_MEMBER_NOTIFICATION:
+                        const newUserChatsAfterDeletionFromChat = userChats.filter(userChat => userChat?.id !== chatId);
+                        // navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+                        setUserChats(newUserChatsAfterDeletionFromChat);
+                        setInformMessage(`You have been deleted from ${chatName} chat`);
+                        // window.alert(`You have been deleted from ${chatName} chat`);
+                        setUser({ ...user });
+                        break;
+                    case NotificationType.MEMBER_LEFT_CHAT_NOTIFICATION:
+                        const newUserChatsAfterLeavingChat = userChats.filter(userChat => userChat?.id !== chatId);
+                        // navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+                        setUserChats(newUserChatsAfterLeavingChat);
+                        setInformMessage(`You have left ${chatName} chat`);
+                        // window.alert(`You have left ${chatName} chat`);
+                        setUser({ ...user });
+                        break;
+                    case NotificationType.DELETED_GROUP_CHAT_NOTIFICATION:
+                        const newUserChatsAfterDeletingGroupChat = userChats.filter(userChat => userChat?.id !== chatId);
+                        // navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+                        setUserChats(newUserChatsAfterDeletingGroupChat);
+                        setInformMessage(`Chat ${chatName} was deleted`);
+                        // window.alert(`Chat ${chatName} was deleted`);
+                        setUser({ ...user });
+                        break;
+                    case NotificationType.DELETED_PRIVATE_CHAT_NOTIFICATION:
+                        const newUserChatsAfterDeletingPrivateChat = userChats.filter(userChat => userChat?.id !== chatId);
+                        // navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+                        setUserChats(newUserChatsAfterDeletingPrivateChat);
+                        setUser({ ...user });
                         break;
                 }
             }
         }
     };
 
-    const onOfficialChannelMessageReceived = (payload) => {
-        console.log("---------------official-channel");
-        console.log(payload);
-        console.log("-------------");
-    };
+    // const onOfficialChannelMessageReceived = (payload) => {
+    //     console.log("---------------official-channel");
+    //     console.log(payload);
+    //     console.log("-------------");
+    // };
 
     const onChatMessageReceived = async (payload) => {
         let payloadBody = payload?.body;
@@ -184,7 +241,7 @@ export default function AuthenticationBasedRoute() {
                 let userPrivateKeyString = localStorage.getItem("user-private-key");
                 userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
                 let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
-                
+
                 for (let i = 0; i < currentUserChats.length; i++) {
                     let currentUserChat = currentUserChats[i];
                     if (currentUserChat) {
@@ -197,13 +254,15 @@ export default function AuthenticationBasedRoute() {
                                     chatMessages[i].content = decryptedText;
                                 }
                             }
-                        } 
+                        }
                     }
                 }
                 setUserChats(currentUserChats);
-            }  
+            }
         }
     };
+
+
 
     return (
         isLoading
@@ -212,6 +271,9 @@ export default function AuthenticationBasedRoute() {
                 ? (
                     <AuthContext.Provider value={{ stompClient, userChats, setUserChats, onChatMessageReceived }}>
                         <Outlet />
+                        <div className={isInformMessageShow ? "inform-message-container inform-message-container-show" : "inform-message-container"}>
+                            <div className="inform-message">{informMessage}</div>
+                        </div>
                     </AuthContext.Provider>
                 )
                 : <NotLoggedInPage />

@@ -1,9 +1,11 @@
 .authPage {
     flex-grow: 1;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     background-color: bisque;
+
+    overflow-y: auto;
 }
 
 .authForm {

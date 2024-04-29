@@ -4,19 +4,9 @@ import { Form, Formik } from "formik";
 import { registrationSchema } from "../../../../utils/validation-schemas/ValidationSchemaConfig"
 import "../AuthPages.css";
 import FormItem from "../FormItem";
-import {
-    USER_ROUTE,
-    ADMIN_ROUTE,
-    ROOT_ROUTE,
-    SIGH_IN_ROUTE,
-    HOME_ROUTE
-} from "../../../../config";
+import { SIGH_IN_ROUTE } from "../../../../config";
 import { register } from "../../../../axios/AuthAPI";
-import { getUserByUsernameAndRole } from "../../../../axios/UserAPI";
-import { jwtDecode } from "jwt-decode";
-import { Role } from "../../../../utils/Role";
 import { useAppContext } from "../../../../App";
-import { generateKeyPair } from "../../../../utils/E2EEProvider";
 import SuccessfulRegistrationPage from "../../alert-pages/SuccessfulRegistrationPage";
 
 export default function RegistrationPage() {
@@ -44,36 +34,6 @@ export default function RegistrationPage() {
         } else {
             window.alert("Can not create an accout. Maybe such user already exists");
         }
-        // if (data?.accessToken && data?.refreshToken) {
-        //     const username = jwtDecode(data.accessToken).sub;
-        //     const role = jwtDecode(data.accessToken).role;
-        //     if (username && role) {
-        //         const response = await getUserByUsernameAndRole(username, role);
-        //         if (response != null && response?.data?.username === username && response?.data?.uniqueName === values.uniqueName) {
-        //             const uniqueName = response.data.uniqueName;
-        //             setUser({
-        //                 username: username,
-        //                 uniqueName: uniqueName,
-        //                 authenticated: true,
-        //                 role: role 
-        //             });
-        //             generateKeyPair();
-        //             switch (role) {
-        //                 case Role.USER:
-        //                     navigate(USER_ROUTE + "/" + uniqueName);
-        //                     break;
-        //                 case Role.ADMIN:
-        //                     navigate(ADMIN_ROUTE + "/" + uniqueName);
-        //                     break;
-        //                 case Role.ROOT:
-        //                     navigate(ROOT_ROUTE + "/" + uniqueName);
-        //                     break;
-        //                 default :
-        //                     navigate(HOME_ROUTE);
-        //             }
-        //         }
-        //     }   
-        // }
     }
 
     return (

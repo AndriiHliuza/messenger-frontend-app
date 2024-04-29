@@ -51,9 +51,7 @@ export default function ViewUsersRoute() {
             setIsInitialMount(false);
             return;
         }
-        // setTimeout(() => {
-        //     setLoading(false);
-        // }, 300);
+
         setLoading(false);
     }, [users]);
 

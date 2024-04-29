@@ -32,9 +32,6 @@ export default function UserProfilePage() {
     if (userUniqueName !== subscriptionUniqueName && userUniqueName !== "" && subscriptionUniqueName !== "") {
       checkSubscription();
     }
-    // setTimeout(() => {
-    //   setLoading(false);
-    // }, 300);
     setLoading(false);
   }, [userProfile, user]);
 

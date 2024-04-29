@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React } from "react";
 import "./AlertPage.css";
 import { SIGH_IN_ROUTE } from "../../../config"; 
 import { Link } from "react-router-dom";

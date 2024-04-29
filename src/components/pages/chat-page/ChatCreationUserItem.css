@@ -59,7 +59,9 @@
 }
 
 @media (max-width: 576px) {
+
     .chat-creation-user-item-info-uniqueName {
         max-width: 190px;
     }
+    
 }

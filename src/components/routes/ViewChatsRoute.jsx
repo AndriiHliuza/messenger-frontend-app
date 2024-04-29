@@ -3,11 +3,9 @@ import "../ViewChatsRoute.css"
 import ViewChatsActionsArea from "../pages/chat-page/ViewChatsActionsArea";
 import { getCurrentUserChats } from "../../axios/ChatAPI";
 import { useAuthContext } from "./AuthenticationBasedRoute";
-import { API_WEB_SOCKET_MESSAGING_TOPIC_URL } from "../../config";
 import ChatsListItem from "../pages/chat-page/ChatsListItem";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
 import forge from "node-forge";
-import CryptoJS from "crypto-js";
 
 export default function ViewChatsRoute() {
 
@@ -42,10 +40,7 @@ export default function ViewChatsRoute() {
             }
             setLoading(false);
         }     
-
-        // setTimeout(() => {
-        //     getChats();
-        // }, 5000); 
+ 
         getChats();
     }, []);
 

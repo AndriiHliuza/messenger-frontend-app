@@ -10,9 +10,7 @@ import LoadingPage from "../../alert-pages/LoadingPage";
 import NotFoundPage from "../../alert-pages/NotFoundPage";
 import { modify, getProfileImage, getProfileImageMetadata } from "../../../../axios/UserAPI";
 import ImageItem from "../ImageItem";
-import {
-    USER_ROUTE
-} from "../../../../config";
+import { USER_ROUTE } from "../../../../config";
 import { useAppContext } from "../../../../App";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,10 +33,7 @@ export default function ProfileModificationPage() {
         } else {
             setUserProfileBirthday(userProfile.birthday);
         }
-        setLoading(false);
-        // setTimeout(() => {
-        //     setLoading(false);
-        // }, 300);     
+        setLoading(false);    
     }, []);
 
     const setBirthday = (e) => {
@@ -177,13 +172,6 @@ export default function ProfileModificationPage() {
                                             type="text"
                                             placeholder={userProfile.lastname}
                                         />
-                                        {/* <FormItem
-                                            label="Birthday:"
-                                            id="birthday"
-                                            name="birthday"
-                                            type="date"
-                                            placeholder="20.12.2022"
-                                        /> */}
                                         <div className="formItem">
                                             <label htmlFor="birthday">Birthday:</label>
                                             <input

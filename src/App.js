@@ -1,4 +1,4 @@
-import { BrowserRouter } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar"
 import RoutesProcessor from './components/routes/RoutesProcessor';
@@ -8,6 +8,7 @@ import { jwtDecode } from "jwt-decode";
 import { Role } from "./utils/Role";
 import { getUserByUsernameAndRole } from "./axios/UserAPI";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { USER_ROUTE } from "./config";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ export const useAppContext = () => useContext(AppContext);
 
 function App() {
 
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     username: "",
     uniqueName: "",
@@ -44,6 +46,7 @@ function App() {
                 authenticated: isAuthenticated,
                 role: role
               });
+              navigate(USER_ROUTE + "/" + uniqueName);
             }
           }
         }
@@ -66,7 +69,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppContext.Provider value={{ user, setUser, setInformMessage }}>
-        <BrowserRouter>
+        {/* <BrowserRouter> */}
           <div className="App">
             <NavBar />
             <RoutesProcessor />
@@ -74,7 +77,7 @@ function App() {
               <div className="inform-message">{informMessage}</div>
             </div>
           </div>
-        </BrowserRouter>
+        {/* </BrowserRouter> */}
       </AppContext.Provider>
     </QueryClientProvider>
   );

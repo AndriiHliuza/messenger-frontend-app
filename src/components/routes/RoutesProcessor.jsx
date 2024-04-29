@@ -39,7 +39,6 @@ export default function RoutesProcessor() {
         <Routes>
             {/* public routes */}
             <Route path={HOME_ROUTE} element={<HomePage />} />
-            <Route path="/chat" element={<ChatPage />} />
 
             {/* Routes for not authenticated users */}
             <Route element={<NotAuthenticatedUserRoute />} >

@@ -71,7 +71,6 @@ export default function ChatsListItem(props) {
                     onContextMenu={onChatListItemContextMenuClick}
                     onMouseLeave={onMouseLeaveChatListItem}
                     className="chat-list-item-info">
-                    {/* <div><strong>Name:</strong></div> */}
                     <div className="chat-list-item-name"><strong>{chat?.name ? chat.name : "Unknown chat"}</strong></div>
                     {
                         isChatListItemActionsButtonsShown

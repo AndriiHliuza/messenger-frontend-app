@@ -4,7 +4,6 @@ import ChatPageMessage from './ChatPageMessage';
 import { sendMessageToChat, updateMessageInChat } from '../../../axios/MessageApi';
 import { MessageType } from '../../../utils/MessageType';
 import forge from "node-forge";
-import CryptoJS from "crypto-js";
 
 export default function ChatPageMessagesArea(props) {
 

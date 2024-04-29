@@ -5,7 +5,6 @@ import { USER_ROUTE } from '../../../config';
 import { ChatMemberRole } from '../../../utils/ChatMemberRole';
 import { useAppContext } from '../../../App';
 import { updateChatMember, deleteChatMemberFromChat } from '../../../axios/ChatAPI';
-import { useAuthContext } from '../../routes/AuthenticationBasedRoute';
 
 export default function ChatPageMember(props) {
 

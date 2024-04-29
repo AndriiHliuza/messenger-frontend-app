@@ -5,7 +5,6 @@ import LoadingPage from "../pages/alert-pages/LoadingPage";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import forge from "node-forge";
-import CryptoJS from "crypto-js";
 import {
     HOME_ROUTE,
     API_WEB_SOCKET_URL,
@@ -36,25 +35,11 @@ export default function AuthenticationBasedRoute() {
     const [isLoading, setLoading] = useState(true);
     const [userChats, setUserChats] = useState([]);
     const [isInitialMount, setIsInitialMount] = useState(true);
-    // const [isInformMessageShow, setInformMessageShow] = useState(false);
-    // const [informMessage, setInformMessage] = useState("");
-
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         setLoading(false);
-    //     }, 5000);
-    // }, []);
 
     useEffect(() => {
         async function checkIsUserAuthenticated() {
             let isAuthenticated = await isUserAuthenticated();
             if (!isAuthenticated) {
-                // setUser({
-                //     username: user.username,
-                //     uniqueName: user.uniqueName,
-                //     authenticated: isAuthenticated,
-                //     role: user.role
-                // });
                 setInformMessage("Sorry! You is not authenticated! Please sign in again!");
                 navigate(HOME_ROUTE);
                 setUser({
@@ -63,7 +48,6 @@ export default function AuthenticationBasedRoute() {
                     authenticated: false,
                     role: Role.VISITOR
                 });
-                localStorage.clear();
             }
         }
         checkIsUserAuthenticated();
@@ -120,7 +104,6 @@ export default function AuthenticationBasedRoute() {
             authenticated: false,
             role: Role.VISITOR
         });
-        localStorage.clear();
     };
 
     const onUserNotificationReceived = async (payload) => {
@@ -232,7 +215,6 @@ export default function AuthenticationBasedRoute() {
                     case NotificationType.DELETED_PRIVATE_CHAT_NOTIFICATION:
                         const newUserChatsAfterDeletingPrivateChat = userChats.filter(userChat => userChat?.id !== chatId);
                         setUserChats(newUserChatsAfterDeletingPrivateChat);
-                        // setUserChats([]);
                         setUser({ ...user });
                         if (notificationSenderUsername && notificationSenderUsername === user.username) {
 

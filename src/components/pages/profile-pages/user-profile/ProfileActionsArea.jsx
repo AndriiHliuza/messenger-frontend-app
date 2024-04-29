@@ -16,8 +16,6 @@ import { getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername, createCh
 import { Role } from "../../../../utils/Role";
 import { ChatType } from "../../../../utils/ChatType";
 import { ChatMemberRole } from "../../../../utils/ChatMemberRole";
-import { isUserAuthenticated } from "../../../../utils/AuthProvider";
-import { validateToken } from "../../../../axios/TokenAPI";
 
 export default function ProfileActionsArea(props) {
 
@@ -95,40 +93,9 @@ export default function ProfileActionsArea(props) {
                 });
                 localStorage.clear();
                 setInformMessage("Account was deleted");
-                // navigate(HOME_ROUTE);
             }
         }
     }
-
-    // const onSubmit = async (values, actions) => {
-    //     let chatName = values.chatName;
-    //     if (chosenUsers.length !== 0 && values.chatName) {
-    //         let usersToAddToChat = [];
-    //         for (let i = 0; i < chosenUsers.length; i++) {
-    //             usersToAddToChat[i] = {
-    //                 chatId: null,
-    //                 user: chosenUsers[i],
-    //                 role: null
-    //             }
-    //         }
-    //         const response = await createChat(
-    //             chatName,
-    //             ChatType.GROUP_CHAT,
-    //             usersToAddToChat
-    //         );
-    //         let chat = response?.data;
-    //         if (chat) {
-    //             actions.resetForm();
-    //             window.alert("Chat " + chat.name + " was successfully created");
-    //             navigate(USER_ROUTE + "/" + user.uniqueName + "/chats");
-    //         } else {
-    //             window.alert("Something went wrong. Chat wasn't created. Try again!")
-    //             actions.resetForm();
-    //         }
-    //     } else {
-    //         window.alert("Chat should have name and users");
-    //     } 
-    // }
 
     const openChat = async () => {
         let isErrorOccured = false;

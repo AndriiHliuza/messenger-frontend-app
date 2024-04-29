@@ -17,7 +17,6 @@ import { jwtDecode } from "jwt-decode";
 import { Role } from "../../../../utils/Role";
 import { useAppContext } from "../../../../App";
 import { generateKeyPair } from "../../../../utils/E2EEProvider";
-import { exchangePublicEncryptionKeys } from "../../../../axios/EncryptionKeysAPI";
 
 export default function LoginPage() {
 

@@ -10,7 +10,6 @@ import ChatFilteredUserItem from './ChatFilteredUserItem';
 import { updateChat, deleteChatById, deleteChatMemberFromChat } from '../../../axios/ChatAPI';
 import { USER_ROUTE } from '../../../config';
 import { ChatType } from '../../../utils/ChatType';
-import { useAuthContext } from '../../routes/AuthenticationBasedRoute';
 
 export default function ChatPageInfo(props) {
 

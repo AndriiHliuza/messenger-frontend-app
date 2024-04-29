@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import "./ChatFilteredUserItem.css"
 import { addNewUserToChat } from "../../../axios/ChatAPI";
 import { USER_ROUTE } from "../../../config";
-import { useAuthContext } from "../../routes/AuthenticationBasedRoute";
 import { useAppContext } from "../../../App";
 
 export default function ChatFilteredUserItem(props) {

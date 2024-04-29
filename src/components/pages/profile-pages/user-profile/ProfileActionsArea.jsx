@@ -2,8 +2,9 @@ import { React } from "react";
 import { useNavigate } from "react-router-dom";
 import "../ProfilePage.css";
 import { useUserContext } from "../../../routes/UserRoute";
-import { getUserByUsernameAndRole, subscribe, unsubscribe } from "../../../../axios/UserAPI";
+import { getUserByUsernameAndRole, deleteUser, subscribe, unsubscribe } from "../../../../axios/UserAPI";
 import {
+    HOME_ROUTE,
     USER_ROUTE,
     CHATS_ROUTE,
     API_WEB_SOCKET_MESSAGING_URL
@@ -15,10 +16,11 @@ import { getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername, createCh
 import { Role } from "../../../../utils/Role";
 import { ChatType } from "../../../../utils/ChatType";
 import { ChatMemberRole } from "../../../../utils/ChatMemberRole";
+import { isUserAuthenticated } from "../../../../utils/AuthProvider";
 
 export default function ProfileActionsArea(props) {
 
-    const { user } = useAppContext();
+    const { user, setUser, setInformMessage } = useAppContext();
     const { stompClient } = useAuthContext();
     const { userProfile } = useUserContext();
     const { follow, setFollow } = props;
@@ -43,13 +45,15 @@ export default function ProfileActionsArea(props) {
         if (response?.data?.subscribed) {
             setFollow(true);
             stompClient.send(
-                API_WEB_SOCKET_MESSAGING_URL + "/notifications",
+                API_WEB_SOCKET_MESSAGING_URL + "/notification",
                 {},
                 JSON.stringify({
+                    senderUsername: user.username,
                     receiverUsername: userProfile.username,
                     content: "New subscriber: " + response?.data?.subscriberUniqueName,
                     time: null,
-                    type: NotificationType.NEW_SUBSCRIBER_NOTIFICATION
+                    type: NotificationType.NEW_SUBSCRIBER_NOTIFICATION,
+                    class: "notification"
                 })
             );
         } else {
@@ -75,8 +79,23 @@ export default function ProfileActionsArea(props) {
         navigate(userProfileRoute + "/" + uniqueName + "/account");
     }
 
-    const deleteAccount = () => {
-
+    const deleteAccount = async () => {
+        if (window.confirm("Are you sure you want to delete your accout?")) {
+            let response = await deleteUser(user?.username);
+            let data = response?.data;
+            if (data) {
+                navigate(HOME_ROUTE);
+                setUser({
+                    username: "",
+                    uniqueName: "",
+                    authenticated: false,
+                    role: Role.VISITOR
+                });
+                localStorage.clear();
+                setInformMessage("Account was deleted");
+                // navigate(HOME_ROUTE);
+            }
+        }
     }
 
     // const onSubmit = async (values, actions) => {
@@ -112,8 +131,8 @@ export default function ProfileActionsArea(props) {
     const openChat = async () => {
         let isErrorOccured = false;
         let openedUserProfileUsername = userProfile.username;
-        let privateChatresponse = await getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername(openedUserProfileUsername);
-        let privateChat = privateChatresponse?.data;
+        let privateChatResponse = await getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername(openedUserProfileUsername);
+        let privateChat = privateChatResponse?.data;
         let chatId = null;
         if (privateChat) {
             chatId = privateChat.id;

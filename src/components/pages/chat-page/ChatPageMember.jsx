@@ -5,12 +5,13 @@ import { USER_ROUTE } from '../../../config';
 import { ChatMemberRole } from '../../../utils/ChatMemberRole';
 import { useAppContext } from '../../../App';
 import { updateChatMember, deleteChatMemberFromChat } from '../../../axios/ChatAPI';
+import { useAuthContext } from '../../routes/AuthenticationBasedRoute';
 
 export default function ChatPageMember(props) {
 
     const navigate = useNavigate();
-    const { user } = useAppContext();
-    const { chatMember, isCurrentUserAdmin, chatId } = props;
+    const { user, setInformMessage } = useAppContext();
+    const { chatMember, isCurrentUserAdmin, chat } = props;
 
     const [chatMemberInfo, setChatMemberInfo] = useState(null);
     const [isChatPageMemberActionsButtonsShown, setChatPageMemberActionsButtonsShown] = useState(false);
@@ -42,27 +43,28 @@ export default function ChatPageMember(props) {
     }
 
     const onSetAdminRoleToChatMemberButtonClick = async () => {
+        setChatPageMemberActionsButtonsShown(false);
         let updatedChatMember = {
             ...chatMember,
             role: ChatMemberRole.ADMIN
         }
-        let response = await updateChatMember(chatId, chatMemberInfo?.username, updatedChatMember);
+        let response = await updateChatMember(chat?.id, chatMemberInfo?.username, updatedChatMember);
         let data = response?.data;
         if (data && data?.role === ChatMemberRole.ADMIN) {
-            window.alert("You have changed " + chatMemberInfo?.uniqueName + "'s status to ADMIN");
+            setInformMessage("You changed " + chatMemberInfo?.uniqueName + "'s status to ADMIN");
         } else {
-            window.alert("Something went wrong. Member role was not updated");
+            setInformMessage("Something went wrong. Member role was not updated");
         }
     }
 
     const onDeleteChatMemberButtonClick = async () => {
-        let response = await deleteChatMemberFromChat(chatId, chatMemberInfo?.username);
+        setChatPageMemberActionsButtonsShown(false);
+        let response = await deleteChatMemberFromChat(chat?.id, chatMemberInfo?.username);
         let data = response?.data;
-
         if (data) {
-            window.alert("You have deleted " + chatMemberInfo?.uniqueName + " user from chat");
+            setInformMessage("You deleted " + chatMemberInfo?.uniqueName + " from chat");
         } else {
-            window.alert("Something went wrong. User " + chatMemberInfo?.uniqueName + " was not deleted from chat");
+            setInformMessage("Something went wrong. User " + chatMemberInfo?.uniqueName + " was not deleted from chat");
         }
     }
 

@@ -125,6 +125,15 @@ export const modify = async (
     })
 }
 
+export const deleteUser = async (username) => {
+    return await authAxiosClient.delete(API_USERS_ROUTE + "/" + username)
+    .then((response) => {
+        return response;
+    }).catch((error) => {
+        return null;
+    })
+}
+
 export const getProfileImage = async (uniqueName) => {
     return await authAxiosClient.get(
         API_USERS_ROUTE + "/" + uniqueName + "/image",

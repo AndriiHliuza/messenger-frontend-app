@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import "./ChatFilteredUserItem.css"
 import { addNewUserToChat } from "../../../axios/ChatAPI";
 import { USER_ROUTE } from "../../../config";
+import { useAuthContext } from "../../routes/AuthenticationBasedRoute";
+import { useAppContext } from "../../../App";
 
 export default function ChatFilteredUserItem(props) {
 
     const navigate = useNavigate();
+    const { setInformMessage } = useAppContext();
     const { chat, userToShow, chatMembers } = props;
 
     const onChatFilteredUserItemClick = () => {
@@ -23,12 +26,12 @@ export default function ChatFilteredUserItem(props) {
         }
 
         if (isUserAlreadyAdded) {
-            window.alert("User is already in the group");
+            setInformMessage(userToShow?.uniqueName + " is already in this chat");
         } else {
             let response = await addNewUserToChat(chat?.id, userToShow?.username, userToShow);
             let data = response?.data;
             if (data) {
-                window.alert("User was successfully added to the group");
+                setInformMessage(userToShow?.uniqueName + " was added to this chat");
             }
         }
     }

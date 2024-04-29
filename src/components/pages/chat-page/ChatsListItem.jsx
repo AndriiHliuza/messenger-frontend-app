@@ -72,7 +72,7 @@ export default function ChatsListItem(props) {
                     onMouseLeave={onMouseLeaveChatListItem}
                     className="chat-list-item-info">
                     {/* <div><strong>Name:</strong></div> */}
-                    <div className="chat-list-item-name"><strong>{chat.name}</strong></div>
+                    <div className="chat-list-item-name"><strong>{chat?.name ? chat.name : "Unknown chat"}</strong></div>
                     {
                         isChatListItemActionsButtonsShown
                             ? isAdmin

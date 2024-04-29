@@ -30,38 +30,43 @@ export default function ChatPage() {
         async function getCurrentChat() {
             let chatId = params?.chatId;
             let response = await getChatById(chatId);
+            // if (userChats && userChats.length === 0) {
+            //     navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+            // } else {
+            //     response = await getChatById(chatId);
+            // }
 
             if (response === null) {
                 navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
-            }
-
-            let returnedChat = response?.data;
+            } else {
+                let returnedChat = response?.data;
             
-            if (chatId === returnedChat?.id) {
-                await updateMessagesStatusesInChat(returnedChat.id, MessageStatus.READ_MESSAGE);
-                setChat(returnedChat);
-                setChatExists(true);
-
-                
-                // let userPrivateKeyString = localStorage.getItem("user-private-key");
-                // userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
-                // let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
-                
-                // let chatMessages = returnedChat?.messages;
-                // if (chatMessages) {
-                //     for (let i = 0; i < chatMessages.length; i++) {
-                //         let messageContent = chatMessages[i]?.content;
-                //         if (messageContent) {
-                //             let decryptedText = userPrivateKey.decrypt(forge.util.decode64(messageContent));
-                //             chatMessages[i].content = decryptedText;                           
-                //         }
-                //     }
-                //     setChat(returnedChat);
-                //     setChatExists(true);
-                // } 
-            }
-
-            setLoading(false);
+                if (chatId === returnedChat?.id) {
+                    await updateMessagesStatusesInChat(returnedChat.id, MessageStatus.READ_MESSAGE);
+                    setChat(returnedChat);
+                    setChatExists(true);
+    
+                    
+                    // let userPrivateKeyString = localStorage.getItem("user-private-key");
+                    // userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
+                    // let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
+                    
+                    // let chatMessages = returnedChat?.messages;
+                    // if (chatMessages) {
+                    //     for (let i = 0; i < chatMessages.length; i++) {
+                    //         let messageContent = chatMessages[i]?.content;
+                    //         if (messageContent) {
+                    //             let decryptedText = userPrivateKey.decrypt(forge.util.decode64(messageContent));
+                    //             chatMessages[i].content = decryptedText;                           
+                    //         }
+                    //     }
+                    //     setChat(returnedChat);
+                    //     setChatExists(true);
+                    // } 
+                }
+    
+                setLoading(false);
+            }            
         }
 
         // setTimeout(() => {

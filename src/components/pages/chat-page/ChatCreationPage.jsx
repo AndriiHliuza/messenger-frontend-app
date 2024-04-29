@@ -14,10 +14,11 @@ import ChatCreationUserItem from "./ChatCreationUserItem";
 import { createChat } from "../../../axios/ChatAPI";
 import { USER_ROUTE } from "../../../config";
 import { ChatMemberRole } from "../../../utils/ChatMemberRole";
+import { useAuthContext } from "../../routes/AuthenticationBasedRoute";
 
 export default function ChatCreationPage() {
 
-    const { user } = useAppContext();
+    const { user, setInformMessage } = useAppContext();
     const { userProfile } = useUserContext();
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -49,14 +50,14 @@ export default function ChatCreationPage() {
             let chat = response?.data;
             if (chat) {
                 actions.resetForm();
-                window.alert("Chat " + chat.name + " was successfully created");
+                setInformMessage("Chat '" + chat.name + "' was successfully created");
                 navigate(USER_ROUTE + "/" + user.uniqueName + "/chats");
             } else {
-                window.alert("Something went wrong. Chat wasn't created. Try again!");
+                setInformMessage("Something went wrong. Chat wasn't created.");
                 actions.resetForm();
             }
         } else {
-            window.alert("Chat should have name and users");
+            setInformMessage("Chat should have name and users");
         } 
     }
 

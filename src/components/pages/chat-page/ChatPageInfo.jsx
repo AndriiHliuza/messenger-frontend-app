@@ -10,14 +10,14 @@ import ChatFilteredUserItem from './ChatFilteredUserItem';
 import { updateChat, deleteChatById, deleteChatMemberFromChat } from '../../../axios/ChatAPI';
 import { USER_ROUTE } from '../../../config';
 import { ChatType } from '../../../utils/ChatType';
+import { useAuthContext } from '../../routes/AuthenticationBasedRoute';
 
 export default function ChatPageInfo(props) {
 
     const navigate = useNavigate();
-    const { user } = useAppContext();
+    const { user, setInformMessage } = useAppContext();
     const { chat, isMemberTabOpened, isAdmin, setAdmin } = props;
     const [chatMembers, setChatMembers] = useState([]);
-    // const [isAdmin, setAdmin] = useState(false);
     const [isAddUserPanelOpened, setAddUsersPanelOpened] = useState(false);
     const [usersToShow, setUsersToShow] = useState([]);
     const [usersUniqueNamePrefix, setUsersUniqueNamePrefix] = useState("");
@@ -45,12 +45,12 @@ export default function ChatPageInfo(props) {
 
     const onSubmitChatNameChangeButtonClick = async () => {
         if (chat?.name && updatedChatName && chat?.name === updatedChatName) {
-            window.alert("Chat name is the same");
+            setInformMessage("Chat name was not changed");
         } else if (updatedChatName) {
             let response = await updateChat(chat?.id, { ...chat, name: updatedChatName });
             let data = response?.data;
             if (data) {
-                window.alert("Chat name was updated");
+                setInformMessage("Chat name was updated");
             }
         }
     }
@@ -66,18 +66,18 @@ export default function ChatPageInfo(props) {
         setAddUsersPanelOpened(!isAddUserPanelOpened);
     }
 
-    const onDeleteChatButtonClick = async () => {
-        if (window.confirm("Are you sure you want to leave chat?")) {
+    const onLeaveChatButtonClick = async () => {
+        if (window.confirm("Are you sure you want to leave this chat?")) {
             let response = await deleteChatMemberFromChat(chat?.id, user?.username);
             let data = response?.data;
-            if (data) {
+            if (data) {            
                 navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
             }
         }
     }
 
-    const onCompletelyDeleteChatButtonClick = async () => {
-        if (window.confirm("Are you sure you want to leave and delete chat?")) {
+    const onDeleteChatButtonClick = async () => {
+        if (window.confirm("Are you sure you want to leave and delete this chat?")) {
             let response = await deleteChatById(chat?.id);
             let data = response?.data;
             if (data) {
@@ -165,7 +165,7 @@ export default function ChatPageInfo(props) {
                                             className="chat-page-updated-name-textarea"
                                         ></textarea>
                                         : <div className="chat-page-info-name-value">
-                                            <strong>{chat.name}</strong>
+                                            <strong>{chat?.name ? chat.name : "Unknown"}</strong>
                                         </div>
                                 }
                             </div>
@@ -189,7 +189,7 @@ export default function ChatPageInfo(props) {
                         <div className="chat-members">
                             {
                                 chatMembers.map((chatMember) => {
-                                    return <ChatPageMember key={chatMember.user?.username} chatMember={chatMember} isCurrentUserAdmin={isAdmin} chatId={chat?.id} />
+                                    return <ChatPageMember key={chatMember.user?.username} chatMember={chatMember} isCurrentUserAdmin={isAdmin} chat={chat} />
                                 })
                             }
                         </div>
@@ -206,17 +206,17 @@ export default function ChatPageInfo(props) {
                                     ? chat?.type === ChatType.GROUP_CHAT
                                         ? <>
                                             <div className="chat-page-button-container">
-                                                <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Leave chat</div>
+                                                <div className="chat-page-button" onClick={onLeaveChatButtonClick}>Leave chat</div>
                                             </div>
                                             <div className="chat-page-button-container">
-                                                <div className="chat-page-button" onClick={onCompletelyDeleteChatButtonClick}>Delete chat</div>
+                                                <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Delete chat</div>
                                             </div>
                                         </>
                                         : <div className="chat-page-button-container">
-                                            <div className="chat-page-button" onClick={onCompletelyDeleteChatButtonClick}>Delete chat</div>
+                                            <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Delete chat</div>
                                         </div>
                                     : <div className="chat-page-button-container">
-                                        <div className="chat-page-button" onClick={onDeleteChatButtonClick}>Leave chat</div>
+                                        <div className="chat-page-button" onClick={onLeaveChatButtonClick}>Leave chat</div>
                                     </div>
                             }
                         </div>

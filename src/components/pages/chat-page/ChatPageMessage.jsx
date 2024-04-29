@@ -153,7 +153,6 @@ export default function ChatPageMessage(props) {
                                         <div className="message-delete-button" onClick={onDeleteMessageButtonClick}>Delete</div>
                                     </>
                             }
-
                         </div>
                     </div>
                 </div>

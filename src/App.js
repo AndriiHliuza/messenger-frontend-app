@@ -22,6 +22,8 @@ function App() {
     authenticated: false,
     role: Role.VISITOR
   });
+  const [isInformMessageShow, setInformMessageShow] = useState(false);
+  const [informMessage, setInformMessage] = useState("");
 
   useEffect(() => {
     async function checkIsUserAuthenticated() {
@@ -50,13 +52,27 @@ function App() {
     checkIsUserAuthenticated();
   }, []);
 
+  useEffect(() => {
+    if (informMessage) {
+      setInformMessageShow(true);
+
+      setTimeout(() => {
+        setInformMessageShow(false);
+        setInformMessage("");
+      }, 5000);
+    }
+  }, [informMessage]);
+
   return (
     <QueryClientProvider client={queryClient}>
-      <AppContext.Provider value={{ user, setUser }}>
+      <AppContext.Provider value={{ user, setUser, setInformMessage }}>
         <BrowserRouter>
           <div className="App">
             <NavBar />
             <RoutesProcessor />
+            <div className={isInformMessageShow ? "inform-message-container inform-message-container-show" : "inform-message-container"}>
+              <div className="inform-message">{informMessage}</div>
+            </div>
           </div>
         </BrowserRouter>
       </AppContext.Provider>

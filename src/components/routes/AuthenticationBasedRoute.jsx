@@ -76,7 +76,8 @@ export default function AuthenticationBasedRoute() {
         }
         exchangePublicEncryptionKeys(user.username);
         if (!stompClient.connected && user.authenticated) {
-            stompClient.connect({}, onWebSocketConnected, onWebSocketConnectionError);
+            let accessToken = localStorage.getItem("access-token");
+            stompClient.connect({Authorization: `Bearer ${accessToken}`}, onWebSocketConnected, onWebSocketConnectionError);
         }
 
         setLoading(false);
@@ -91,7 +92,8 @@ export default function AuthenticationBasedRoute() {
     }, [user]);
 
     const onWebSocketConnected = async () => {
-        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/" + user.username + "/notifications", onUserNotificationReceived);
+        let accessToken = localStorage.getItem("access-token");
+        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/" + user.username + "/notifications", onUserNotificationReceived, {Authorization: `Bearer ${accessToken}`});
 
         let currentUserChatsResponse = await getCurrentUserChats(3);
         let currentUserChats = currentUserChatsResponse?.data;
@@ -101,7 +103,7 @@ export default function AuthenticationBasedRoute() {
                 if (currentUserChat) {
                     let chatId = currentUserChat?.id;
                     if (chatId) {
-                        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived);
+                        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived, {Authorization: `Bearer ${accessToken}`});
                     }
                 }
             }
@@ -149,7 +151,8 @@ export default function AuthenticationBasedRoute() {
                             }
                         }
                         if (isNewChatNotificationReceived) {
-                            stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived);
+                            let accessToken = localStorage.getItem("access-token");
+                            stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived, {Authorization: `Bearer ${accessToken}`});
                             let currentUserChatsResponse = await getCurrentUserChats(3);
                             let currentUserChats = currentUserChatsResponse?.data;
                             let isCurrentUserCreatorOfChat = false;

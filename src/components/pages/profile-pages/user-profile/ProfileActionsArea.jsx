@@ -17,6 +17,7 @@ import { Role } from "../../../../utils/Role";
 import { ChatType } from "../../../../utils/ChatType";
 import { ChatMemberRole } from "../../../../utils/ChatMemberRole";
 import { isUserAuthenticated } from "../../../../utils/AuthProvider";
+import { validateToken } from "../../../../axios/TokenAPI";
 
 export default function ProfileActionsArea(props) {
 
@@ -44,9 +45,10 @@ export default function ProfileActionsArea(props) {
 
         if (response?.data?.subscribed) {
             setFollow(true);
+            let accessToken = localStorage.getItem("access-token");
             stompClient.send(
                 API_WEB_SOCKET_MESSAGING_URL + "/notification",
-                {},
+                {Authorization: `Bearer ${accessToken}`},
                 JSON.stringify({
                     senderUsername: user.username,
                     receiverUsername: userProfile.username,

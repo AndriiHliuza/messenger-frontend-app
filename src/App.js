@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navbar/NavBar"
 import RoutesProcessor from './components/routes/RoutesProcessor';
@@ -17,7 +17,6 @@ export const useAppContext = () => useContext(AppContext);
 
 function App() {
 
-  const navigate = useNavigate();
   const [user, setUser] = useState({
     username: "",
     uniqueName: "",
@@ -46,7 +45,6 @@ function App() {
                 authenticated: isAuthenticated,
                 role: role
               });
-              navigate(USER_ROUTE + "/" + uniqueName);
             }
           }
         }
@@ -69,7 +67,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppContext.Provider value={{ user, setUser, setInformMessage }}>
-        {/* <BrowserRouter> */}
+        <BrowserRouter>
           <div className="App">
             <NavBar />
             <RoutesProcessor />
@@ -77,7 +75,7 @@ function App() {
               <div className="inform-message">{informMessage}</div>
             </div>
           </div>
-        {/* </BrowserRouter> */}
+        </BrowserRouter>
       </AppContext.Provider>
     </QueryClientProvider>
   );

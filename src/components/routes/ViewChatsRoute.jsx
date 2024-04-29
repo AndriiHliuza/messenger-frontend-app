@@ -17,25 +17,6 @@ export default function ViewChatsRoute() {
             let currentUserChatsResponse = await getCurrentUserChats(3);
             let currentUserChats = currentUserChatsResponse?.data;
             if (currentUserChats) {
-                let userPrivateKeyString = localStorage.getItem("user-private-key");
-                userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
-                let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
-
-                for (let i = 0; i < currentUserChats.length; i++) {
-                    let currentUserChat = currentUserChats[i];
-                    if (currentUserChat) {
-                        let chatMessages = currentUserChat?.messages;
-                        if (chatMessages) {
-                            for (let j = 0; j < chatMessages.length; j++) {
-                                let messageContent = chatMessages[j]?.content;
-                                if (messageContent) {
-                                    let decryptedText = userPrivateKey.decrypt(forge.util.decode64(messageContent));
-                                    chatMessages[j].content = decryptedText;
-                                }
-                            }
-                        } 
-                    }
-                }
                 setUserChats(currentUserChats);
             }
             setLoading(false);

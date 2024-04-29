@@ -48,7 +48,7 @@ export default function RoutesProcessor() {
 
             {/* Routes for authenticated users */}
             <Route element={<AuthenticationBasedRoute />} >
-
+                
                 <Route element={<RoleUserRoute />} >
                     <Route path={USER_ROUTE} element={<UserRoute />} >
                         <Route index element={<ViewUsersRoute />} />

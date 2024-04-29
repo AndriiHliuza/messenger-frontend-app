@@ -5,11 +5,14 @@ import { ChatMemberRole } from "../../../utils/ChatMemberRole";
 import "./ChatListItem.css";
 import { useAppContext } from "../../../App";
 import { MessageStatus } from "../../../utils/MessageStatus";
+import { ChatType } from "../../../utils/ChatType";
+import { getChatById, deleteChatById, deleteChatMemberFromChat } from "../../../axios/ChatAPI";
+import forge from "node-forge";
 
 export default function ChatsListItem(props) {
 
     const navigate = useNavigate();
-    const { user } = useAppContext();
+    const { user, setInformMessage } = useAppContext();
 
     const { chat } = props;
     const [lastChatMessage, setLastChatMessage] = useState("");
@@ -18,29 +21,44 @@ export default function ChatsListItem(props) {
     const [isChatListItemActionsButtonsShown, setChatListItemActionsButtonsShow] = useState(false);
 
     useEffect(() => {
-        setNewMessagesPresent(false);
-        let chatMessages = chat?.messages;
-        if (chatMessages && chatMessages.length !== 0) {
-            let lastMessage = chatMessages[chatMessages.length - 1];
-            if (lastMessage) {
-                setLastChatMessage(lastMessage);
-                if (lastMessage.status === MessageStatus.UNREAD_MESSAGE && lastMessage?.sender?.username != user?.username) {
-                    setNewMessagesPresent(true);
+        async function getChat() {
+            setNewMessagesPresent(false);
+            let response = await getChatById(chat?.id);
+            let data = response?.data;
+            if (data) {
+                let chatMessages = response?.data?.messages;
+                if (chatMessages && chatMessages.length !== 0) {
+                    let lastMessage = chatMessages[chatMessages.length - 1];
+                    if (lastMessage) {
+                        let userPrivateKeyString = localStorage.getItem("user-private-key");
+                        userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
+                        let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
+                        if (lastMessage?.content) {
+                            let decryptedText = userPrivateKey.decrypt(forge.util.decode64(lastMessage.content));
+                            setLastChatMessage({ ...lastMessage, content: decryptedText });
+                        } else {
+                            setLastChatMessage("");
+                        }
+                        if (lastMessage.status === MessageStatus.UNREAD_MESSAGE && lastMessage?.sender?.username != user?.username) {
+                            setNewMessagesPresent(true);
+                        }
+                    }
+                } else {
+                    setLastChatMessage("");
                 }
+
+                let members = chat?.members;
+                let currentUserUsername = user?.username;
+
+                let isCurrentUserhasRoleAdminInChat = members.some(
+                    member =>
+                        member?.user?.username === currentUserUsername
+                        && member?.role === ChatMemberRole.ADMIN
+                );
+                setAdmin(isCurrentUserhasRoleAdminInChat);
             }
-        } else {
-            setLastChatMessage("");
         }
-
-        let members = chat?.members;
-        let currentUserUsername = user?.username;
-
-        let isCurrentUserhasRoleAdminInChat = members.some(
-            member =>
-                member?.user?.username === currentUserUsername
-                && member?.role === ChatMemberRole.ADMIN
-        );
-        setAdmin(isCurrentUserhasRoleAdminInChat);
+        getChat();
     }, [chat]);
 
     const onChatListItemContextMenuClick = (e) => {
@@ -56,12 +74,24 @@ export default function ChatsListItem(props) {
         navigate(CHATS_ROUTE + "/" + chat.id);
     }
 
-    const onChatDeleteButtonClick = () => {
-        console.log("delete chat");
+    const onLeaveChatButtonClick = async () => {
+        if (window.confirm("Are you sure you want to leave this chat?")) {
+            let response = await deleteChatMemberFromChat(chat?.id, user?.username);
+            let data = response?.data;
+            if (!data) {
+                setInformMessage("Something wen wrong. Try again");
+            }
+        }
     }
 
-    const onCompletelyChatDeleteButtonClick = () => {
-        console.log("completely delete chat");
+    const onDeleteChatButtonClick = async () => {
+        if (window.confirm("Are you sure you want to leave and delete this chat?")) {
+            let response = await deleteChatById(chat?.id);
+            let data = response?.data;
+            if (!data) {
+                setInformMessage("Something went wrong. Try again!");
+            }
+        }
     }
 
     return (
@@ -75,16 +105,20 @@ export default function ChatsListItem(props) {
                     {
                         isChatListItemActionsButtonsShown
                             ? isAdmin
-                                ? <>
-                                    <div className="chat-list-item-delete-button-container">
-                                        <div className="chat-list-item-delete-button" onClick={onChatDeleteButtonClick}>Delete chat for me</div>
+                                ? chat?.type === ChatType.GROUP_CHAT
+                                    ? <>
+                                        <div className="chat-list-item-delete-button-container">
+                                            <div className="chat-list-item-delete-button" onClick={onLeaveChatButtonClick}>Leave chat</div>
+                                        </div>
+                                        <div className="chat-list-item-delete-button-container">
+                                            <div className="chat-list-item-delete-button" onClick={onDeleteChatButtonClick}>Delete chat</div>
+                                        </div>
+                                    </>
+                                    : <div className="chat-list-item-delete-button-container">
+                                        <div className="chat-list-item-delete-button" onClick={onDeleteChatButtonClick}>Delete chat</div>
                                     </div>
-                                    <div className="chat-list-item-delete-button-container">
-                                        <div className="chat-list-item-delete-button" onClick={onCompletelyChatDeleteButtonClick}>Delete chat for all</div>
-                                    </div>
-                                </>
                                 : <div className="chat-list-item-delete-button-container">
-                                    <div className="chat-list-item-delete-button" onClick={onChatDeleteButtonClick}>Delete chat</div>
+                                    <div className="chat-list-item-delete-button" onClick={onLeaveChatButtonClick}>Leave chat</div>
                                 </div>
                             : ""
                     }

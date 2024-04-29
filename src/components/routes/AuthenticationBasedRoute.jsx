@@ -246,25 +246,6 @@ export default function AuthenticationBasedRoute() {
             let currentUserChatsResponse = await getCurrentUserChats(3);
             let currentUserChats = currentUserChatsResponse?.data;
             if (currentUserChats) {
-                let userPrivateKeyString = localStorage.getItem("user-private-key");
-                userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
-                let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
-
-                for (let i = 0; i < currentUserChats.length; i++) {
-                    let currentUserChat = currentUserChats[i];
-                    if (currentUserChat) {
-                        let chatMessages = currentUserChat?.messages;
-                        if (chatMessages) {
-                            for (let i = 0; i < chatMessages.length; i++) {
-                                let messageContent = chatMessages[i]?.content;
-                                if (messageContent) {
-                                    let decryptedText = userPrivateKey.decrypt(forge.util.decode64(messageContent));
-                                    chatMessages[i].content = decryptedText;
-                                }
-                            }
-                        }
-                    }
-                }
                 setUserChats(currentUserChats);
             }
         }

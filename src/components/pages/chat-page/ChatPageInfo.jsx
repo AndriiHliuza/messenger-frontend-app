@@ -71,6 +71,8 @@ export default function ChatPageInfo(props) {
             let data = response?.data;
             if (data) {            
                 navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+            } else {
+                setInformMessage("Something went wrong. Try again!");
             }
         }
     }
@@ -81,6 +83,8 @@ export default function ChatPageInfo(props) {
             let data = response?.data;
             if (data) {
                 navigate(USER_ROUTE + "/" + user?.uniqueName + "/chats");
+            } else {
+                setInformMessage("Something went wrong. Try again!");
             }
         }
     }

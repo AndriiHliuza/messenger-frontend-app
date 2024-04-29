@@ -32,6 +32,8 @@ import ChatPage from "../pages/chat-page/ChatPage";
 import ProfileModificationPage from "../pages/profile-pages/profile-modification-page/ProfileModificationPage";
 import ViewChatsRoute from "./ViewChatsRoute";
 import ChatCreationPage from "../pages/chat-page/ChatCreationPage";
+import UserSubscribersPage from "../pages/subs-pages/UserSubscribersPage";
+import UserSubscriptionsPage from "../pages/subs-pages/UserSubscriptionsPage";
 
 export default function RoutesProcessor() {
 
@@ -58,12 +60,12 @@ export default function RoutesProcessor() {
                             <Route index element={<ViewChatsRoute />} />
                             <Route path="creation-panel" element={<ChatCreationPage />}/>
                         </Route>
-                        <Route path=":uniqueName/subscribers" element={<h1>Hello subscribers</h1>} />
-                        <Route path=":uniqueName/subscriptions" element={<h1>Hello subscribtions</h1>} />
+                        <Route path=":uniqueName/subscribers" element={<UserSubscribersPage />} />
+                        <Route path=":uniqueName/subscriptions" element={<UserSubscriptionsPage />} />
                     </Route>
                 </Route>
 
-                <Route path={CHATS_ROUTE}>
+                <Route path={CHATS_ROUTE} element={<NotFoundPage />} >
                     <Route path=":chatId" element={<ChatPage />} />
                 </Route>
 

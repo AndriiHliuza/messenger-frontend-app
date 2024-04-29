@@ -11,6 +11,7 @@ import { updateMessagesStatusesInChat } from '../../../axios/MessageApi';
 import { MessageStatus } from '../../../utils/MessageStatus';
 import { USER_ROUTE } from '../../../config';
 import { useAppContext } from '../../../App';
+import { Role } from '../../../utils/Role';
 
 export default function ChatPage() {
 
@@ -50,7 +51,7 @@ export default function ChatPage() {
     return (
         isLoading
             ? <LoadingPage />
-            : chatExists
+            : chatExists && user?.role !== Role.ADMIN && user?.role !== Role.ROOT 
                 ? (
                     <div className="chat-page-container">
                         <div className="chat-page-buttons-container">

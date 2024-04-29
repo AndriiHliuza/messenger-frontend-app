@@ -21,40 +21,43 @@ export default function NavBar() {
     const navigate = useNavigate();
     const location = useLocation();
 
-    const items = [
-        { name: "Home", href: HOME_ROUTE },
-    ];
+    const items = [];
 
     const [itemsToShow, setItemsToShow] = useState([]);
 
     useEffect(() => {
-        let userProfileRoute = USER_ROUTE;
-        let role = user.role;
-        switch (role) {
-            case Role.USER:
-                userProfileRoute = USER_ROUTE;
-                break;
-            case Role.ADMIN:
-                userProfileRoute = ADMIN_ROUTE;
-                break;
-            case Role.ROOT:
-                userProfileRoute = ROOT_ROUTE;
-                break;
-            default:
-                userProfileRoute = USER_ROUTE;
-        }
-
         if (user.authenticated) {
             const uniqueName = user.uniqueName;
-            setItemsToShow([
-                ...items,
-                { name: "Users", href: USER_ROUTE },
-                { name: "Chats", href: userProfileRoute + "/" + uniqueName + "/chats" },
-                { name: "Profile", href: userProfileRoute + "/" + uniqueName }
-            ]);
+            let userProfileRoute = USER_ROUTE;
+            let role = user.role;
+            switch (role) {
+                case Role.USER:
+                    userProfileRoute = USER_ROUTE;
+                    setItemsToShow([
+                        { name: "Users", href: USER_ROUTE },
+                        { name: "Chats", href: userProfileRoute + "/" + uniqueName + "/chats" },
+                        { name: "Profile", href: userProfileRoute + "/" + uniqueName }
+                    ]);
+                    break;
+                case Role.ADMIN:
+                    userProfileRoute = ADMIN_ROUTE;
+                    setItemsToShow([
+                        { name: "Profile", href: userProfileRoute + "/" + uniqueName }
+                    ]);
+                    break;
+                case Role.ROOT:
+                    userProfileRoute = ROOT_ROUTE;
+                    setItemsToShow([
+                        { name: "Profile", href: userProfileRoute + "/" + uniqueName }
+                    ]);
+                    break;
+                default:
+                    userProfileRoute = USER_ROUTE;
+            }
         } else {
             setItemsToShow([
                 ...items,
+                { name: "Home", href: HOME_ROUTE },
                 { name: "Sign In", href: SIGH_IN_ROUTE },
                 { name: "Sign Up", href: SIGN_UP_ROUTE }
             ]);

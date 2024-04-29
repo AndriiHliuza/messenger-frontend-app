@@ -29,8 +29,8 @@ export const NOT_FOUND_ROUTE = "/*";
 
 // authenticated user routes
 export const USER_ROUTE = "/users";
-export const ADMIN_ROUTE = "/admin";
-export const ROOT_ROUTE = "/root";
+export const ADMIN_ROUTE = "/admins";
+export const ROOT_ROUTE = "/roots";
 export const CHATS_ROUTE = "/chats";
 
 // validation form regex

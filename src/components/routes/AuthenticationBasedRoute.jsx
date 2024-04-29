@@ -1,5 +1,5 @@
 import { React, useEffect, useState, createContext, useContext } from "react";
-import { Outlet, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import NotLoggedInPage from "../pages/alert-pages/NotLoggedInPage";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
 import Stomp from "stompjs";
@@ -59,7 +59,7 @@ export default function AuthenticationBasedRoute() {
             return;
         }
         exchangePublicEncryptionKeys(user.username);
-        if (!stompClient.connected && user.authenticated) {
+        if (!stompClient.connected && user.authenticated && user.role !== Role.ADMIN && user.role !== Role.ROOT) {
             let accessToken = localStorage.getItem("access-token");
             stompClient.connect({Authorization: `Bearer ${accessToken}`}, onWebSocketConnected, onWebSocketConnectionError);
         }

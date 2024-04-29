@@ -63,6 +63,25 @@ export const getUsers = async (page, size, order) => {
         })
 }
 
+export const getUserSubscriptions = async (username) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "/" + username + "/subscriptions")
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const getUserSubscribers = async (username) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "/" + username + "/subscribers")
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+
+            return null;
+        })
+}
+
 export const subscribe = async (
     subscriberUniqueName,
     subscriptionUniqueName

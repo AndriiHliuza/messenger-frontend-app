@@ -1,19 +1,24 @@
 import { React, useEffect, forwardRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { USER_ROUTE } from "../config";
+import { ADMIN_ROUTE, USER_ROUTE } from "../config";
 import "./UsersListItem.css";
 import { getProfileImage, getProfileImageMetadata } from "../axios/UserAPI";
 import ProfileImageItem from "./pages/profile-pages/ProfileImageItem";
+import { Role } from "../utils/Role";
 
 const UsersListItem = forwardRef((props, ref) => {
 
-    const { user } = props;
+    const { user, role } = props;
 
     const navigate = useNavigate();
     const [usersListItemImage, setUsersListItemImage] = useState(null);
 
     const onVisitAccountClick = () => {
-        navigate(USER_ROUTE + "/" + user.uniqueName);
+        if (role === Role.USER) {
+            navigate(USER_ROUTE + "/" + user.uniqueName);
+        } else if (role === Role.ADMIN) {
+            navigate(ADMIN_ROUTE + "/" + user.uniqueName);
+        }
     }
 
     useEffect(() => {

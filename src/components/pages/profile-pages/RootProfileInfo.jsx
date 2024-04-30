@@ -1,37 +1,37 @@
 import { React } from "react";
 import "./ProfileInfo.css";
 import ProfileInfoItem from "./ProfileInfoItem";
-import { useUserContext } from "../../routes/UserRoute";
 import ProfileImageItem from "./ProfileImageItem";
+import { useRootContext } from "../../routes/RootRoute";
 
-export default function UserInfo() {
+export default function RootProfileInfo() {
 
-    const { userProfile } = useUserContext();
+    const { rootProfile } = useRootContext();
 
     return (
         <div className="profile-info">
             <div className="user-photo">
                 <div className="user-photo-container">
-                    <ProfileImageItem profileImage={userProfile?.profileImage} />
+                    <ProfileImageItem profileImage={rootProfile?.profileImage} />
                 </div>
             </div>
             <div className="user-info">
                 <div className="user-info-container">
                     <ProfileInfoItem
                         itemName="Username:"
-                        itemValue={userProfile.uniqueName ? userProfile.uniqueName : "-"}
+                        itemValue={rootProfile.uniqueName ? rootProfile.uniqueName : "-"}
                     />
                     <ProfileInfoItem
                         itemName="First name:"
-                        itemValue={userProfile.firstname ? userProfile.firstname : "-"}
+                        itemValue={rootProfile.firstname ? rootProfile.firstname : "-"}
                     />
                     <ProfileInfoItem
                         itemName="Last name:"
-                        itemValue={userProfile.lastname ? userProfile.lastname : "-"}
+                        itemValue={rootProfile.lastname ? rootProfile.lastname : "-"}
                     />
                     <ProfileInfoItem
                         itemName="Birthday:"
-                        itemValue={userProfile.birthday ? userProfile.birthday : "-"}
+                        itemValue={rootProfile.birthday ? rootProfile.birthday : "-"}
                     />
                 </div>
             </div>

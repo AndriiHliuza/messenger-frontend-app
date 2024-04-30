@@ -2,6 +2,7 @@ import { React, useEffect, useState } from "react";
 import { findUsersByUniqueNameStartingWith } from "../../axios/UserAPI";
 import "./Search.css";
 import FilteredUserItem from "./FilteredUserItem";
+import { Role } from "../../utils/Role";
 
 export default function Search(props) {
 

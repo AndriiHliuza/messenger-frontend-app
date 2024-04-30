@@ -6,6 +6,7 @@ import ProfileActionsArea from "./ProfileActionsArea";
 import { isSubscribed } from "../../../../axios/UserAPI";
 import { useUserContext } from "../../../routes/UserRoute";
 import { useAppContext } from "../../../../App";
+import { Role } from "../../../../utils/Role";
 
 export default function UserProfilePage() {
 
@@ -29,7 +30,7 @@ export default function UserProfilePage() {
     }
     let userUniqueName = user.uniqueName;
     let subscriptionUniqueName = userProfile.uniqueName;
-    if (userUniqueName !== subscriptionUniqueName && userUniqueName !== "" && subscriptionUniqueName !== "") {
+    if (userUniqueName !== subscriptionUniqueName && userUniqueName !== "" && subscriptionUniqueName !== "" && user.role !== Role.ADMIN && user.role !== Role.ROOT) {
       checkSubscription();
     }
     setLoading(false);

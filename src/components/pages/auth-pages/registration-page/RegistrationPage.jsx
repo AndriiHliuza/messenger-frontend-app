@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { registrationSchema } from "../../../../utils/validation-schemas/ValidationSchemaConfig"
 import "../AuthPages.css";
@@ -11,11 +11,30 @@ import SuccessfulRegistrationPage from "../../alert-pages/SuccessfulRegistration
 
 export default function RegistrationPage() {
 
-    const navigate = useNavigate();
-    const { setUser } = useAppContext();
+    const { setInformMessage } = useAppContext();
     const [isRegistrationSuccessful, setRegistrationSuccessful] = useState(false);
 
     const onSubmit = async (values, actions) => {
+        if (!values.username) {
+            setInformMessage("Provide email");
+            return;
+        } else if (!values.password) {
+            setInformMessage("Provide password");
+            return;
+        } else if (!values.confirmedPassword) {
+            setInformMessage("Confirm password");
+            return;
+        } else if (!values.uniqueName) {
+            setInformMessage("Provide username");
+            return;
+        } else if (!values.firstname) {
+            setInformMessage("Provide firstname");
+            return;
+        } else if (!values.lastname) {
+            setInformMessage("Provide lastname");
+            return;
+        }
+
         const data = await register(
             values.username,
             values.password,
@@ -32,7 +51,7 @@ export default function RegistrationPage() {
                 setRegistrationSuccessful(true);
             }
         } else {
-            window.alert("Can not create an accout. Maybe such user already exists");
+            setInformMessage("Can not create an accout. Maybe such user already exists");
         }
     }
 

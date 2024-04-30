@@ -68,6 +68,7 @@ export const getUserSubscriptions = async (username) => {
         .then((response) => {
             return response;
         }).catch((error) => {
+            console.log(error);
             return null;
         })
 }

@@ -5,28 +5,22 @@ import { PASSWORD_REGEX } from "../../config";
 export const registrationSchema = yup.object().shape({
     username: yup
         .string()
-        .email("Please enter a valid email")
-        .required(),
+        .email("Please enter a valid email"),
     password: yup
         .string()
         .min(8)
         .matches(PASSWORD_REGEX, {
             message: "Password must include uppercase, lowercase letters, a number and a special character. Allowed special characters: !@#$%.,;"
-        })
-        .required(),
+        }),
     confirmedPassword: yup
         .string()
-        .oneOf([yup.ref("password"), null], "Passwords must match")
-        .required(),
+        .oneOf([yup.ref("password"), null], "Passwords must match"),
     uniqueName: yup
-        .string()
-        .required(),
+        .string(),
     firstname: yup
-        .string()
-        .required(),
+        .string(),
     lastname: yup
-        .string()
-        .required(),
+        .string(),
     birthday: yup
         .date()
         .max(new Date(), ({ max }) => `Date needs to be before ${new Date()}`)
@@ -36,11 +30,9 @@ export const registrationSchema = yup.object().shape({
 export const authenticationSchema = yup.object().shape({
     username: yup
         .string()
-        .email("Please enter a valid email")
-        .required(),
+        .email("Please enter a valid email"),
     password: yup
         .string()
-        .required()
 });
 
 export const modificationSchema = yup.object().shape({
@@ -62,6 +54,21 @@ export const modificationSchema = yup.object().shape({
         .matches(PASSWORD_REGEX, {
             message: "Password must include uppercase, lowercase letters, a number and a special character. Allowed special characters: !@#$%.,;"
         })
+});
+
+export const adminModificationSchema = yup.object().shape({
+    uniqueName: yup
+        .string(),
+    password: yup
+        .string()
+        .min(8),
+    firstname: yup
+        .string(),
+    lastname: yup
+        .string(),
+    currentPassword: yup
+        .string()
+        .min(8)
 });
 
 export const chatCreationSchema = yup.object().shape({

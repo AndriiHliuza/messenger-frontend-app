@@ -1,15 +1,15 @@
 import { React, useRef, useCallback, useState, useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
-import { getUsers } from "../../axios/UserAPI";
+import { getAdmins } from "../../axios/AdminAPI";
 import NotFoundPage from "../pages/alert-pages/NotFoundPage";
 import LoadingPage from "../pages/alert-pages/LoadingPage";
 import UsersListItem from "../UsersListItem";
-import UsersNotFoundPage from "../pages/alert-pages/UsersNotFoundPage";
 import "../ViewUsersRoute.css"
+import AdminsNotFoundPage from "../pages/alert-pages/AdminsNotFoundPage";
+import ViewAdminsActionsArea from "../pages/admin-pages/ViewAdminsActionsArea";
 import { Role } from "../../utils/Role";
-import ViewUsersActionsArea from "../pages/user-pages/ViewUsersActionsArea";
 
-export default function ViewUsersRoute() {
+export default function ViewAdminsRoute() {
 
     const [isLoading, setLoading] = useState(true);
     const [isInitialMount, setIsInitialMount] = useState(true);
@@ -20,30 +20,30 @@ export default function ViewUsersRoute() {
         data,
         status
     } = useInfiniteQuery({
-        queryKey: ["users"],
-        queryFn: ({ pageParam = 0 }) => getUsers(pageParam, 3, "ASC"),
+        queryKey: ["admins"],
+        queryFn: ({ pageParam = 0 }) => getAdmins(pageParam, 3, "ASC"),
         getNextPageParam: (lastPage, allPages) => {
             return lastPage.data.length ? allPages.length : undefined;
         }
     });
 
-    let users = data?.pages?.reduce((prevPage, currentPage) => [...prevPage, ...currentPage.data], []);
+    let admins = data?.pages?.reduce((prevPage, currentPage) => [...prevPage, ...currentPage.data], []);
 
     const observer = useRef(null);
-    const lastUserRef = useCallback(user => {
-        if (!user) return;
+    const lastAdminRef = useCallback(admin => {
+        if (!admin) return;
         if (isFetchingNextPage) return;
 
         if (observer.current) {
             observer.current.disconnect();
         }
-        observer.current = new IntersectionObserver((users) => {
-            if (users[0].isIntersecting) {
+        observer.current = new IntersectionObserver((admins) => {
+            if (admins[0].isIntersecting) {
                 fetchNextPage();
             }
         })
-        if (user) {
-            observer.current.observe(user);
+        if (admin) {
+            observer.current.observe(admin);
         }
 
     }, [isFetchingNextPage, fetchNextPage])
@@ -55,7 +55,7 @@ export default function ViewUsersRoute() {
         }
 
         setLoading(false);
-    }, [users]);
+    }, [admins]);
 
     if (status === 'error') return <NotFoundPage />
 
@@ -64,17 +64,17 @@ export default function ViewUsersRoute() {
             ? <LoadingPage />
             : (
                 <>
-                    <ViewUsersActionsArea />
+                    <ViewAdminsActionsArea />
                     {
-                        users && users.length > 0
+                        admins && admins.length > 0
                             ? (
                                 <div className="view-users-page">
-                                    {users.map((user) => {
-                                        return <UsersListItem key={user.username} ref={lastUserRef} user={user} role={Role.USER} />
+                                    {admins.map((admin) => {
+                                        return <UsersListItem key={admin.username} ref={lastAdminRef} user={admin} role={Role.ADMIN} />
                                     })}
                                 </div>
                             )
-                            : <UsersNotFoundPage />
+                            : <AdminsNotFoundPage />
                     }
                 </>
             )

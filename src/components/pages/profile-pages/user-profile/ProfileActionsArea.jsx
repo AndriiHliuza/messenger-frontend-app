@@ -46,7 +46,7 @@ export default function ProfileActionsArea(props) {
             let accessToken = localStorage.getItem("access-token");
             stompClient.send(
                 API_WEB_SOCKET_MESSAGING_URL + "/notification",
-                {Authorization: `Bearer ${accessToken}`},
+                { Authorization: `Bearer ${accessToken}` },
                 JSON.stringify({
                     senderUsername: user.username,
                     receiverUsername: userProfile.username,
@@ -81,9 +81,9 @@ export default function ProfileActionsArea(props) {
 
     const deleteAccount = async () => {
         if (window.confirm("Are you sure you want to delete your accout?")) {
-            let response = await deleteUser(user?.username);
+            let response = await deleteUser(userProfile?.username);
             let data = response?.data;
-            if (data) {
+            if (data && user?.role === Role.USER) {
                 navigate(HOME_ROUTE);
                 setUser({
                     username: "",
@@ -92,6 +92,9 @@ export default function ProfileActionsArea(props) {
                     role: Role.VISITOR
                 });
                 localStorage.clear();
+                setInformMessage("Account was deleted");
+            } else if (data && (user?.role === Role.ADMIN || user?.role === Role.ROOT)) {
+                navigate(USER_ROUTE);
                 setInformMessage("Account was deleted");
             }
         }
@@ -146,10 +149,16 @@ export default function ProfileActionsArea(props) {
     return (
         <div className="profile-actions-area">
             <div className="profile-actions-panel">
-                <div className={user.username === userProfile.username ? "profile-button modify-account-button" : "hide-button"} onClick={modifyAccount}>Modify Account</div>
-                <div className={user.username === userProfile.username ? "profile-button modify-account-button delete-account-button" : "hide-button"} onClick={deleteAccount}>Delete Account</div>
-                <div className={user.username !== userProfile.username ? "profile-button follow-button" : "hide-button"} onClick={onFollowClick}>{follow ? "Unsubscribe" : "Subscribe"}</div>
-                <div className={user.username !== userProfile.username ? "profile-button message-button" : "hide-button"} onClick={openChat}>Write message</div>
+                {
+                    user?.role === Role.USER
+                        ? <>
+                            <div className={user.username === userProfile.username ? "profile-button modify-account-button" : "hide-button"} onClick={modifyAccount}>Modify Account</div>
+                            <div className={user.username === userProfile.username ? "profile-button modify-account-button delete-account-button delete-account-button-color" : "hide-button"} onClick={deleteAccount}>Delete Account</div>
+                            <div className={user.username !== userProfile.username ? "profile-button follow-button" : "hide-button"} onClick={onFollowClick}>{follow ? "Unsubscribe" : "Subscribe"}</div>
+                            <div className={user.username !== userProfile.username ? "profile-button message-button" : "hide-button"} onClick={openChat}>Write message</div>
+                        </>
+                        : <div className="profile-button modify-account-button delete-account-button-color" onClick={deleteAccount}>Delete Account</div>
+                }
             </div>
             <div className="profile-subscriptions-area">
                 <div className="profile-button subscribtions-button" onClick={onSubscriptionsButtonClick}>Subscriptions</div>

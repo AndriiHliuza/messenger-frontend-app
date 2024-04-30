@@ -1,37 +1,37 @@
 import { React } from "react";
 import "./ProfileInfo.css";
 import ProfileInfoItem from "./ProfileInfoItem";
-import { useUserContext } from "../../routes/UserRoute";
 import ProfileImageItem from "./ProfileImageItem";
+import { useAdminContext } from "../../routes/AdminRoute";
 
-export default function UserInfo() {
+export default function AdminProfileInfo() {
 
-    const { userProfile } = useUserContext();
+    const { adminProfile } = useAdminContext();
 
     return (
         <div className="profile-info">
             <div className="user-photo">
                 <div className="user-photo-container">
-                    <ProfileImageItem profileImage={userProfile?.profileImage} />
+                    <ProfileImageItem profileImage={adminProfile?.profileImage} />
                 </div>
             </div>
             <div className="user-info">
                 <div className="user-info-container">
                     <ProfileInfoItem
                         itemName="Username:"
-                        itemValue={userProfile.uniqueName ? userProfile.uniqueName : "-"}
+                        itemValue={adminProfile.uniqueName ? adminProfile.uniqueName : "-"}
                     />
                     <ProfileInfoItem
                         itemName="First name:"
-                        itemValue={userProfile.firstname ? userProfile.firstname : "-"}
+                        itemValue={adminProfile.firstname ? adminProfile.firstname : "-"}
                     />
                     <ProfileInfoItem
                         itemName="Last name:"
-                        itemValue={userProfile.lastname ? userProfile.lastname : "-"}
+                        itemValue={adminProfile.lastname ? adminProfile.lastname : "-"}
                     />
                     <ProfileInfoItem
                         itemName="Birthday:"
-                        itemValue={userProfile.birthday ? userProfile.birthday : "-"}
+                        itemValue={adminProfile.birthday ? adminProfile.birthday : "-"}
                     />
                 </div>
             </div>

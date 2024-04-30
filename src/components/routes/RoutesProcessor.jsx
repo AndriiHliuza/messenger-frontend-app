@@ -34,6 +34,13 @@ import ViewChatsRoute from "./ViewChatsRoute";
 import ChatCreationPage from "../pages/chat-page/ChatCreationPage";
 import UserSubscribersPage from "../pages/subs-pages/UserSubscribersPage";
 import UserSubscriptionsPage from "../pages/subs-pages/UserSubscriptionsPage";
+import ChatRoute from "./ChatRoute";
+import ViewAdminsRoute from "./ViewAdminsRoute";
+import AdminProfileModificationPage from "../pages/profile-pages/profile-modification-page/AdminProfileModificationPage";
+import RootProfileModificationPage from "../pages/profile-pages/profile-modification-page/RootProfileModificationPage";
+import SearchUsersPage from "../pages/user-pages/SearchUsersPage";
+import SearchAdminsPage from "../pages/admin-pages/SearchAdminsPage";
+import AdminCreationPage from "../pages/admin-pages/AdminCreationPage";
 
 export default function RoutesProcessor() {
 
@@ -50,7 +57,7 @@ export default function RoutesProcessor() {
 
             {/* Routes for authenticated users */}
             <Route element={<AuthenticationBasedRoute />} >
-                
+
                 <Route element={<RoleUserRoute />} >
                     <Route path={USER_ROUTE} element={<UserRoute />} >
                         <Route index element={<ViewUsersRoute />} />
@@ -58,26 +65,32 @@ export default function RoutesProcessor() {
                         <Route path=":uniqueName/account" element={<ProfileModificationPage />} />
                         <Route path=":uniqueName/chats" >
                             <Route index element={<ViewChatsRoute />} />
-                            <Route path="creation-panel" element={<ChatCreationPage />}/>
+                            <Route path="creation-panel" element={<ChatCreationPage />} />
                         </Route>
                         <Route path=":uniqueName/subscribers" element={<UserSubscribersPage />} />
                         <Route path=":uniqueName/subscriptions" element={<UserSubscriptionsPage />} />
+                        <Route path="search" element={<SearchUsersPage />} />
                     </Route>
                 </Route>
 
-                <Route path={CHATS_ROUTE} element={<NotFoundPage />} >
+                <Route path={CHATS_ROUTE} element={<ChatRoute />} >
                     <Route path=":chatId" element={<ChatPage />} />
                 </Route>
 
                 <Route element={<RoleAdminRoute />} >
                     <Route path={ADMIN_ROUTE} element={<AdminRoute />} >
+                        <Route index element={<ViewAdminsRoute />} />
                         <Route path=":uniqueName" element={<AdminProfilePage />} />
+                        <Route path=":uniqueName/account" element={<AdminProfileModificationPage />} />
+                        <Route path="creation-panel" element={<AdminCreationPage />} />
+                        <Route path="search" element={<SearchAdminsPage />} />
                     </Route>
                 </Route>
 
                 <Route element={<RoleRootRoute />} >
                     <Route path={ROOT_ROUTE} element={<RootRoute />} >
                         <Route path=":uniqueName" element={<RootProfilePage />} />
+                        <Route path=":uniqueName/account" element={<RootProfileModificationPage />} />
                     </Route>
                 </Route>
 

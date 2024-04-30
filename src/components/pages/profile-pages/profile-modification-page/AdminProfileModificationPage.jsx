@@ -1,37 +1,37 @@
 import { React, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../routes/UserRoute";
 import "../ProfileModificationPage.css";
 import { Form, Formik } from "formik";
 import FormItem from "../../auth-pages/FormItem";
 import "../../auth-pages/FormItem.css";
-import { modificationSchema } from "../../../../utils/validation-schemas/ValidationSchemaConfig";
+import { adminModificationSchema } from "../../../../utils/validation-schemas/ValidationSchemaConfig";
 import LoadingPage from "../../alert-pages/LoadingPage";
 import NotFoundPage from "../../alert-pages/NotFoundPage";
 import { modify, getProfileImage, getProfileImageMetadata } from "../../../../axios/UserAPI";
 import ImageItem from "../ImageItem";
-import { USER_ROUTE } from "../../../../config";
+import { ADMIN_ROUTE } from "../../../../config";
 import { useAppContext } from "../../../../App";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAdminContext } from "../../../routes/AdminRoute";
 
-export default function ProfileModificationPage() {
+export default function AdminProfileModificationPage() {
 
     const { user, setUser } = useAppContext();
-    const { userProfile, setUserProfile } = useUserContext();
+    const { adminProfile, setAdminProfile } = useAdminContext();
     const [isLoading, setLoading] = useState(true);
     const [isModificationFailed, setModificationFailed] = useState(false);
     const [profileImage, setProfileImage] = useState(null);
-    const [userProfileBirthday, setUserProfileBirthday] = useState("");
+    const [adminProfileBirthday, setAdminProfileBirthday] = useState("");
     const [isBirthdayValid, setBirthdayValid] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        setProfileImage(userProfile.profileImage);
-        if (userProfile.birthday === null) {
-            setUserProfileBirthday("");
+        setProfileImage(adminProfile.profileImage);
+        if (adminProfile.birthday === null) {
+            setAdminProfileBirthday("");
         } else {
-            setUserProfileBirthday(userProfile.birthday);
+            setAdminProfileBirthday(adminProfile.birthday);
         }
         setLoading(false);    
     }, []);
@@ -49,7 +49,7 @@ export default function ProfileModificationPage() {
         } else {
             setBirthdayValid(true);
         }
-        setUserProfileBirthday(birthdayValue);
+        setAdminProfileBirthday(birthdayValue);
     }
 
     const onSubmit = async (values, actions) => {
@@ -60,19 +60,19 @@ export default function ProfileModificationPage() {
         formData.append("uniqueName", values.uniqueName);
         formData.append("firstname", values.firstname);
         formData.append("lastname", values.lastname);
-        formData.append("birthday", userProfileBirthday);
+        formData.append("birthday", adminProfileBirthday);
         formData.append("userImage", profileImage)
-        const userDataResponse = await modify(
+        const adminDataResponse = await modify(
             user.username,
             formData
         );
 
-        if (userDataResponse?.data && userDataResponse?.data?.uniqueName) {
-            let userProfileRoute = USER_ROUTE;
-            const uniqueName = userDataResponse.data.uniqueName;
-            const firstname = userDataResponse?.data?.firstname;
-            const lastname = userDataResponse?.data?.lastname;
-            const birthday = userDataResponse?.data?.birthday;
+        if (adminDataResponse?.data && adminDataResponse?.data?.uniqueName) {
+            let adminProfileRoute = ADMIN_ROUTE;
+            const uniqueName = adminDataResponse.data.uniqueName;
+            const firstname = adminDataResponse?.data?.firstname;
+            const lastname = adminDataResponse?.data?.lastname;
+            const birthday = adminDataResponse?.data?.birthday;
 
             const profileImageResponse = await getProfileImage(uniqueName);
             let imageToSet = null;
@@ -107,15 +107,15 @@ export default function ProfileModificationPage() {
                 uniqueName: uniqueName
             });
             setProfileImage(imageToSet);
-            setUserProfile({
-                ...userProfile,
+            setAdminProfile({
+                ...adminProfile,
                 uniqueName: uniqueName,
                 firstname: firstname,
                 lastname: lastname,
                 birthday: birthday,
                 profileImage: imageToSet
             });
-            navigate(userProfileRoute + "/" + uniqueName);
+            navigate(adminProfileRoute + "/" + uniqueName);
         } else {
             setModificationFailed(true);
         }
@@ -124,17 +124,17 @@ export default function ProfileModificationPage() {
     return (
         isLoading
             ? <LoadingPage />
-            : user.username === userProfile.username
+            : user.username === adminProfile.username
                 ? (
                     <Formik
                         initialValues={{
-                            uniqueName: userProfile.uniqueName,
+                            uniqueName: adminProfile.uniqueName,
                             password: "",
-                            firstname: userProfile.firstname,
-                            lastname: userProfile.lastname,
+                            firstname: adminProfile.firstname,
+                            lastname: adminProfile.lastname,
                             currentPassword: ""
                         }}
-                        validationSchema={modificationSchema}
+                        validationSchema={adminModificationSchema}
                         onSubmit={onSubmit}
                     >
                         {({ isSubmitting }) => (
@@ -148,7 +148,7 @@ export default function ProfileModificationPage() {
                                             id="uniqueName"
                                             name="uniqueName"
                                             type="text"
-                                            placeholder={userProfile.uniqueName}
+                                            placeholder={adminProfile.uniqueName}
                                         />
                                         <FormItem
                                             label="Password:"
@@ -162,14 +162,14 @@ export default function ProfileModificationPage() {
                                             id="firstname"
                                             name="firstname"
                                             type="text"
-                                            placeholder={userProfile.firstname}
+                                            placeholder={adminProfile.firstname}
                                         />
                                         <FormItem
                                             label="Last name:"
                                             id="lastname"
                                             name="lastname"
                                             type="text"
-                                            placeholder={userProfile.lastname}
+                                            placeholder={adminProfile.lastname}
                                         />
                                         <div className="formItem">
                                             <label htmlFor="birthday">Birthday:</label>
@@ -177,7 +177,7 @@ export default function ProfileModificationPage() {
                                                 id="birthday"
                                                 name="birthday"
                                                 type="date"
-                                                value={userProfileBirthday}
+                                                value={adminProfileBirthday}
                                                 onChange={setBirthday}
                                             />
                                             <div className={!isBirthdayValid ? "display-item-error-validation-message" : "hide-item-error-validation-message"}>

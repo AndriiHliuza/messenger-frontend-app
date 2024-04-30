@@ -1,0 +1,56 @@
+.view-admins-actions-area {
+    background-color: rgb(110, 110, 110);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+
+    margin: 20px;
+}
+
+.view-admins-actions-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 80px;
+    width: 100%;
+    margin: 0px 20px 0px 20px;
+}
+
+.admin-actions-area-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 50px;
+    width: 100%;
+
+    margin: 0px 5px 0px 5px;
+
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.admin-actions-area-button:hover {
+    background-color: rgba(9, 9, 9, 0.8);
+    cursor: pointer;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .view-admins-actions-panel {
+        flex-direction: column;
+        
+        height: 100px;
+
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }  
+    
+    .create-admin-button, .search-admin-button {
+        margin-bottom: 10px;
+    }
+}

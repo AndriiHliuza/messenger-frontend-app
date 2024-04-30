@@ -42,12 +42,16 @@ export default function NavBar() {
                 case Role.ADMIN:
                     userProfileRoute = ADMIN_ROUTE;
                     setItemsToShow([
+                        { name: "Users", href: USER_ROUTE },
+                        { name: "Admins", href: ADMIN_ROUTE },
                         { name: "Profile", href: userProfileRoute + "/" + uniqueName }
                     ]);
                     break;
                 case Role.ROOT:
                     userProfileRoute = ROOT_ROUTE;
                     setItemsToShow([
+                        { name: "Users", href: USER_ROUTE },
+                        { name: "Admins", href: ADMIN_ROUTE },
                         { name: "Profile", href: userProfileRoute + "/" + uniqueName }
                     ]);
                     break;

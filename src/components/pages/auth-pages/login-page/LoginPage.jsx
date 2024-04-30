@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Formik } from "formik";
 import { authenticationSchema } from "../../../../utils/validation-schemas/ValidationSchemaConfig";
@@ -21,13 +21,22 @@ import { generateKeyPair } from "../../../../utils/E2EEProvider";
 export default function LoginPage() {
 
     const navigate = useNavigate();
-    const { setUser } = useAppContext();
+    const { setUser, setInformMessage } = useAppContext();
 
     const onSubmit = async (values, actions) => {
+        if (!values.username) {
+            setInformMessage("Provide username");
+            return;
+        } else if (!values.password) {
+            setInformMessage("Provide password");
+            return;
+        }
+
         const data = await authenticate(
             values.username,
             values.password
         );
+
         actions.resetForm();
         if (data?.accessToken && data?.refreshToken) {
             const username = jwtDecode(data.accessToken).sub;
@@ -58,6 +67,8 @@ export default function LoginPage() {
                     }
                 }
             }
+        } else {
+            setInformMessage("Can not sign in. Check input data and try again!");
         }
     }
 

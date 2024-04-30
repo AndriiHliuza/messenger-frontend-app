@@ -1,0 +1,29 @@
+.user-search-item-container {   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100px;
+    width: 90%;
+
+    border: 2px solid black;
+    border-radius: 10px;
+
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.user-search-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+    height: 100%;
+}
+
+.user-search-item-container:hover {
+    background-color: rgb(77, 77, 77);
+    cursor: pointer;
+}

@@ -208,7 +208,7 @@ export default function AuthenticationBasedRoute() {
                         const newUserChatsAfterDeletingGroupChat = userChats.filter(userChat => userChat?.id !== chatId);
                         setUserChats(newUserChatsAfterDeletingGroupChat);
                         setUser({ ...user });
-                        notificationContent = "'" + chatName + "' was deleted";
+                        notificationContent = "'" + chatName + "' chat was deleted";
                         setInformMessage(notificationContent);
                         break;
 

@@ -80,7 +80,7 @@ export default function ProfileActionsArea(props) {
     }
 
     const deleteAccount = async () => {
-        if (window.confirm("Are you sure you want to delete your accout?")) {
+        if (window.confirm("Are you sure you want to delete accout?")) {
             let response = await deleteUser(userProfile?.username);
             let data = response?.data;
             if (data && user?.role === Role.USER) {

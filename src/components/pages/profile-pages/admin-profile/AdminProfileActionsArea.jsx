@@ -23,7 +23,7 @@ export default function AdminProfileActionsArea() {
     }
 
     const deleteAccount = async () => {
-        if (window.confirm("Are you sure you want to delete your accout?")) {
+        if (window.confirm("Are you sure you want to delete accout?")) {
             let response = await deleteAdmin(adminProfile?.username);
             let data = response?.data;
             if (data && user?.role === Role.ADMIN) {

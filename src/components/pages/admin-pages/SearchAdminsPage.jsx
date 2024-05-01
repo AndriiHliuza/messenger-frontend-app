@@ -30,7 +30,7 @@ export default function SearchAdminsPage() {
         <div className="search-user-page-container">
             <div className="search-user-page">
                 <div className="search-container">
-                    <h2>FIND USER</h2>
+                    <h2>FIND ADMIN</h2>
                     <input
                         className="search-field"
                         type="text"

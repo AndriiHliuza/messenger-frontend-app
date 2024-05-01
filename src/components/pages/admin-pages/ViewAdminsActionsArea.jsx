@@ -6,7 +6,6 @@ import { ADMIN_ROUTE } from "../../../config";
 export default function ViewAdminsActionsArea() {
 
     const navigate = useNavigate();
-    // const { user } = useAppContext();
 
     const onCreateAdminButtonClick = () => {
         navigate(ADMIN_ROUTE + "/creation-panel");

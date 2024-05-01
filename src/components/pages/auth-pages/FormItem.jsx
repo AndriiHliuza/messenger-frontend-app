@@ -1,8 +1,8 @@
+import React from "react";
 import { useField } from "formik";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./FormItem.css"
-import { useEffect } from "react";
 
 export default function FormItem({ label, ...props }) {
 

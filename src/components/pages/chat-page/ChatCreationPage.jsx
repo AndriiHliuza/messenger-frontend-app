@@ -32,11 +32,13 @@ export default function ChatCreationPage() {
                     role: ChatMemberRole.MEMBER
                 }
             }
+
             const response = await createChat(
                 chatName,
                 ChatType.GROUP_CHAT,
                 usersToAddToChat
             );
+            
             let chat = response?.data;
             if (chat) {
                 actions.resetForm();

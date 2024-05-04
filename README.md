@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+<a name="readme-top"></a>
+<h1 align="center"><b>WebTalk Messenger</b></h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+## Description
+### This repository is a FRONT-END ReactJS part of a messenegr project
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Functionality and features
 
-### `npm test`
+* **USER Account features**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - **Registration** with account activation via user's email.
 
-### `npm run build`
+    - **Authentication** based on **JWTs (JSON Web Tokens)**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    - **Real-time Messaging** using **WebSocket** connection.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    - **Chat's members hierarchy** based on roles.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    - **Messages managment** with options to delete and update previously sent messages.
 
-### `npm run eject`
+    - **Subscription System** to follow other users.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    - **Account modification** option
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* **ADMIN panel features**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+    - **User management system** with functionality to block and delete user's accounts by admins.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    - **Admin Creation functionality**: Admins can create other admins to assist in managing the platform
+    
+    - **Admin Account modification** option
 
-## Learn More
+* **ROOT panel features** (**Root** is the main **Admin** with the most rights in the system)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    - **All** functionality of a regular **ADMIN**.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - **Admin Deletion** functionality: ROOT can delete other admins in the system
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Prerequisites
+* Node.js
+* Installed and fully functioning BACK-END project.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### Follow the link to see [BACK-END](https://github.com/AndriiHliuza/messenger) implementation for this application.
 
-### Making a Progressive Web App
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
 
-### Advanced Configuration
+## Installation steps
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Clone the repository.
+```
+git clone https://github.com/AndriiHliuza/messenger-frontend-app.git
+```
 
-### Deployment
+2. Navigate to the project's directory.
+```
+cd messenger-frontend-app
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+3. Install dependencies
+```
+npm install
+```
 
-### `npm run build` fails to minify
+4. Run the server
+```
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+## Usage
+* Open browser and navigate to http://localhost:3000

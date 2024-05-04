@@ -19,6 +19,8 @@ import { exchangePublicEncryptionKeys } from "../../axios/EncryptionKeysAPI";
 import { ChatType } from "../../utils/ChatType";
 import { MessageType } from "../../utils/MessageType";
 import { Role } from "../../utils/Role";
+import { getUserAccountByUserUsername } from "../../axios/UserAPI";
+import { UserAccountState } from "../../utils/UserAccountState";
 
 export const AuthContext = createContext();
 export const useAuthContext = () => useContext(AuthContext);
@@ -48,6 +50,23 @@ export default function AuthenticationBasedRoute() {
                     authenticated: false,
                     role: Role.VISITOR
                 });
+            } else if (isAuthenticated && user?.authenticated === true && user?.username) {
+                let userAccountResponse = await getUserAccountByUserUsername(user?.username);
+                let userAccountData = userAccountResponse?.data;
+                if (!userAccountData) {
+                    let userAccountState = userAccountData?.state;
+                    if (userAccountState !== UserAccountState.ACTIVATED) {
+                        setInformMessage("Something went wrong! Maybe your account was blocked");
+                        navigate(HOME_ROUTE);
+                        setUser({
+                            username: "",
+                            uniqueName: "",
+                            authenticated: false,
+                            role: Role.VISITOR
+                        });
+                        localStorage.clear();
+                    }
+                }
             }
         }
         checkIsUserAuthenticated();
@@ -61,7 +80,7 @@ export default function AuthenticationBasedRoute() {
         exchangePublicEncryptionKeys(user.username);
         if (!stompClient.connected && user.authenticated && user.role !== Role.ADMIN && user.role !== Role.ROOT) {
             let accessToken = localStorage.getItem("access-token");
-            stompClient.connect({Authorization: `Bearer ${accessToken}`}, onWebSocketConnected, onWebSocketConnectionError);
+            stompClient.connect({ Authorization: `Bearer ${accessToken}` }, onWebSocketConnected, onWebSocketConnectionError);
         }
 
         setLoading(false);
@@ -77,7 +96,7 @@ export default function AuthenticationBasedRoute() {
 
     const onWebSocketConnected = async () => {
         let accessToken = localStorage.getItem("access-token");
-        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/" + user.username + "/notifications", onUserNotificationReceived, {Authorization: `Bearer ${accessToken}`});
+        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/" + user.username + "/notifications", onUserNotificationReceived, { Authorization: `Bearer ${accessToken}` });
 
         let currentUserChatsResponse = await getCurrentUserChats(3);
         let currentUserChats = currentUserChatsResponse?.data;
@@ -87,7 +106,7 @@ export default function AuthenticationBasedRoute() {
                 if (currentUserChat) {
                     let chatId = currentUserChat?.id;
                     if (chatId) {
-                        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived, {Authorization: `Bearer ${accessToken}`});
+                        stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived, { Authorization: `Bearer ${accessToken}` });
                     }
                 }
             }
@@ -135,7 +154,7 @@ export default function AuthenticationBasedRoute() {
                         }
                         if (isNewChatNotificationReceived) {
                             let accessToken = localStorage.getItem("access-token");
-                            stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived, {Authorization: `Bearer ${accessToken}`});
+                            stompClient.subscribe(API_WEB_SOCKET_MESSAGING_TOPIC_URL + "/chats/" + chatId + "/messages", onChatMessageReceived, { Authorization: `Bearer ${accessToken}` });
                             let currentUserChatsResponse = await getCurrentUserChats(3);
                             let currentUserChats = currentUserChatsResponse?.data;
                             let isCurrentUserCreatorOfChat = false;

@@ -72,7 +72,7 @@
     border-radius: 5px 5px 0px 0px;
 }
 
-.delete-account-button {
+.delete-account-button, .block-account-button {
     border-radius: 0px;
 }
 

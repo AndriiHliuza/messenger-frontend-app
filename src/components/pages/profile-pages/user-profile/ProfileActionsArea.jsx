@@ -1,8 +1,8 @@
-import { React } from "react";
+import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../ProfilePage.css";
 import { useUserContext } from "../../../routes/UserRoute";
-import { getUserByUsernameAndRole, deleteUser, subscribe, unsubscribe } from "../../../../axios/UserAPI";
+import { getUserByUsernameAndRole, getUserAccountByUserUsername, modifyUserAccount, deleteUser, subscribe, unsubscribe } from "../../../../axios/UserAPI";
 import {
     HOME_ROUTE,
     USER_ROUTE,
@@ -16,6 +16,7 @@ import { getCurrentUserPrivateChatWithAnotherUserByAnotherUserUsername, createCh
 import { Role } from "../../../../utils/Role";
 import { ChatType } from "../../../../utils/ChatType";
 import { ChatMemberRole } from "../../../../utils/ChatMemberRole";
+import { UserAccountState } from "../../../../utils/UserAccountState";
 
 export default function ProfileActionsArea(props) {
 
@@ -24,6 +25,22 @@ export default function ProfileActionsArea(props) {
     const { userProfile } = useUserContext();
     const { follow, setFollow } = props;
     const navigate = useNavigate();
+    const [isAccountBlocked, setAccountBlocked] = useState(false);
+
+    useEffect(() => {
+        async function getUserAccount() {
+            if (userProfile?.username) {
+                let response = await getUserAccountByUserUsername(userProfile?.username);
+                let data = response?.data;
+                if (data) {
+                    if (data?.state === UserAccountState.BLOCKED) {
+                        setAccountBlocked(true);
+                    }
+                }
+            }
+        }
+        getUserAccount();
+    }, [userProfile]);
 
     const onFollowClick = async () => {
         let authenticatedUserUniqueName = user.uniqueName;
@@ -100,6 +117,39 @@ export default function ProfileActionsArea(props) {
         }
     }
 
+    const blockUnBlockAccount = async () => {
+        if (isAccountBlocked) {
+            if (window.confirm("Are you sure you want to unblock accout?")) {
+                let unblockedUserAccountResponse = await modifyUserAccount(userProfile?.username, {
+                    userDto: userProfile,
+                    state: UserAccountState.ACTIVATED,
+                    createdAt: null,
+                    activatedAt: null
+                });
+                let unblockedUserAccountResponseData = unblockedUserAccountResponse?.data;
+                if (unblockedUserAccountResponseData?.state === UserAccountState.ACTIVATED) {
+                    setAccountBlocked(false);
+                    setInformMessage("Account was unblocked");
+                }
+            }
+        } else {
+            if (window.confirm("Are you sure you want to block accout?")) {
+                let blockedUserAccountResponse = await modifyUserAccount(userProfile?.username, {
+                    userDto: userProfile,
+                    state: UserAccountState.BLOCKED,
+                    createdAt: null,
+                    activatedAt: null
+                });
+                let blockedUserAccountResponseData = blockedUserAccountResponse?.data;
+                if (blockedUserAccountResponseData?.state === UserAccountState.BLOCKED) {
+                    setAccountBlocked(true);
+                    setInformMessage("Account was blocked");
+                }
+            }
+        }
+
+    }
+
     const openChat = async () => {
         let isErrorOccured = false;
         let openedUserProfileUsername = userProfile.username;
@@ -157,7 +207,10 @@ export default function ProfileActionsArea(props) {
                             <div className={user.username !== userProfile.username ? "profile-button follow-button" : "hide-button"} onClick={onFollowClick}>{follow ? "Unsubscribe" : "Subscribe"}</div>
                             <div className={user.username !== userProfile.username ? "profile-button message-button" : "hide-button"} onClick={openChat}>Write message</div>
                         </>
-                        : <div className="profile-button modify-account-button delete-account-button-color" onClick={deleteAccount}>Delete Account</div>
+                        : <>
+                            <div className="profile-button modify-account-button delete-account-button-color" onClick={deleteAccount}>Delete Account</div>
+                            <div className="profile-button modify-account-button block-account-button delete-account-button-color" onClick={blockUnBlockAccount}>{isAccountBlocked ? "Unblock Account" : "Block Account"}</div>
+                        </>
                 }
             </div>
             <div className="profile-subscriptions-area">

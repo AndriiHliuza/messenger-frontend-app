@@ -2,7 +2,8 @@ import { axiosClient, authAxiosClient } from "./AxiosClient";
 import { 
     API_REGISTRATION_ROUTE, 
     API_AUTHENTICATION_ROUTE, 
-    API_LOGOUT_ROUTE 
+    API_LOGOUT_ROUTE,
+    API_USER_ROUTE
 } from "../config";
 
 export const register = async (
@@ -65,4 +66,21 @@ export const logout = async () => {
         localStorage.removeItem("user-public-key");
         localStorage.removeItem("server-public-key");
     });
+}
+
+export const activateUserAccount = async (username, activationCode) => {
+    return await axiosClient.post(
+        API_USER_ROUTE + "/" + username + "/account/activation",
+        {
+            username: username,
+            activationCode: activationCode
+        },
+        {
+            headers: { "Content-Type": "application/json" }
+        }
+    ).then((response) => {
+        return response;
+    }).catch((error) => {
+        return null;
+    })
 }

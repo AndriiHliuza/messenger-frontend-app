@@ -7,7 +7,7 @@ import FormItem from "../FormItem";
 import { SIGH_IN_ROUTE } from "../../../../config";
 import { register } from "../../../../axios/AuthAPI";
 import { useAppContext } from "../../../../App";
-import SuccessfulRegistrationPage from "../../alert-pages/SuccessfulRegistrationPage";
+import AfterUserRegistrationPage from "../../alert-pages/AfterUserRegistrationPage";
 
 export default function RegistrationPage() {
 
@@ -49,6 +49,9 @@ export default function RegistrationPage() {
             let isRegistrationSuccessful = data?.registrationSuccessful;
             if (user && isRegistrationSuccessful) {
                 setRegistrationSuccessful(true);
+                if (user?.username) {
+                    localStorage.setItem("registratingUserEmail", user.username);
+                }
             }
         } else {
             setInformMessage("Can not create an accout. Maybe such user already exists");
@@ -57,7 +60,7 @@ export default function RegistrationPage() {
 
     return (
         isRegistrationSuccessful
-            ? <SuccessfulRegistrationPage />
+            ? <AfterUserRegistrationPage />
             : <Formik
                 initialValues={{
                     username: "",

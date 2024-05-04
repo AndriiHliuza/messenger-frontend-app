@@ -54,6 +54,32 @@ export const getUserByUniqueNameAndRole = async (uniqueName, role) => {
         })
 }
 
+export const getUserAccountByUserUsername = async (username) => {
+    return await authAxiosClient.get(API_USERS_ROUTE + "/" + username + "/account")
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
+}
+
+export const modifyUserAccount = async (
+    username,
+    userAccount
+) => {
+    return await authAxiosClient.patch(
+        API_USERS_ROUTE + "/" + username + "/account",
+        userAccount,
+        {
+            headers: { "Content-Type": "application/json" }
+        }
+    ).then((response) => {
+        return response;
+    }).catch((error) => {
+        return null;
+    })
+}
+
 export const getUsers = async (page, size, order) => {
     return await authAxiosClient.get(API_USERS_ROUTE + "?page=" + page + "&size=" + size + "&order=" + order)
         .then((response) => {

@@ -41,6 +41,7 @@ import RootProfileModificationPage from "../pages/profile-pages/profile-modifica
 import SearchUsersPage from "../pages/user-pages/SearchUsersPage";
 import SearchAdminsPage from "../pages/admin-pages/SearchAdminsPage";
 import AdminCreationPage from "../pages/admin-pages/AdminCreationPage";
+import AccountActivationPage from "../pages/auth-pages/account-activation-page/AccountActivationPage";
 
 export default function RoutesProcessor() {
 
@@ -53,6 +54,7 @@ export default function RoutesProcessor() {
             <Route element={<NotAuthenticatedUserRoute />} >
                 <Route path={SIGH_IN_ROUTE} element={<LoginPage />} />
                 <Route path={SIGN_UP_ROUTE} element={<RegistrationPage />} />
+                <Route path="/user/:uniqueName/account/activation" element={<AccountActivationPage />} />
             </Route>
 
             {/* Routes for authenticated users */}

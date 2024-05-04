@@ -1,0 +1,5 @@
+export const UserAccountState = {
+    ACTIVATED: "ACTIVATED",
+    REQUIRE_ACTIVATION: "REQUIRE_ACTIVATION",
+    BLOCKED: "BLOCKED"
+}

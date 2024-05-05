@@ -26,9 +26,7 @@
 
 <!-- About The Project -->
 ## About The Project
-This repository is a FRONT-END ReactJS part of a messeneger project
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+This repository is a FRONT-END ReactJS part of a messeneger project for a real-time communication between users.
 
 
 <!-- Project's Functionality and Features -->

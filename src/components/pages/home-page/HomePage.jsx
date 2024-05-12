@@ -4,6 +4,7 @@ import "./HomePage.css";
 import HomePageFooter from "./footer/HomePageFooter"
 import { useAppContext } from "../../../App";
 import { HOME_ROUTE, USER_ROUTE } from "../../../config";
+import homePageImg from "../../../images/homepage-img.png";
 
 export default function HomePage() {
     const { user } = useAppContext();
@@ -20,8 +21,9 @@ export default function HomePage() {
         <div className='content'>
             <div className="content-message">
                 <h1>Welcome to WebTalk</h1>
-                <strong>WebTalk is a social network <br />which allows you to share your thoughts with others around the world</strong>
+                <strong>WebTalk is a safe messenger <br />which allows you to share your thoughts with others around the world</strong>
             </div>
+            <img className="home-page-img" src={homePageImg} alt="Responsive Image" />
             <HomePageFooter />
         </div >
     );

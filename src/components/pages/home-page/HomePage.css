@@ -24,3 +24,25 @@
 
     margin: 20px 0px 20px 0px;
 }
+
+.home-page-img {
+    width: 40%;
+    height: auto;
+}
+
+@media (min-width: 768px) {
+
+    .home-page-img {
+        width: 400px;
+        height: auto
+    }
+
+}
+
+@media (max-height: 250px) {
+
+    .home-page-img {
+        margin-top: 30px;
+    }
+
+}

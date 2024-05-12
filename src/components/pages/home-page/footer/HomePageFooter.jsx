@@ -8,7 +8,7 @@ export default function HomePageFooter() {
                 <div className="footer-item">
                     <div className="footer-item-content">
                         <h4>About</h4>
-                        <div>Social network</div>
+                        <div>Messenger</div>
                     </div>
                 </div>
                 <div className="footer-item">

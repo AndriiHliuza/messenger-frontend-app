@@ -8,6 +8,7 @@ import { MessageStatus } from "../../../utils/MessageStatus";
 import { ChatType } from "../../../utils/ChatType";
 import { getChatById, deleteChatById, deleteChatMemberFromChat } from "../../../axios/ChatAPI";
 import forge from "node-forge";
+import CryptoJS from 'crypto-js';
 
 export default function ChatsListItem(props) {
 
@@ -30,17 +31,23 @@ export default function ChatsListItem(props) {
                 if (chatMessages && chatMessages.length !== 0) {
                     let lastMessage = chatMessages[chatMessages.length - 1];
                     if (lastMessage) {
-                        let userPrivateKeyString = localStorage.getItem("user-private-key");
-                        userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
-                        let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
-                        if (lastMessage?.content) {
-                            let decryptedText = userPrivateKey.decrypt(forge.util.decode64(lastMessage.content));
-                            setLastChatMessage({ ...lastMessage, content: decryptedText });
+                        let aesKey = localStorage.getItem("aes-key");
+                        if (aesKey) {
+                            if (lastMessage?.content) {
+                                let decryptedText = CryptoJS.AES.decrypt(
+                                    { ciphertext: CryptoJS.enc.Base64.parse(lastMessage?.content) },
+                                    CryptoJS.enc.Base64.parse(aesKey),
+                                    { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }
+                                )
+                                setLastChatMessage({ ...lastMessage, content: decryptedText.toString(CryptoJS.enc.Utf8) });
+                            } else {
+                                setLastChatMessage("");
+                            }
+                            if (lastMessage.status === MessageStatus.UNREAD_MESSAGE && lastMessage?.sender?.username != user?.username) {
+                                setNewMessagesPresent(true);
+                            }
                         } else {
                             setLastChatMessage("");
-                        }
-                        if (lastMessage.status === MessageStatus.UNREAD_MESSAGE && lastMessage?.sender?.username != user?.username) {
-                            setNewMessagesPresent(true);
                         }
                     }
                 } else {

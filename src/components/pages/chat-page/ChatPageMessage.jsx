@@ -6,6 +6,7 @@ import { USER_ROUTE } from '../../../config';
 import { deleteMessageFromChat, getMessageStatusForUser } from '../../../axios/MessageApi';
 import { getChatById } from '../../../axios/ChatAPI';
 import forge from "node-forge";
+import CryptoJS from 'crypto-js';
 
 export default function ChatPageMessage(props) {
 
@@ -93,12 +94,14 @@ export default function ChatPageMessage(props) {
             setSenderUniqueName(senderUserUniqueName);
         }
 
-        let userPrivateKeyString = localStorage.getItem("user-private-key");
-        userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
-        let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
+        let aesKey = localStorage.getItem("aes-key");
         if (message?.content) {
-            let decryptedText = userPrivateKey.decrypt(forge.util.decode64(message.content));
-            setMessageContent(decryptedText);
+            let decryptedText = CryptoJS.AES.decrypt(
+                { ciphertext: CryptoJS.enc.Base64.parse(message?.content) },
+                CryptoJS.enc.Base64.parse(aesKey),
+                { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }
+            )
+            setMessageContent(decryptedText.toString(CryptoJS.enc.Utf8));
         }
 
         let messageTime = message?.sendTime;

@@ -27,7 +27,7 @@ export default function ChatPageInfo(props) {
 
     const onChatNameClick = (e) => {
         e.preventDefault();
-        if (isAdmin) {
+        if (isAdmin && chat?.type && chat.type !== ChatType.PRIVATE_CHAT) {
             setChatModificationButtonShown(true);
         }
     }
@@ -49,6 +49,7 @@ export default function ChatPageInfo(props) {
             let response = await updateChat(chat?.id, { ...chat, name: updatedChatName });
             let data = response?.data;
             if (data) {
+                setChatNameIsChanging(false);
                 setInformMessage("Chat name was updated");
             }
         }

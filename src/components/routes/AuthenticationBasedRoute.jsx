@@ -5,6 +5,7 @@ import LoadingPage from "../pages/alert-pages/LoadingPage";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import forge from "node-forge";
+import CryptoJS from 'crypto-js';
 import {
     HOME_ROUTE,
     API_WEB_SOCKET_URL,
@@ -15,7 +16,7 @@ import { isUserAuthenticated } from "../../utils/AuthProvider";
 import { useAppContext } from "../../App";
 import { NotificationType } from "../../utils/NotificationType";
 import { ChatMemberRole } from "../../utils/ChatMemberRole";
-import { exchangePublicEncryptionKeys } from "../../axios/EncryptionKeysAPI";
+import { exchangePublicEncryptionKeys, getEncryptedAesKey } from "../../axios/EncryptionKeysAPI";
 import { ChatType } from "../../utils/ChatType";
 import { MessageType } from "../../utils/MessageType";
 import { Role } from "../../utils/Role";
@@ -77,7 +78,21 @@ export default function AuthenticationBasedRoute() {
             setIsInitialMount(false);
             return;
         }
-        exchangePublicEncryptionKeys(user.username);
+
+        async function exchangeKeys() {
+            await exchangePublicEncryptionKeys(user.username);
+            let aesKeyResponse = await getEncryptedAesKey();
+            let aesKeyResponseData = aesKeyResponse?.data;
+            if (aesKeyResponseData) {
+                let userPrivateKeyString = localStorage.getItem("user-private-key");
+                userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
+                let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
+                let decryptedAesKey = userPrivateKey.decrypt(forge.util.decode64(aesKeyResponseData?.encryptionKey));
+                localStorage.setItem("aes-key", decryptedAesKey);
+            }            
+        }
+        exchangeKeys();
+        
         if (!stompClient.connected && user.authenticated && user.role !== Role.ADMIN && user.role !== Role.ROOT) {
             let accessToken = localStorage.getItem("access-token");
             stompClient.connect({ Authorization: `Bearer ${accessToken}` }, onWebSocketConnected, onWebSocketConnectionError);
@@ -159,9 +174,6 @@ export default function AuthenticationBasedRoute() {
                             let currentUserChats = currentUserChatsResponse?.data;
                             let isCurrentUserCreatorOfChat = false;
                             if (currentUserChats) {
-                                let userPrivateKeyString = localStorage.getItem("user-private-key");
-                                userPrivateKeyString = "-----BEGIN RSA PRIVATE KEY-----\n" + userPrivateKeyString + "\n-----END RSA PRIVATE KEY-----";
-                                let userPrivateKey = forge.pki.privateKeyFromPem(userPrivateKeyString);
                                 for (let i = 0; i < currentUserChats.length; i++) {
                                     let currentUserChat = currentUserChats[i];
                                     if (currentUserChat) {
@@ -170,7 +182,12 @@ export default function AuthenticationBasedRoute() {
                                             for (let i = 0; i < chatMessages.length; i++) {
                                                 let messageContent = chatMessages[i]?.content;
                                                 if (messageContent) {
-                                                    let decryptedText = userPrivateKey.decrypt(forge.util.decode64(messageContent));
+                                                    let aesKey = localStorage.getItem("aes-key");
+                                                    let decryptedText = CryptoJS.AES.decrypt(
+                                                        { ciphertext: CryptoJS.enc.Base64.parse(messageContent) },
+                                                        CryptoJS.enc.Base64.parse(aesKey),
+                                                        { mode: CryptoJS.mode.ECB, padding: CryptoJS.pad.Pkcs7 }
+                                                    )
                                                     chatMessages[i].content = decryptedText;
                                                 }
                                             }

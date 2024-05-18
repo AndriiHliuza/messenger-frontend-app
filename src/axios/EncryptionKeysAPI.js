@@ -7,7 +7,7 @@ export const exchangePublicEncryptionKeys = async (username) => {
         let receivedValue = await authAxiosClient.post(
             API_ENCRYPTION_KEYS_ROUTE + "/publicKey",
             {
-                publicKey: userPublicKey
+                encryptionKey: userPublicKey
             },
             {
                 headers: { "Content-Type": "application/json" }
@@ -17,13 +17,23 @@ export const exchangePublicEncryptionKeys = async (username) => {
         }).catch((error) => {
             return null;
         })
-        
+
         let response = receivedValue?.data;
         if (response) {
-            let serverPublicKey = response?.publicKey;
+            let serverPublicKey = response?.encryptionKey;
             if (serverPublicKey) {
                 localStorage.setItem("server-public-key", serverPublicKey);
             }
         }
     }
+}
+
+export const getEncryptedAesKey = async () => {
+    return await authAxiosClient.get(
+        API_ENCRYPTION_KEYS_ROUTE + "/aesKey")
+        .then((response) => {
+            return response;
+        }).catch((error) => {
+            return null;
+        })
 }

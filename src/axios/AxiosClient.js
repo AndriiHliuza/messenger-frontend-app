@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { BASE_URL } from "../config";
 import { isUserAuthenticated } from "../utils/AuthProvider";
+import { validateToken } from "./TokenAPI";
 
 export const axiosClient = axios.create({
     baseURL: BASE_URL
@@ -16,12 +17,8 @@ export const refreshAuthAxiosClient = axios.create({
 });
 
 authAxiosClient.interceptors.request.use(async (request) => {
-    let isAuthenticated = await isUserAuthenticated();
-    if (isAuthenticated) {
-        const accessToken = localStorage.getItem("access-token");
-        request.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
+    const accessToken = localStorage.getItem("access-token");
+    request.headers.Authorization = `Bearer ${accessToken}`;
     return request;
 });
 

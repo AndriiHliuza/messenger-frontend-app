@@ -86,6 +86,35 @@
     cursor: pointer;    
 }
 
+.emoji-area {
+    position: relative;
+}
+
+.emoji-picker-button {
+    background-color: antiquewhite;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 50px;
+    height: 50px;
+
+    margin: 0px 10px 0px 10px;
+    padding-bottom: 5px;
+
+    font-size: 40px;
+
+    border: 0px;
+    border-radius: 10px;
+}
+
+.emoji-picker-container {
+    position: absolute;
+    bottom: 80px;
+    right: 0px;
+}
+
 @media (max-width: 768px) {
     .hide-chat-page-messages-area-container {
         display: none;
@@ -93,5 +122,11 @@
 
     .chat-page-write-message-textarea {
         font-size: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .emoji-area {
+        display: none;
     }
 }

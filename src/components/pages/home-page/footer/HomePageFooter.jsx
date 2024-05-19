@@ -14,7 +14,15 @@ export default function HomePageFooter() {
                 <div className="footer-item">
                     <div className="footer-item-content">
                         <h4>Contact</h4>
-                        <div>Phone number</div>
+                        <div>
+                            <a
+                                href="https://github.com/AndriiHliuza"
+                                target=">blank"
+                                className="footer-contact-link"
+                            >
+                                GitHub
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

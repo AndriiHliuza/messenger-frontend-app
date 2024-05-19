@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import { getUserSubscriptions } from "../../../axios/UserAPI";
 import "./SubsPages.css";
 import LoadingPage from "../alert-pages/LoadingPage";
@@ -10,11 +11,12 @@ export default function UserSubscriptionsPage() {
     const { userProfile }  = useUserContext();
     const [subscriptions, setSubscriptions] = useState([]);
     const [isLoading, setLoading] = useState(true);
+    const params = useParams();
 
     useEffect(() => {
         async function getSubscriptions() {
             if (userProfile?.username) {
-                let response = await getUserSubscriptions(userProfile.username);
+                let response = await getUserSubscriptions(params.uniqueName);
                 let data = response?.data;
                 if (data) {
                     setSubscriptions(data);

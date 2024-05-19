@@ -41,6 +41,10 @@ footer {
     flex-grow: 1;
     height: 100%;
 }
+.footer-contact-link {
+    text-decoration: none;
+    color: white;
+}
 
 @media (max-width: 1200px) {
     .footer-item {

@@ -7,6 +7,7 @@ import { isSubscribed } from "../../../../axios/UserAPI";
 import { useUserContext } from "../../../routes/UserRoute";
 import { useAppContext } from "../../../../App";
 import { Role } from "../../../../utils/Role";
+import ProfilePostsArea from "../ProfilePostsArea";
 
 export default function UserProfilePage() {
 
@@ -43,6 +44,7 @@ export default function UserProfilePage() {
         <div className="profile-page">
           <ProfileInfo />
           <ProfileActionsArea follow={follow} setFollow={setFollow} />
+          <ProfilePostsArea />
         </div>
       )
   );

@@ -19,8 +19,8 @@ export default function SubsPagesUserItem(props) {
         >
             <div className="subs-page-user-item">
                 <div><strong>Username:</strong> {user?.uniqueName ? user.uniqueName : "Unknown"}</div>
-                <div><strong>Username:</strong> {user?.firstname ? user.firstname : "Unknown"}</div>
-                <div><strong>Username:</strong> {user?.lastname ? user.lastname : "UnKnown"}</div>
+                <div><strong>Firstname:</strong> {user?.firstname ? user.firstname : "Unknown"}</div>
+                <div><strong>Lastname:</strong> {user?.lastname ? user.lastname : "UnKnown"}</div>
             </div>
         </div>
     );

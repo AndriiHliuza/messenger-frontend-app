@@ -65,6 +65,7 @@ export const logout = async () => {
         localStorage.removeItem("user-private-key");
         localStorage.removeItem("user-public-key");
         localStorage.removeItem("server-public-key");
+        localStorage.removeItem("aes-key");
     });
 }
 

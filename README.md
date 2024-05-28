@@ -72,7 +72,7 @@
 
 ---
 
-[![Watch the video](https://img.youtube.com/vi/https://6NsA-YT16ZI/0.jpg)](https://www.youtube.com/watch?v=6NsA-YT16ZI)
+![Alt Text](assets/messenger_registration_and_authentication.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

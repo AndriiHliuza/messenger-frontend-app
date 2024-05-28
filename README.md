@@ -26,7 +26,10 @@
 
 <!-- About The Project -->
 ## About The Project
-This repository is a FRONT-END ReactJS part of a messeneger project for a real-time communication between users.
+<p>This repository is a FRONT-END ReactJS part of a safe and secure messeneger project for a real-time communication between users.</p>
+<p>
+  Safety of communication is achieved by encrypting messages before sending them to other users. For this purpose messenger uses a combination of asymmetric and symmetric encryption methods.
+</p>
 
 
 <!-- Project's Functionality and Features -->
@@ -62,6 +65,18 @@ This repository is a FRONT-END ReactJS part of a messeneger project for a real-t
 
     - **ADMIN's deletion functionality**: ROOT can delete other admins in the system
 
+<br/>
+
+
+### Registration and authentication
+
+---
+
+<video width="100%" height="100%" controls>
+  <source src="assets/messenger_registration_and_authentication.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -69,17 +84,26 @@ This repository is a FRONT-END ReactJS part of a messeneger project for a real-t
 ## Getting Started
 
 ### Prerequisites
-* Node.js
-* Installed and running [BACK-END](https://github.com/AndriiHliuza/messenger) project.
+
+<ul>
+  <li>Node.js</li>
+  <li>
+    <div>BACK-END project</div>
+    <div>
+      <code>In order to properly set up the BACK-END project follow this link: <a href="https://example.com">BACK-END</a></code>
+    </div>
+  </li>
+</ul>
+
 
 ### Installation steps
 1. Clone the repository.
-```sh
+```
 git clone https://github.com/AndriiHliuza/messenger-frontend-app.git
 ```
 
 2. Navigate to the project's directory.
-```sh
+```
 cd messenger-frontend-app
 ```
 

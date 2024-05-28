@@ -101,7 +101,7 @@
 <img src="assets/chats.png" alt="Chats" width="100%" height="100%" title="Chats">
 
 <h2 align="center">Subscription notification</h2>
-<img src="assets/subscription-notification.png" alt="Subscription notification" width="100%" height="100%" title="Subscription notification">
+<img src="assets/subscription-notification.png" alt="Subscription notification" width="30%" height="30%" title="Subscription notification">
 
 <h2 align="center">Users</h2>
 <img src="assets/users.png" alt="Users" width="100%" height="100%" title="Users">

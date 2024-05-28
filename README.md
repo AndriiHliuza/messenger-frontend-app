@@ -121,7 +121,7 @@
   <li>
     <div>BACK-END project</div>
     <div>
-      <code>In order to properly set up the BACK-END project follow this link: <a href="https://example.com">BACK-END</a></code>
+      <code>In order to properly set up the BACK-END project follow this link: <a href="https://github.com/AndriiHliuza/messenger/tree/dev">BACK-END</a></code>
     </div>
   </li>
 </ul>

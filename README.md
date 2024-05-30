@@ -148,7 +148,7 @@
 <h3><code>Users route:</code> All users in messenger except the current one.</h3>
 <img src="assets/users.png" alt="Users" width="100%" height="100%" title="Users">
 
-<br/><br/>
+<br/>
 
 <h2 align="center">Admin routes</h2>
 <h3><code>Admin routes are accessible only for users with role: ADMIN or ROOT.</code></h3>

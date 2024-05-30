@@ -81,8 +81,6 @@
   <li>Authenticate in messenger by moving to the <code>Sign in</code> tab and filling in the form with data provided during registration process.</li>
 </ol>
 
-<br/>
-
 <h3><code>Registration form</code></h3>
 <img src="assets/registration-form.png" alt="Registration form" width="100%" title="Registration form">
 
@@ -100,10 +98,6 @@
 
 <h3><code>Activation code field</code></h3>
 <img src="assets/activation-code-field.png" alt="Activation code field" width="100%" title="Activation code field">
-
-<br/><br/>
-
-### Follow the link for a detailed instruction on how to create the account: [Registration and authentication](assets/messenger_registration_and_authentication.mp4)
 
 <br/><br/>
 

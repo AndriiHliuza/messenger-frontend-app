@@ -84,22 +84,22 @@
 <h3><code>Registration form</code></h3>
 <img src="assets/registration-form.png" alt="Registration form" width="100%" title="Registration form">
 
-<br/><br/>
+<br/>
 
 <h3><code>Message after registration</code></h3>
 <img src="assets/message-after-registration.png" alt="Message after registration" width="100%" title="Message after registration">
 
-<br/><br/>
+<br/>
 
 <h3><code>Account activation email</code></h3>
 <img src="assets/registration-email.png" alt="Account activation email" width="100%" title="Account activation email">
 
-<br/><br/>
+<br/>
 
 <h3><code>Activation code field</code></h3>
 <img src="assets/activation-code-field.png" alt="Activation code field" width="100%" title="Activation code field">
 
-<br/><br/>
+<br/>
 
 <h2 align="center">Account modification</h2>
 <ol>
@@ -111,19 +111,19 @@
 <br/>
 <img src="assets/account-modification.gif" alt="Account modification" style="width: 100%">
 
-<br/><br/>
+<br/>
 
 <h2 align="center">Post functionality</h2>
 <h3><code>User can create posts on different topics and publish them on his/her profile page.</code></h3>
 <img src="assets/post-functionality.gif" alt="Post functionality" style="width: 100%">
 
-<br/><br/>
+<br/>
 
 <h2 align="center">Subscription functionality</h2>
 <h3><code>User can subscribe to other users for quick access to profiles of other users in order to check posts or write messages to them.</code></h3>
 <img src="assets/subscription-functionality.gif" alt="Subscription functionality" style="width: 100%">
 
-<br/><br/>
+<br/>
 
 <h2 align="center">Messaging in chat</h2>
 <h3>Messaging functionality:</h3>
@@ -138,28 +138,28 @@
 </ul>
 <img src="assets/messaging-in-chat.gif" alt="Messaging in chat" style="width: 100%">
 
-<br/><br/>
+<br/>
 
 <h3><code>User's chats.</code></h3>
 <img src="assets/chats.png" alt="Chats" width="100%" height="100%" title="Chats">
 
-<br/><br/>
+<br/>
 
 <h3><code>Users route:</code> All users in messenger except the current one.</h3>
 <img src="assets/users.png" alt="Users" width="100%" height="100%" title="Users">
 
-
+<br/><br/>
 
 <h2 align="center">Admin routes</h2>
 <h3><code>Admin routes are accessible only for users with role: ADMIN or ROOT.</code></h3>
 <img src="assets/admin-panel.png" alt="Admin panel" width="100%" height="100%" title="Admin panel">
 
-<br/><br/>
+<br/>
 
 <h3><code>Admins route:</code> All admins in messenger except the current one.</h3>
 <img src="assets/admins.png" alt="Admins" width="100%" height="100%" title="Admins">
 
-<br/><br/>
+<br/>
 
 <h3><code>ADMINs can delete or block account of another user in messenger.</code></h3>
 <img src="assets/another-user-page-for-admin.png" alt="Another user page for admin" width="100%" height="100%" title="Another user page for admin">

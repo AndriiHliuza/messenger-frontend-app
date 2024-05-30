@@ -7,7 +7,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li>
-      <a href="#description">About The Project</a>
+      <a href="#about-the-project">About The Project</a>
     </li>
     <li>
       <a href="#projects-functionality-and-features">Project's Functionality and Features</a>
@@ -80,34 +80,95 @@
   <li>Activate account by following the link in the email and entering the activation code in the provided field.</li>
   <li>Authenticate in messenger by moving to the <code>Sign in</code> tab and filling in the form with data provided during registration process.</li>
 </ol>
+
 <br/>
 
----
+<h3><code>Registration form</code></h3>
+<img src="assets/registration-form.png" alt="Registration form" width="100%" title="Registration form">
 
-![Alt Text](assets/registration-and-authentication.gif)
+<br/><br/>
+
+<h3><code>Message after registration</code></h3>
+<img src="assets/message-after-registration.png" alt="Message after registration" width="100%" title="Message after registration">
+
+<br/><br/>
+
+<h3><code>Account activation email</code></h3>
+<img src="assets/registration-email.png" alt="Account activation email" width="100%" title="Account activation email">
+
+<br/><br/>
+
+<h3><code>Activation code field</code></h3>
+<img src="assets/activation-code-field.png" alt="Activation code field" width="100%" title="Activation code field">
+
+<br/><br/>
+
+### Follow the link for a detailed instruction on how to create the account: [Registration and authentication](assets/messenger_registration_and_authentication.mp4)
+
+<br/><br/>
 
 <h2 align="center">Account modification</h2>
+<ol>
+  <li>Press <code>modify</code> button</li>
+  <li>Fill in and submit the modification form.</li>
+  <li>Provide your current password for modification</li>
+  <li>Submit the form</li>
+</ol>
+<br/>
+<img src="assets/account-modification.gif" alt="Account modification" style="width: 100%">
 
-![Alt Text](assets/account-modification.gif)
+<br/><br/>
 
-<h2 align="center">Posts creation</h2>
+<h2 align="center">Post functionality</h2>
+<h3><code>User can create posts on different topics and publish them on his/her profile page.</code></h3>
+<img src="assets/post-functionality.gif" alt="Post functionality" style="width: 100%">
 
-![Alt Text](assets/posts.gif)
+<br/><br/>
 
-<h2 align="center">Chat</h2>
-<img src="assets/chat.png" alt="Chat" width="100%" height="100%" title="Chat">
+<h2 align="center">Subscription functionality</h2>
+<h3><code>User can subscribe to other users for quick access to profiles of other users in order to check posts or write messages to them.</code></h3>
+<img src="assets/subscription-functionality.gif" alt="Subscription functionality" style="width: 100%">
 
-<h2 align="center">Chats</h2>
+<br/><br/>
+
+<h2 align="center">Messaging in chat</h2>
+<h3>Messaging functionality:</h3>
+<ul>
+  <li>Write messages.</li>
+  <li>Use emojis.</li>
+  <li>Update or delete messages.</li>
+  <li>Make admins (Accessable only for admins in chat).</li>
+  <li>Change chat name (Accessable only for admins in chat).</li>
+  <li>Add users to chat.</li>
+  <li>Delete users from chat (Accessable only for admins in chat.)</li>
+</ul>
+<img src="assets/messaging-in-chat.gif" alt="Messaging in chat" style="width: 100%">
+
+<br/><br/>
+
+<h3><code>User's chats.</code></h3>
 <img src="assets/chats.png" alt="Chats" width="100%" height="100%" title="Chats">
 
-<h2 align="center">Subscription notification</h2>
-<img src="assets/subscription-notification.png" alt="Subscription notification" width="30%" height="30%" title="Subscription notification">
+<br/><br/>
 
-<h2 align="center">Users</h2>
+<h3><code>Users route:</code> All users in messenger except the current one.</h3>
 <img src="assets/users.png" alt="Users" width="100%" height="100%" title="Users">
 
-<h2 align="center">Admins</h2>
+
+
+<h2 align="center">Admin routes</h2>
+<h3><code>Admin routes are accessible only for users with role: ADMIN or ROOT.</code></h3>
+<img src="assets/admin-panel.png" alt="Admin panel" width="100%" height="100%" title="Admin panel">
+
+<br/><br/>
+
+<h3><code>Admins route:</code> All admins in messenger except the current one.</h3>
 <img src="assets/admins.png" alt="Admins" width="100%" height="100%" title="Admins">
+
+<br/><br/>
+
+<h3><code>ADMINs can delete or block account of another user in messenger.</code></h3>
+<img src="assets/another-user-page-for-admin.png" alt="Another user page for admin" width="100%" height="100%" title="Another user page for admin">
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

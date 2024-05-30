@@ -135,7 +135,9 @@ export default function ChatsListItem(props) {
                         <div className="chat-list-item-last-message-sender-uniqueName">
                             <strong>{lastChatMessage
                                 ? lastChatMessage?.sender?.uniqueName
-                                    ? "From: " + lastChatMessage.sender.uniqueName
+                                    ? lastChatMessage?.sender?.uniqueName === user?.uniqueName
+                                        ? "From: me"
+                                        : "From: " + lastChatMessage.sender.uniqueName
                                     : "From: Unknown user"
                                 : "No messages"}
                             </strong>

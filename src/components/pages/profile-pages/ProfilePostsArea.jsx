@@ -50,9 +50,9 @@ export default function ProfilePostsArea() {
         <div className="user-posts-area-container">
             <div className="user-posts-area">
                 {
-                    posts.length !== 0
-                        ? <h2>Posts</h2>
-                        : ""
+                    posts.length === 0 && user?.username !== userProfile?.username
+                        ? ""
+                        : <h2>Posts</h2>
                 }
                 {
                     user?.username === userProfile?.username

@@ -1,0 +1,56 @@
+.subs-page-container {   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin-bottom: 10px;
+}
+
+.subs-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+
+    height: 90%;
+    width: 90%;
+}
+
+.subs-page-user-item-container {
+    background-color: rgb(125, 125, 125);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 100px;
+    width: 100%;
+
+    margin: 10px 0px 10px 0px;
+
+    border: 2px solid black;
+    border-radius: 10px;
+}
+
+.subs-page-user-item-container:hover {
+    background-color: rgb(50, 50, 50);
+    color: white;
+    cursor: pointer;
+}
+
+.subs-page-user-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+
+    width: 90%;
+    height: 90%;
+
+    white-space: nowrap;
+    overflow: hidden;
+}

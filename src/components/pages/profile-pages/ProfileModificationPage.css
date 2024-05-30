@@ -1,0 +1,179 @@
+.profile-modification-page-container {
+    background-color: bisque;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+
+    flex-grow: 1;
+
+    overflow-y: auto;
+}
+
+.profile-modification-form {
+    background-color: rgb(110, 110, 110);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    max-width: 600px;
+    margin: 20px 0%;
+
+    flex-grow: 1;
+
+    border-radius: 5px;
+}
+
+.profile-img {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;  
+}
+
+.profile-img-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 300px;
+    width: 300px;
+
+    margin: 10px;
+
+    border: 2px solid black;
+    border-radius: 150px;
+}
+
+.profile-img-container:hover {
+    cursor: pointer;
+}
+
+.remove-profile-img-button {
+    background-color: brown;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 40px;
+    width: 200px;
+
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.remove-profile-img-button:hover {
+    background-color: rgb(114, 29, 29);
+    cursor: pointer;
+}
+
+.profile-modification-form > h1 {
+    text-align: center;
+}
+
+.profile-modification-form > form {
+    display: flex;
+    flex-direction: column;
+}
+
+hr {
+    width: 100%;
+}
+
+.modification-explanation-text {
+    background-color: pink;
+    color: rgb(60, 0, 0);
+    padding: 10px;
+    margin: 10px;
+
+    border-radius: 5px;
+}
+
+.profile-modification-form button {
+    align-self: center;
+    margin-bottom: 10px;
+
+    height: 50px;
+    width: 300px;
+
+    border:  1px solid rgb(156, 156, 156);
+    border-radius: 10px;
+
+    background-color: rgb(67, 67, 67);
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.profile-modification-form button:hover {
+    background-color: rgb(56, 56, 56);
+}
+
+.profile-modification-form button:disabled {
+    opacity: 0.35;
+}
+
+.modification-failded-message {
+    background-color: pink;
+    color: brown;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 90%;
+
+    margin-bottom: 10px;
+    padding: 10px;
+
+    border: 1px solid rgb(60, 0, 0);
+    border-radius: 5px;  
+}
+
+.inactive-block {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .profile-modification-form {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 576px) {
+    .profile-modification-form {
+        max-width: 500px;
+        margin: 20px;
+    }
+
+    .profile-modification-form button {
+        width: 250px;
+    }
+}
+
+@media (max-width: 400px) {
+    .profile-img-container {
+        height: 200px;
+        width: 200px;
+    }
+}
+
+@media (max-width: 300px) {
+    .profile-modification-form {
+        max-width: 250px;
+    }
+
+    .profile-modification-form button {
+        width: 200px;
+    }
+    .modification-failded-message {    
+        width: 80%;
+    }
+}

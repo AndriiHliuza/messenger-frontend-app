@@ -1,70 +1,213 @@
-# Getting Started with Create React App
+<a name="readme-top"></a>
+<h1 align="center"><b>WebTalk Messenger</b></h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#projects-functionality-and-features">Project's Functionality and Features</a>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation-steps">Installation Steps</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+  </ol>
+</details>
 
-In the project directory, you can run:
 
-### `npm start`
+<!-- About The Project -->
+## About The Project
+<p>This repository is a FRONT-END ReactJS part of a safe and secure messeneger project for a real-time communication between users.</p>
+<p>
+  Safety of communication is achieved by encrypting messages before sending them to other users. For this purpose messenger uses a combination of asymmetric and symmetric encryption methods.
+</p>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<!-- Project's Functionality and Features -->
+## Project's Functionality and Features
 
-### `npm test`
+* **USER Account features**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    - **Registration** with account activation via user's email.
 
-### `npm run build`
+    - **Authentication** based on **JWTs (JSON Web Tokens)**.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    - **Real-time encrypted messaging** using **WebSocket** connection.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+    - **Chat's members hierarchy** based on roles.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    - **Messages managment** with options to delete and update previously sent messages in real-time communication.
 
-### `npm run eject`
+    - **Subscription managment** with ability for users to subscribe to other users and track own subscriptions and subscribers.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+    - **Account modification functionality**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    - **Posts creation functionality**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* **ADMIN panel features**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+    - **User management** with functionality to block and delete user's accounts by admins.
 
-## Learn More
+    - **ADMIN creation functionality**: Admins can create other admins to assist in managing the platform
+    
+    - **ADMIN's account modification functionality**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* **ROOT panel features** (**ROOT** is the main **ADMIN** with the most rights in the system)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+    - **All** functionality of a regular **ADMIN**.
 
-### Code Splitting
+    - **ADMIN's deletion functionality**: ROOT can delete other admins in the system
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<br/>
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<h2 align="center">Registration and authentication</h2>
 
-### Making a Progressive Web App
+<h3>Registration and authentication steps:</h3>
+<ol>
+  <li>Move to <code>Sign Up</code> tab.</li>
+  <li>Fill in and submit the registration form.</li>
+  <li>Check your email for account activation code.</li>
+  <li>Activate account by following the link in the email and entering the activation code in the provided field.</li>
+  <li>Authenticate in messenger by moving to the <code>Sign in</code> tab and filling in the form with data provided during registration process.</li>
+</ol>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+<h3><code>Registration form</code></h3>
+<img src="assets/registration-form.png" alt="Registration form" width="100%" title="Registration form">
 
-### Advanced Configuration
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<h3><code>Message after registration</code></h3>
+<img src="assets/message-after-registration.png" alt="Message after registration" width="100%" title="Message after registration">
 
-### Deployment
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+<h3><code>Account activation email</code></h3>
+<img src="assets/registration-email.png" alt="Account activation email" width="100%" title="Account activation email">
 
-### `npm run build` fails to minify
+<br/>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<h3><code>Activation code field</code></h3>
+<img src="assets/activation-code-field.png" alt="Activation code field" width="100%" title="Activation code field">
+
+<br/>
+
+<h2 align="center">Account modification</h2>
+<ol>
+  <li>Press <code>modify</code> button</li>
+  <li>Fill in and submit the modification form.</li>
+  <li>Provide your current password for modification</li>
+  <li>Submit the form</li>
+</ol>
+<br/>
+<img src="assets/account-modification.gif" alt="Account modification" style="width: 100%">
+
+<br/>
+
+<h2 align="center">Post functionality</h2>
+<h3><code>User can create posts on different topics and publish them on his/her profile page.</code></h3>
+<img src="assets/post-functionality.gif" alt="Post functionality" style="width: 100%">
+
+<br/>
+
+<h2 align="center">Subscription functionality</h2>
+<h3><code>User can subscribe to other users for quick access to profiles of other users in order to check posts or write messages to them.</code></h3>
+<img src="assets/subscription-functionality.gif" alt="Subscription functionality" style="width: 100%">
+
+<br/>
+
+<h2 align="center">Messaging in chat</h2>
+<h3>Messaging functionality:</h3>
+<ul>
+  <li>Write messages.</li>
+  <li>Use emojis.</li>
+  <li>Update or delete messages.</li>
+  <li>Make admins (Accessable only for admins in chat).</li>
+  <li>Change chat name (Accessable only for admins in chat).</li>
+  <li>Add users to chat.</li>
+  <li>Delete users from chat (Accessable only for admins in chat.)</li>
+</ul>
+<img src="assets/messaging-in-chat.gif" alt="Messaging in chat" style="width: 100%">
+
+<br/>
+
+<h3><code>User's chats.</code></h3>
+<img src="assets/chats.png" alt="Chats" width="100%" height="100%" title="Chats">
+
+<br/>
+
+<h3><code>Users route:</code> All users in messenger except the current one.</h3>
+<img src="assets/users.png" alt="Users" width="100%" height="100%" title="Users">
+
+<br/>
+
+<h2 align="center">Admin routes</h2>
+<h3><code>Admin routes are accessible only for users with role: ADMIN or ROOT.</code></h3>
+<img src="assets/admin-panel.png" alt="Admin panel" width="100%" height="100%" title="Admin panel">
+
+<br/>
+
+<h3><code>Admins route:</code> All admins in messenger except the current one.</h3>
+<img src="assets/admins.png" alt="Admins" width="100%" height="100%" title="Admins">
+
+<br/>
+
+<h3><code>ADMINs can delete or block account of another user in messenger.</code></h3>
+<img src="assets/another-user-page-for-admin.png" alt="Another user page for admin" width="100%" height="100%" title="Another user page for admin">
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- Getting Started -->
+## Getting Started
+
+### Prerequisites
+
+<ul>
+  <li>Node.js</li>
+  <li>
+    <div>BACK-END project</div>
+    <div>
+      <code>In order to properly set up the BACK-END project follow this link: <a href="https://github.com/AndriiHliuza/messenger/tree/dev">BACK-END</a></code>
+    </div>
+  </li>
+</ul>
+
+
+### Installation steps
+1. Clone the repository.
+```
+git clone https://github.com/AndriiHliuza/messenger-frontend-app.git
+```
+
+2. Navigate to the project's directory.
+```
+cd messenger-frontend-app
+```
+
+3. Install dependencies
+```
+npm install
+```
+
+4. Run the server
+```
+npm start
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- Usage -->
+## Usage
+* Open browser and navigate to http://localhost:3000
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>

@@ -71,6 +71,7 @@ export default function ChatPageMessagesArea(props) {
                     setInformMessage(`Your message "${textValue}" wasn't updated`);
                 }
                 setTextValue("");
+                setShowEmojiPicker(false);
             }
         } else {
             window.alert(`Your message "${textValue}" wasn't changed`);

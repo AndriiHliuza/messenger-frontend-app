@@ -79,3 +79,52 @@
     background-color: rgb(0, 40, 20);
     cursor: pointer;
 }
+
+.modal-window {
+    background-color: antiquewhite;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    height: 30%;
+    width: 30%;
+
+    margin-top: 20px;
+    
+    border: 1px solid black;
+    border-radius: 3px;
+
+    box-shadow: 1px 1px 5px 1px black;
+}
+
+.modal-window-message {
+    word-wrap: break-word;
+    width: 100%;
+    white-space: pre-line;
+}
+
+.modal-window-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+}
+
+.modal-window-button {
+    background-color: rgba(9, 9, 9, 0.8);
+    color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 10px;
+
+    height: 40px;
+    width: 100%;
+
+    border-radius: 5px;
+}
